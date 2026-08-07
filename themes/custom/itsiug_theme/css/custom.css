@@ -2,3 +2,10 @@
   --sdc-padding-bottom: 40px !important;
   padding-bottom: 40px !important;
 }
+
+/* Testimonial module background override from base theme. */
+.testimonial-module.testimonial-module--themed,
+body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
+.testimonial-module {
+  background-color: #1f4b6b !important;
+}
