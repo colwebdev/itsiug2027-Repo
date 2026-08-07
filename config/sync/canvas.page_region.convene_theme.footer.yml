@@ -91,4 +91,4 @@ component_tree:
     component_id: sdc.convene_theme.copyright
     component_version: 442eed26aa9e1b43
     inputs:
-      text: '© 2026 OpenSense Labs. Crafted together with the community.'
+      text: '© 2026 ITSIUG. Crafted together with the higher education community.'
