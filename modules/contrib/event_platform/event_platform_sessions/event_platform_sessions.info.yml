@@ -1,0 +1,39 @@
+name: Event Platform Sessions
+type: module
+description: A content type, views, and vocabularies for managing sessions
+package: Event Platform
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - drupal:content_moderation
+  - drupal:datetime_range
+  - drupal:workflows
+  - add_content_by_bundle:add_content_by_bundle
+  - auto_entitylabel:auto_entitylabel
+  - content_moderation_link:content_moderation_link
+  - eca:eca_base
+  - eca:eca_content
+  - eca_tamper:eca_tamper
+  - eca_vbo:eca_vbo
+  - event_platform:event_platform_details
+  - field_group:field_group
+  - field_permissions:field_permissions
+  - hide_revision_field:hide_revision_field
+  - maxlength:maxlength
+  - metatag:metatag_open_graph
+  - metatag:metatag_twitter_cards
+  - pathauto:pathauto
+  - schema_metatag:schema_metatag
+  - schema_metatag:schema_event
+  - simple_sitemap:simple_sitemap
+  - smart_date:smart_date
+  - smart_menu_links:smart_menu_links
+  - token_or:token_or
+  - tvi:tvi
+  - views_argument_token:views_argument_token
+  - views_summary_tabs:views_summary_tabs
+  - webform_views:webform_views
+
+# Information added by Drupal.org packaging script on 2025-07-13
+version: '2.0.2'
+project: 'event_platform'
+datestamp: 1752442418

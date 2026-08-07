@@ -1,0 +1,156 @@
+eca.event.plugin.vbo:execute:
+  type: eca.event.plugin
+  label: 'VBO: Execute Views bulk operation (one by one)'
+  mapping:
+    operation_name:
+      type: text
+      label: 'Operation name'
+    view_id:
+      type: string
+      label: 'Optionally restrict by view ID'
+    display_id:
+      type: text
+      label: 'Optionally restrict by view display ID'
+eca.event.plugin.vbo:execute_multiple:
+  type: eca.event.plugin
+  label: 'VBO: Execute Views bulk operation (multiple at once)'
+  mapping:
+    operation_name:
+      type: text
+      label: 'Operation name'
+    view_id:
+      type: string
+      label: 'Optionally restrict by view ID'
+    display_id:
+      type: text
+      label: 'Optionally restrict by view display ID'
+eca.event.plugin.vbo:custom_access:
+  type: eca.event.plugin
+  label: 'VBO: Custom access for Views bulk operation'
+  mapping:
+    operation_name:
+      type: text
+      label: 'Operation name'
+    view_id:
+      type: string
+      label: 'Optionally restrict by view ID'
+    display_id:
+      type: text
+      label: 'Optionally restrict by view display ID'
+eca.event.plugin.vbo:form_build:
+  type: eca.event.plugin
+  label: 'VBO: Form build of Views bulk operation'
+  mapping:
+    operation_name:
+      type: text
+      label: 'Operation name'
+    view_id:
+      type: string
+      label: 'Optionally restrict by view ID'
+    display_id:
+      type: text
+      label: 'Optionally restrict by view display ID'
+eca.event.plugin.vbo:form_validate:
+  type: eca.event.plugin
+  label: 'VBO: Form validate of Views bulk operation'
+  mapping:
+    operation_name:
+      type: text
+      label: 'Operation name'
+    view_id:
+      type: string
+      label: 'Optionally restrict by view ID'
+    display_id:
+      type: text
+      label: 'Optionally restrict by view display ID'
+eca.event.plugin.vbo:form_submit:
+  type: eca.event.plugin
+  label: 'VBO: Form submit of Views bulk operation'
+  mapping:
+    operation_name:
+      type: text
+      label: 'Operation name'
+    view_id:
+      type: string
+      label: 'Optionally restrict by view ID'
+    display_id:
+      type: text
+      label: 'Optionally restrict by view display ID'
+eca.event.plugin.vbo:confirm_form_build:
+  type: eca.event.plugin
+  label: 'VBO: Confirm form build of Views bulk operation'
+  mapping:
+    operation_name:
+      type: text
+      label: 'Operation name'
+    view_id:
+      type: string
+      label: 'Optionally restrict by view ID'
+    display_id:
+      type: text
+      label: 'Optionally restrict by view display ID'
+eca.event.plugin.vbo:confirm_form_validate:
+  type: eca.event.plugin
+  label: 'VBO: Confirm form validate of Views bulk operation'
+  mapping:
+    operation_name:
+      type: text
+      label: 'Operation name'
+    view_id:
+      type: string
+      label: 'Optionally restrict by view ID'
+    display_id:
+      type: text
+      label: 'Optionally restrict by view display ID'
+eca.event.plugin.vbo:confirm_form_submit:
+  type: eca.event.plugin
+  label: 'VBO: Confirm form submit of Views bulk operation'
+  mapping:
+    operation_name:
+      type: text
+      label: 'Operation name'
+    view_id:
+      type: string
+      label: 'Optionally restrict by view ID'
+    display_id:
+      type: text
+      label: 'Optionally restrict by view display ID'
+
+action.configuration.eca_vbo_execute:
+  type: mapping
+  label: 'VBO: Trigger Views Bulk Operation event'
+  mapping:
+    operation_name:
+      type: string
+      label: 'Operation name'
+
+action.configuration.eca_vbo_set_custom_access:
+  type: mapping
+  label: 'VBO: Set custom access on Views Bulk Operation'
+  mapping:
+    access_granted:
+      type: boolean
+      label: 'Access granted'
+
+action.configuration.eca_vbo_get_config_value:
+  type: eca_action_configuration
+  label: 'VBO: Get configuration value'
+
+action.configuration.eca_vbo_set_result:
+  type: eca_action_configuration
+  label: 'Action VBO: Set result'
+
+action.configuration.eca_vbo_get_views_argument:
+  type: eca_action_configuration
+  label: 'Action VBO: Get Views argument'
+
+views.field.eca_vbo_bulk_form:
+  type: views.field.views_bulk_operations_bulk_form
+
+views_bulk_operations.action_config.eca_vbo_execute:
+  type: views_bulk_operations_action_config
+  label: 'ECO VBO Execute action'
+  mapping:
+    skip_confirm:
+      type: integer
+      label: 'Skip confirmation step'

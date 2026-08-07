@@ -1,0 +1,17 @@
+event_platform_scheduler.scheduler:
+  title: 'Session Schedule'
+  description: 'Provides dynamic entity relationship diagrams for all of your Drupal entities.'
+  route_name: event_platform_scheduler.scheduler
+  parent: config_pages.event_details
+
+event_platform_scheduler.settings:
+  title: Session Schedule settings
+  description: 'Configure Session Schedule'
+  route_name: event_platform_scheduler.settings
+  parent: event_platform_scheduler.scheduler
+
+event_platform_scheduler.time_slots:
+  title: Time Slots
+  description: 'Generate Time Slots'
+  route_name: event_platform_scheduler.time_slots
+  parent: event_platform_scheduler.scheduler

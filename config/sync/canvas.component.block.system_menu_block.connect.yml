@@ -1,0 +1,41 @@
+uuid: 238e6bf4-eed4-49fe-ac68-f72c604142ed
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.connect
+  module:
+    - system
+_core:
+  default_config_hash: XFNSRAqXB94p18qnfnKvGRycGNQeiQXhkzVAFC7KbWs
+active_version: 379dcf788226043f
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'system_menu_block:connect'
+        label: Connect
+        label_display: '0'
+        provider: system
+        level: 1
+        depth: null
+        expand_all_items: false
+    fallback_metadata:
+      slot_definitions: null
+  7a1a68e548425150:
+    settings:
+      default_settings:
+        id: 'system_menu_block:connect'
+        label: Connect
+        label_display: '0'
+        provider: system
+        level: 1
+        depth: null
+        expand_all_items: false
+    fallback_metadata:
+      slot_definitions: null
+label: Connect
+id: block.system_menu_block.connect
+provider: system
+source: block
+source_local_id: 'system_menu_block:connect'

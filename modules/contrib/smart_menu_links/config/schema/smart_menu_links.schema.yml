@@ -1,0 +1,68 @@
+smart_menu_links.smart_menu_link.*:
+  type: config_entity
+  label: Smart menu links
+  mapping:
+    id:
+      type: string
+      label: ID
+    label:
+      type: label
+      label: Label
+    uuid:
+      type: string
+    link_text:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\config_translation\FormElement\Textfield
+      label: Link Text
+      translation context: 'Smart menu link'
+    link_suffix:
+      type: string
+      translatable: true
+      form_element_class: \Drupal\config_translation\FormElement\Textfield
+      label: Link Suffix
+      translation context: 'Smart menu link'
+    menu_name:
+      type: string
+      label: Menu name
+    parent:
+      type: string
+      label: Parent
+    weight:
+      type: weight
+      label: Weight
+    expanded:
+      type: boolean
+      label: Expanded
+    enabled:
+      type: boolean
+      label: Enabled
+    target_entity_type:
+      type: string
+      label: Target Entity Type
+    target_bundle:
+      label: Bundle
+      type: string
+    moderation_states:
+      label: Moderation States
+      type: sequence
+      sequence:
+        type: string
+    source_path_segment:
+      type: integer
+      label: Source Path Segment
+    source_id_or_name:
+      type: string
+      label: Source ID or Name
+    fallback:
+      type: string
+      label: Fallback
+    validate_segment:
+      type: boolean
+      label: Validate a Segment
+    validate_segment_id:
+      type: integer
+      label: Segment to Validate
+    validate_segment_value:
+      type: string
+      label: Segment Validation Value

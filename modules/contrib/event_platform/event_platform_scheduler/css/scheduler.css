@@ -1,0 +1,89 @@
+/* stylelint-disable order/properties-order */
+/**
+ * @file
+ * Styles for the scheduler.
+ *
+ */
+
+#scheduler--wrapper {
+  display: flex;
+}
+
+#scheduler-table th {
+  text-align: center;
+}
+
+#scheduler-table th:first-of-type {
+  width: 175px;
+  text-align: left;
+}
+
+#scheduler-table th:nth-of-type(2) {
+  width: 175px;
+  text-align: left;
+}
+
+#scheduler-table .filled {
+  padding: 0.5rem;
+}
+
+#scheduler-table .session {
+  margin: 0;
+}
+
+#scheduler--sessions {
+  padding-left: 2%;
+  width: 15%;
+}
+
+.time-slot {
+  border: 1px solid #999;
+  background-color: #ccc;
+  height: 3.5rem;
+  padding: 0.5rem;
+}
+
+#scheduler-table td.conflict {
+  background-color: hsl(0, 100%, 40%, 0.1);
+  transition: background-color 0.5s;
+}
+
+.dragover {
+  border: 1px solid #333;
+  background-color: #fff;
+}
+
+/* Sessions */
+
+.session {
+  border: 1px solid #333;
+  background: #fff;
+  padding: 1rem;
+  cursor: move;
+  border-radius: var(--gin-border-m);
+}
+
+.session.theconflict {
+  border-color: #c00;
+  color: #900;
+}
+
+#scheduler--sessions .session {
+  width: 100%;
+}
+
+.scheduler--unassign {
+  text-align: center;
+  padding: 1rem;
+  background: #bbb;
+  width: 100%;
+}
+
+.dragging {
+  opacity: 0.4;
+}
+
+.scheduler--filters-match {
+  background-color: #ffb;
+  transition: background-color 0.5s;
+}

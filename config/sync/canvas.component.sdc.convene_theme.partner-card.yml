@@ -1,0 +1,33 @@
+uuid: 18a2a9e6-c1ff-479e-9897-c644295ca762
+langcode: en
+status: true
+dependencies:
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: ozNZmXhXTwfS4GKpXVhPzOltSAbUZlVjJcJgcy6nmmc
+active_version: 2b36998778a5fcdb
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+          description: 'Check to enable Admin Theme styles.'
+    fallback_metadata:
+      slot_definitions:
+        media:
+          title: 'Media Slot'
+          description: 'Slot for the logo image.'
+label: 'Partner Card'
+id: sdc.convene_theme.partner-card
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:partner-card'

@@ -1,0 +1,23 @@
+uuid: c12ca927-d84c-4045-8d08-6055e65c6e3b
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.sdc.convene_theme.button
+    - canvas.component.sdc.convene_theme.list-check-item
+    - canvas.component.sdc.convene_theme.media
+    - canvas.component.sdc.convene_theme.pricing-toggle
+    - canvas.component.sdc.convene_theme.social_link
+    - canvas.component.sdc.convene_theme.typography
+_core:
+  default_config_hash: hr6TMcuH8JgZ-JGIs4h9S5jLF-1LUw8o0vipqP1_4RM
+name: Atoms
+configEntityTypeId: component
+weight: 0
+items:
+  - sdc.convene_theme.button
+  - sdc.convene_theme.list-check-item
+  - sdc.convene_theme.media
+  - sdc.convene_theme.pricing-toggle
+  - sdc.convene_theme.social_link
+  - sdc.convene_theme.typography

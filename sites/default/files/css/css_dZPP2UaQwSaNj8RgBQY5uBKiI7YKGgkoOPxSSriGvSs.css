@@ -1,0 +1,2 @@
+/* @license GPL-2.0-or-later https://www.drupal.org/licensing/faq */
+.info-item{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:16px;border-top:1px solid transparent;}.info-item.info-item--highlight{border-top:1px solid #93C5FD;}.info-item__title{margin:0 0 12px 0;font-size:20px;font-weight:400;color:#030804;}.info-item__description{margin:0;font-size:16px;line-height:1.5;color:#4b5563;}

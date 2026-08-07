@@ -1,0 +1,30 @@
+uuid: 0914953c-645e-4265-b61c-c2fb85f4e8f1
+langcode: en
+status: true
+dependencies:
+  module:
+    - path
+    - user
+_core:
+  default_config_hash: GFoaSFmtIstvdwr8i-lmfW4z99Z0qH9FwAfmPOdmFI4
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  account:
+    weight: -10
+    region: content
+  language:
+    weight: 0
+    region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  timezone:
+    weight: 6
+    region: content
+hidden: {  }

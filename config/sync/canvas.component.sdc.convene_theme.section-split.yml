@@ -1,0 +1,161 @@
+uuid: c04c4e87-f199-463f-b5d9-9e4928e2180f
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: etQvPH0FT37otbQhCcToaYZyQmNNbYeFelDmwXDg9cA
+active_version: d623974a069f4140
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        variation:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value: null
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+          description: 'Check to enable Admin Theme styles.'
+    fallback_metadata:
+      slot_definitions:
+        heading:
+          title: 'Heading Slot'
+          description: 'Slot for the main headline.'
+        content:
+          title: 'Content Slot'
+          description: 'Slot for the body text or description.'
+        actions:
+          title: 'Actions Slot'
+          description: 'Buttons or links.'
+        media:
+          title: 'Media Slot'
+          description: 'Image or video to be displayed alongside the content.'
+  d76cb538cc171e9b:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          description: 'Check to enable Admin Theme styles.'
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+        variation:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value: null
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
+        disable_css:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+    fallback_metadata:
+      slot_definitions:
+        heading:
+          title: 'Heading Slot'
+          description: 'Slot for the main headline.'
+        content:
+          title: 'Content Slot'
+          description: 'Slot for the body text or description.'
+        actions:
+          title: 'Actions Slot'
+          description: 'Buttons or links.'
+        media:
+          title: 'Media Slot'
+          description: 'Image or video to be displayed alongside the content.'
+  9564a7f3d34fc0c2:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          description: 'Check to enable Admin Theme styles.'
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata: {  }
+        content:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata: {  }
+        image_url:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata: {  }
+        image_alt:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata: {  }
+        image_position:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value: null
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: 'Split Section'
+id: sdc.convene_theme.section-split
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:section-split'

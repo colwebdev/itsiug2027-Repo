@@ -1,0 +1,8 @@
+entity.smart_menu_link.overview:
+  title: Smart menu links
+  parent: system.admin_structure
+  description: 'List of smart menu links to extend site functionality.'
+  route_name: entity.smart_menu_link.collection
+smart_menu_links:
+  class: Drupal\smart_menu_links\Plugin\Menu\SmartMenuLink
+  deriver: Drupal\smart_menu_links\Plugin\Derivative\SmartMenuLink

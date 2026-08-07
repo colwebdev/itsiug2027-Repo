@@ -1,0 +1,4 @@
+.featured-speakers .sdc-grid {
+  --sdc-padding-bottom: 40px !important;
+  padding-bottom: 40px !important;
+}

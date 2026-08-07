@@ -1,0 +1,7 @@
+services:
+  cache.eca_vbo_memory:
+    class: Drupal\Core\Cache\MemoryCache\MemoryCacheInterface
+    tags:
+      - { name: cache.bin.memory, default_backend: cache.backend.memory.memory }
+    factory: ['@cache_factory', 'get']
+    arguments: [eca_vbo_memory]

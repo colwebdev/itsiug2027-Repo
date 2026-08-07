@@ -1,0 +1,17 @@
+uuid: fe9f58e4-225a-45e0-80b8-423c44247706
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: gqyQjf5j4g79Wi5SN39ZCHMLv0lSW5B83TCzsBSMI1k
+name: uncropped_500w_webp
+label: 'Uncropped | 500w'
+effects:
+  e340ff9b-0c69-4b8e-a1c3-96585413dce3:
+    uuid: e340ff9b-0c69-4b8e-a1c3-96585413dce3
+    id: image_scale
+    weight: 1
+    data:
+      width: 500
+      height: null
+      upscale: false

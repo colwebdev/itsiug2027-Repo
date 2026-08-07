@@ -1,0 +1,50 @@
+uuid: 5b22b25c-480d-4649-91f2-d7c26c3dc505
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.canvas_full_html
+  module:
+    - ckeditor5
+_core:
+  default_config_hash: JVHSfzS5MJG4Ov6_-IzkELjT5GP79mmALBHxhGBDdBE
+format: canvas_full_html
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - heading
+      - '|'
+      - bold
+      - italic
+      - underline
+      - strikethrough
+      - superscript
+      - subscript
+      - removeFormat
+      - '|'
+      - link
+      - bulletedList
+      - numberedList
+      - blockQuote
+      - horizontalLine
+      - '|'
+      - sourceEditing
+  plugins:
+    ckeditor5_heading:
+      enabled_headings:
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
+    ckeditor5_list:
+      properties:
+        reversed: false
+        startIndex: false
+        styles: true
+      multiBlock: true
+    ckeditor5_sourceEditing:
+      allowed_tags: {  }
+image_upload:
+  status: false

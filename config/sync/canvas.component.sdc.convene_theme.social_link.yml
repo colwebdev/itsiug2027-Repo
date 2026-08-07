@@ -1,0 +1,52 @@
+uuid: 4bf3c870-a73f-4a7a-8461-ac4492b6f31a
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: SkvxNt0_Vcr_LUdosn2-19USE9feB1MnBnMx7EDybdk
+active_version: 0061eab3af9f74f5
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        platform:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value: null
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
+        url:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: 'Social Link'
+id: sdc.convene_theme.social_link
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:social_link'

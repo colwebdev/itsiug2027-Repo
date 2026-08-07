@@ -1,0 +1,66 @@
+uuid: a59a3990-40e6-4c02-bc70-13c17a40b01d
+langcode: en
+status: true
+dependencies:
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: 19rth21plhv_WyO1fQcM1dgedtCaeIHj0O6pDStQ95k
+active_version: a7f93efa9350beb4
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+          description: 'Check to enable Admin Theme styles.'
+        title:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        description:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        price:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions:
+        action:
+          title: 'Action Slot'
+          description: "Slot for the action button (e.g., 'Book now')."
+        features:
+          title: 'Features Slot'
+          description: 'Slot for the unordered list (<ul>) of features. Will be styled with checkmarks automatically.'
+label: 'Pricing Card'
+id: sdc.convene_theme.pricing-card
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:pricing-card'

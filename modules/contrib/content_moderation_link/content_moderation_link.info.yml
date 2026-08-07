@@ -1,0 +1,14 @@
+name: Content Moderation Link
+type: module
+description: Provides a permissions-aware link that can used to moderation content using outside sources like email.
+package: Other
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+dependencies:
+  - drupal:content_moderation
+
+configure: content_moderation_link.settings_form
+
+# Information added by Drupal.org packaging script on 2025-07-25
+version: '1.1.0'
+project: 'content_moderation_link'
+datestamp: 1753485890

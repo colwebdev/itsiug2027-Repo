@@ -1,0 +1,10 @@
+uuid: c7c93385-be81-41fa-b613-a897f32c9d53
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: Nhz3lBTrwtwraIcVyjvyawNK4kIMz-KHFR-nFj3-5gc
+id: event-info
+label: 'Event info'
+description: ''
+locked: false

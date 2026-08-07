@@ -1,0 +1,3218 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  modules/custom/editoria11y/editoria11y.post_update.php: n/a
+#  modules/custom/editoria11y/editoria11y.views.inc: n/a
+#  modules/custom/editoria11y/editoria11y.info.yml: n/a
+#  modules/custom/editoria11y/editoria11y.links.menu.yml: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.info.yml: n/a
+#  modules/custom/editoria11y/modules/editoria11y_export/editoria11y_export.info.yml: n/a
+#  modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml: n/a
+#  modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml: n/a
+#  modules/custom/editoria11y/js/editoria11y-dashboard.js: n/a
+#  modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php: n/a
+#  modules/custom/editoria11y/editoria11y.module: n/a
+#  modules/custom/editoria11y/editoria11y.routing.yml: n/a
+#  modules/custom/editoria11y/editoria11y.install: n/a
+#  modules/custom/editoria11y/editoria11y.links.task.yml: n/a
+#  modules/custom/editoria11y/editoria11y.permissions.yml: n/a
+#  modules/custom/editoria11y/config/schema/editoria11y.schema.yml: n/a
+#  modules/custom/editoria11y/src/Controller/DashboardController.php: n/a
+#  modules/custom/editoria11y/js/editoria11yOptions.js: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.module: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.install: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/src/Entity/Ed11yCustomRule.php: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.links.action.yml: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.links.task.yml: n/a
+#  modules/custom/editoria11y/src/Form/Editoria11ySettings.php: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.routing.yml: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/src/Ed11yCustomRuleListBuilder.php: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/src/LicenseManager.php: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/src/LicenseUninstallValidator.php: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php: n/a
+#  modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php: n/a
+#  modules/custom/editoria11y/src/TestNames.php: n/a
+#  modules/custom/editoria11y/src/Dashboard.php: n/a
+#  modules/custom/editoria11y/src/Controller/ApiController.php: n/a
+#  modules/custom/editoria11y/src/Plugin/views/area/SyncCheckMessage.php: n/a
+#  modules/custom/editoria11y/src/Plugin/views/field/PageLink.php: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2026-08-01 21:46-0400\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: modules/custom/editoria11y/editoria11y.post_update.php:217;306
+msgid "editoria11y_post_update_0004: scanned @scanned mismatched page(s), backfilled @fixed to the referenced entity language."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:20;200;303 modules/custom/editoria11y/editoria11y.info.yml:0 modules/custom/editoria11y/editoria11y.links.menu.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.info.yml:0 modules/custom/editoria11y/modules/editoria11y_export/editoria11y_export.info.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0;0;0
+msgid "Editoria11y"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:24
+msgid "Editoria11y - Pages with issues"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:25
+msgctxt "problems"
+msgid "Provides relationship for issues and dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:31
+msgid "EID"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:32
+msgid "Editoria11y's internal page ID"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:48
+msgid "Entity ID"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:49
+msgid "The NID/TID/UID of the page with an issue."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:65 modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0
+msgid "Entity type"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:66
+msgid "The entity type; \"route\" if no type found."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:83
+msgid "Route name"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:84
+msgid "Route name for page."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:100 modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0
+msgid "Page path"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:101
+msgid "Internal, relative page path."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:117 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0;0;0;0
+msgid "Page language"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:118
+msgid "Active translation."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:134 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0
+msgid "Page title"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:135
+msgid "The name of the route where this was last seen."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:151 modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0
+msgid "Content alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:152
+msgid "Number of alerts shown to content editors."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:168 modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0
+msgid "Dev alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:169
+msgid "Number of alerts shown to developers."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:185
+msgid "Updated"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:186
+msgid "When this page was last checked."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:204
+msgid "Editoria11y - Test results"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:205
+msgctxt "problems"
+msgid "Stores Editoria11y issue list"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:211
+msgid "Result row"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:212
+msgid "Internal identifier"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:228
+msgid "Created"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:229
+msgid "When this page was flagged."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:242 modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:93 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Alert type"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:243;407
+msgid "The name of the test as reported by Editoria11y JS"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:256
+msgid "Alert type, linked"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:257
+msgid "Linked to report of all alerts of this type."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:274
+msgid "Content alert count"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:275;289
+msgid "The number of hits for this test type on this page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:288
+msgid "Dev alert count"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:307
+msgid "Editoria11y - Dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:308
+msgid "Stores Editoria11y warnings and dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:314
+msgid "Dismissal internal reference ID"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:327 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Page with dismissal"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:341 modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Dismissed by"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:342
+msgid "The user linked to this dismissal."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:347
+msgid "Linked Drupal user"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:361
+msgid "Dismissed element id"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:362
+msgid "Code sample to identify the flagged element."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:378 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Dismissed on"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:379
+msgid "The Unix timestamp of the first time this record was flagged."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:392 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Dismissal stale since"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:393
+msgid "The element has not been seen since this date."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:406 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Dismissed result name"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:420
+msgid "Dismissed result name, linked"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:421
+msgid "Links to report of all alerts of this type."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:438 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Dismissal status"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:439
+msgid "The type of dismissal (e.g., OK, Ignore)"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:464;476
+msgid "Relate from Editoria11y page to referenced node"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:465;478;489;502
+msgid "Issues were found on this node"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:488;500
+msgid "Relate from node data to Editoria11y page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:512;524
+msgid "Relate from Editoria11y page to referenced taxonomy term"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:513;526;537;550
+msgid "Issues were found on this term page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:536;548
+msgid "Relate from taxonomy term data to Editoria11y page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:560
+msgid "Relate from Editoria11y page list to user bio page data"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:561;574;585;598
+msgid "Issues were found on this user bio page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:572
+msgid "Relate from Editoria11y page to user bio page with issues"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:584
+msgid "Relate from user bio page to Editoria11y results"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:596
+msgid "Relate from users list to Editoria11y results on bio page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:610;622
+msgid "Relate from Editoria11y page to issues on page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:611;624;635;648;659;672;683;696
+msgid "Issues found on this node"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:634;646
+msgid "Relate from Editoria11y result to page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:658;670
+msgid "Relate from Editoria11y page to dismissals on page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:682;694
+msgid "Relate from Editoria11y dismissal to page"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:726
+msgid "Group relationship for node with Editoria11y issues"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:727;733
+msgid "Bridge to the Group module. Add the Group module Group relationship on top of this one to filter or sort issues by group."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:728
+msgid "Group relationship for node"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:732
+msgid "Group relationship for user bio with Editoria11y issues"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:734
+msgid "Group relationship for user"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:738
+msgid "Group relationship for taxonomy term with Editoria11y issues"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:739
+msgid "Bridge to the Group module. Add the Group module Group relationship on top of this one to filter or sort issues by group. Requires a contrib module that exposes terms as group content."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:740
+msgid "Group relationship for taxonomy term"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.views.inc:896
+msgid "Warning: possible out of date path. This content may have moved to"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.module:147 modules/custom/editoria11y/editoria11y.routing.yml:0
+msgid "Export CSV"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.module:211
+msgid "Predelete failed: @error_message"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.module:578
+msgid "Page attachment failed: @error_message"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.install:1416
+msgid "editoria11y_update_9019: scanned @total rows, repaired @updated, deleted @deleted corrupted group rows, left @skipped untouched."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.install:1619
+msgid "editoria11y_update_9020: hashed @hashed page rows, removed @deduped duplicate rows, added unique keys."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.info.yml:0
+msgid "Editoria11y Accessibility Checker"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.info.yml:0
+msgid "Checks page content for accessibility and provides a site-wide dashboard."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.links.menu.yml:0
+msgid "Content Accessibility"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.links.menu.yml:0
+msgid "Accessibility checker notifications and exclusions."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.links.menu.yml:0
+msgid "Results from the Editoria11y checker."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.links.task.yml:0 modules/custom/editoria11y/js/editoria11y-dashboard.js:0
+msgid "Dashboard"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.links.task.yml:0
+msgid "Core settings"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.links.task.yml:0 modules/custom/editoria11y/editoria11y.routing.yml:0
+msgid "Demo"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "View Editoria11y checker"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "Assign to all content editors."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "Administer Editoria11y checker"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "Allows user to purge results and change configuration."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "Mark as hidden in Editoria11y"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "Adds button to suppress a manual check for the current user."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "Mark as OK in Editoria11y"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "Adds button to suppress a manual check for all users, if sync is enabled."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "Manage Editoria11y results"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.permissions.yml:0
+msgid "View the site-wide dashboard and reset dismissals."
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.routing.yml:0
+msgid "Editoria11y core settings"
+msgstr ""
+
+#: modules/custom/editoria11y/editoria11y.routing.yml:0
+msgid "Content Accessibility Issues"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Editoria11y Settings"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Check elements in these containers"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Alert panel assertiveness"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Do not run if these elements are on the page"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Suppress all alerts if none of these elements are present"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Do not run tests on these containers"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Move toggle to avoid colliding with these widgets"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Full check should warn on these elements with embedded uncheckable content"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "These links download a document or image and need a manual review"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Strings that indicate a link opens in a new window"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Remove these strings from link text before checking for bad link text"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Remove strings in this selector before checking for bad link text"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Hidden elements in these containers will be revealed by theme JS on request via a dispatched event"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Elements that truncate overflow, partially hiding buttons"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Color scheme for panel and tooltips"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Pin toolbar to left or right"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Web components the checker should check"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Auto-detects for additional shadow components"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Auto-detects and checks new content"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Disables dashboard and synchronized marking of elements as OK"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "URL query parameters that should be recorded as separate pages"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Remove string from URL for dashboard page links"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Number of custom test finished events the checker should wait for"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Disables live editor checking"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Selector for frontend-context editors that should inherit the document outline"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Selector for editors where their first heading should be h2"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Selector for editors where their first heading should be h3"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Selector for editors where their first heading should be h4"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Selectors for components where edit links are meaningless on tips"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Tell CK5 to have a header rows or columns by default."
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Tests not shown to content authors."
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "Disable the tests you are not ready for"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "linkNewWindow"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "linkNoText"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "altEmptyLinked"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "linkDocument"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "linkTextIsURL"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "linkTextIsGeneric"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "textPossibleList"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "textPossibleHeading"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "textUppercase"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "tableNoHeaderCells"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "tableEmptyHeaderCell"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "tableContainsContentHeading"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "embedVideo"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "embedAudio"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "embedVisualization"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "embedTwitter"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "embedCustom"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "headingEmpty"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "headingIsLong"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "headingLevelSkipped"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "blockquoteIsShort"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "altMissing"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "altNull"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "altMeaningless"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "altURL"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "altImageOf"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "altDeadspace"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "altLong"
+msgstr ""
+
+#: modules/custom/editoria11y/config/schema/editoria11y.schema.yml:0
+msgid "altPartOfLinkWithText"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0
+msgid "2-letter code (en, fr, de)"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Alert"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Alert types"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0
+msgid "All dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "All issues"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "All pages"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Apply"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0
+msgid "Author"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0
+msgid "Authored after"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0
+msgid "Authored before"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0
+msgid "Authored"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0;0;0;0;0
+msgid "Content type"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Detected"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0
+msgid "Dismissed accessibility alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Edited"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0
+msgid "Editor"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Items per page"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0;0
+msgid "Filter"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0
+msgid "Language"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0
+msgid "Last editor"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0;0;0
+msgid "Marked"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "No dismissals found."
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0;0;0;0;0;0;0
+msgid "Page"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0
+msgid "Pages"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Pages with alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0
+msgid "Panel"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0
+msgid "Path"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0
+msgid "Published"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0
+msgid "Recent"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Recent accessibility alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Recent alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/DashboardController.php:185
+msgctxt "problems"
+msgid "Recent alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Sort by"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0
+msgid "Title"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0
+msgid "Type"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0
+msgid "Filter and sort"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0
+msgid "Deleted."
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0
+msgid "Delete failed."
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0
+msgid "<p>The Editoria11y <strong><em>@type</em></strong> view is missing.</p>"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0
+msgid "<p>There are three view configurations this module installs, found in its /config/install folder. Each must be installed for this dashboard to display results.</p>"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11y-dashboard.js:0
+msgid "<p>To fix: copy and paste the contents of <strong>/editoria11y/config/install/views.view.ed11y_@type.yml</strong> into a \"View\" type import at <a href=\"/admin/config/development/configuration/single/import\">/admin/config/development/configuration/single/import</a>. If you sync your configuration to the filesystem, be sure to include these Views in your repository.</p>"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11yOptions.js:0
+msgid "link is external"
+msgstr ""
+
+#: modules/custom/editoria11y/js/editoria11yOptions.js:0
+msgid "link sends email"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.module:26 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0
+msgid "No results found"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.module:104
+msgid "Your Editoria11y CSA trial has @days days remaining. <a href=\"@url\">Activate a license</a> to continue using CSA features after the trial ends."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.module:112
+msgid "Your Editoria11y CSA trial has expired. CSA features have been disabled. <a href=\"@url\">Activate a license</a> to continue using them."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.module:144
+msgid "Your Editoria11y CSA license has expired. <a href=\"@url\">Renew or deactivate your license</a>."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.module:153
+msgid "Your Editoria11y CSA license has expired. Please renew to reactivate CSA add-ons."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.module:77
+msgid "Cron license check failed: @msg"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.install:45
+msgid "Editoria11y CSA features are active on a @days-day trial. <a href=\"@url\">Activate a license</a> to continue using them after the trial ends."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.install:84 modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/src/Entity/Ed11yCustomRule.php:10
+msgid "Editoria11y Custom Test"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.install:85 modules/custom/editoria11y/modules/editoria11y_csa/src/Entity/Ed11yCustomRule.php:10
+msgid "Editoria11y Custom Tests"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.install:86 modules/custom/editoria11y/modules/editoria11y_csa/src/Entity/Ed11yCustomRule.php:10
+msgid "editoria11y custom test"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.install:87 modules/custom/editoria11y/modules/editoria11y_csa/src/Entity/Ed11yCustomRule.php:10
+msgid "editoria11y custom tests"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.info.yml:0
+msgid "Editoria11y CSA: Advanced Tools"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.info.yml:0
+msgid "Community-Supported Addons include code and contrast checks, custom checks, a site crawler and report maintenance tools."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.links.action.yml:0
+msgid "Add custom test"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.links.task.yml:0
+msgid "Recheck"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.links.task.yml:0
+msgid "CSA membership"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.links.task.yml:0 modules/custom/editoria11y/src/Form/Editoria11ySettings.php:316
+msgid "Custom tests"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.routing.yml:0
+msgid "Dashboard Actions"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.routing.yml:0
+msgid "Editoria11y CSA membership"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.routing.yml:0
+msgid "Editoria11y custom tests"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.routing.yml:0
+msgid "Add a custom test"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.routing.yml:0
+msgid "Edit custom test"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/editoria11y_csa.routing.yml:0
+msgid "Delete custom test"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Editoria11y CSA Settings"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Developer roles"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Developer assertiveness"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Tests overridden to show to content editors"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Tests overridden to turn off"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Tests overridden to only to show to developers"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Elements to ignore for contrast test"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Turn on contrast checks"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Developer check root: body or specify"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Developer check root selector"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Selector for elements to ignore for developers"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Enabled"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Custom development domain patterns"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "ID"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Label"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Test key"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Tooltip title"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Tip content HTML"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Element set to check"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Dismiss key type"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "CSS filter selector"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Text strings to include"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0;0
+msgid "Text string"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Text strings to exclude"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/schema/editoria11y_csa.schema.yml:0
+msgid "Case sensitive text matching"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "Filter which pages will be crawled"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "Cancel"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "Millisecond pause between page requests"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "This tab needs to remain open and in the foreground during the crawl."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "Estimated time:"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "hours"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "minutes"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "minute"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "Start crawling"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "Checked:"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "pages"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/js/crawler.js:0
+msgid "Back to dashboard"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Ed11yCustomRuleListBuilder.php:19
+msgid "Test"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Ed11yCustomRuleListBuilder.php:20
+msgid "Elements"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Ed11yCustomRuleListBuilder.php:21
+msgid "Status"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Ed11yCustomRuleListBuilder.php:32
+msgid "Text"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Ed11yCustomRuleListBuilder.php:36 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0
+msgid "On"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Ed11yCustomRuleListBuilder.php:36 modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:206 modules/custom/editoria11y/src/Form/Editoria11ySettings.php:674;681
+msgid "Off"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/LicenseManager.php:518
+msgid "Freemius deactivation API call failed: @msg"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/LicenseManager.php:558
+msgid "Cannot cancel subscription: API token not found."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/LicenseManager.php:573
+msgid "Freemius subscription cancellation API call failed: @msg"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/LicenseManager.php:641
+msgid "Key module lookup for @id failed: @msg"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/LicenseManager.php:743
+msgid "Failed to update Freemius install properties: @msg"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/LicenseUninstallValidator.php:34
+msgid "An <a href=\"@settings\">active license must be deactivated</a> before uninstalling."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:55
+msgid "License key stored. Use editoria11y-csa:activate to activate."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:74 modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:422
+msgid "License activated."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:89 modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:558
+msgid "License deactivated."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:114
+msgid "License active. Expires: @date"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:117
+msgid "License active. No expiration date."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:132
+msgid "License management locked. Use editoria11y-csa:unlock to re-enable UI changes."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:142
+msgid "License management unlocked. UI changes are now allowed."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:121
+msgid "License expired or cancelled."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:44
+msgid "License key cannot be empty."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:52
+msgid "Failed to store key: {msg}"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:68
+msgid "No stored license key found. Run editoria11y-csa:set-key first."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:77
+msgid "Activation failed: {msg}"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:92
+msgid "Deactivation failed: {msg}"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Drush/Commands/Editoria11yCsaCommands.php:106
+msgid "License check failed: {msg}"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:42 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0
+msgid "Export"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:49 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Export pages"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:54 modules/custom/editoria11y/src/Controller/DashboardController.php:67;77 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0
+msgid "Export dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:59 modules/custom/editoria11y/src/Controller/DashboardController.php:64;76 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Export alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:69
+msgid "Paths with parameters"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:80
+msgid "Drop records for deleted or moved pages"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:83
+msgid "Deletes results that no longer have valid paths or entity references."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:98
+msgid "Update page titles"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:101
+msgid "Replaces recorded titles for Nodes, Terms and Users with the current value on their edit page."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:105
+msgid "Update page paths"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:108
+msgid "Replaces recorded URLs for Nodes, Terms and Users with their current canonical path. <br>@ReviewPaths (node/1?node=2) will not be updated."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:112
+msgid "Risky deletions"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:117
+msgid "Delete records for paths with parameters (e.g., ?page=2)"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:120 modules/custom/editoria11y/src/Form/Editoria11ySettings.php:269
+msgid "None"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:121
+msgid "Only for nodes, terms & users"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:122
+msgid "All, including search and views"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:125
+msgid "Used to remove duplicate records when previously recorded parameters like page numbers or search keys were not meaningful. Parameters that are not meaningful should be removed from the list of parameters to save under \"Syncing results to reports\" in the module configuration.<br>@ReviewPaths should be reviewed before proceeding. <strong>There is no undo</strong>."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:132
+msgid "Start"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:142
+msgid "Recheck nodes"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:146
+msgid "Set up a crawl"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:208
+msgid "Processing batch #@batch_id of @count."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:501
+msgid "@process processed @count, deleted @deleted, updated @updated."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:523
+msgid "An error occurred while processing %error_operation with arguments: @arguments"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:551
+msgid "No records to process."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/DashboardActions.php:509
+msgid "@process processed @count, deleted @deleted, updated @updated in @elapsed."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:34
+msgid "Admin label for the configuration page"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:42
+msgid "Test grouping ID"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:43
+msgid "Letters, numbers and underscores only.<br>Rules that share an ID will be grouped on dashboard reports."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:61
+msgid "Active"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:67
+msgid "Alert content"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:72
+msgid "Tip title"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:80
+msgid "Tip details"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:81
+msgid "HTML displayed in the tooltip. The provided template is optional.<br>\n        Allowed tags: @tags."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:86
+msgid "To fix"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:95
+msgid "Error"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:96
+msgid "Manual check"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:106
+msgid "Dismiss key"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:107
+msgid "How dismissals are tracked. 'Text' uses its text content, 'Attributes' uses its attributes (href, id, class, src)."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:109
+msgid "Text content"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:110
+msgid "Attributes on tag (e.g. href and src)"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:122
+msgid "Elements to check"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:123
+msgid "These sets contain elements that match your check area and skip over configuration."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:151
+msgid "Common choices"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:153
+msgid "All text elements: Headings, Paragraphs, Blockquotes and Lists"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:154;172 modules/custom/editoria11y/src/TestNames.php:353
+msgid "Links"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:155;168
+msgid "Paragraphs"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:156;169 modules/custom/editoria11y/src/TestNames.php:356
+msgid "Headings"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:157;171 modules/custom/editoria11y/src/TestNames.php:355
+msgid "Images"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:158
+msgid "All elements"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:159
+msgid "...other..."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:166
+msgid "Specific elements and combinations"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:170
+msgid "Lists"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:173
+msgid "Blockquotes"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:174 modules/custom/editoria11y/src/TestNames.php:357
+msgid "Tables"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:175
+msgid "Buttons"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:176
+msgid "Inputs"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:177
+msgid "Labels"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:178
+msgid "Iframes"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:179
+msgid "Videos"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:180
+msgid "Audio"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:183
+msgid "Note: combining Links with Paragraphs and other text containers can lead to duplicate alerts."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:193
+msgid "When tip should appear"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:194
+msgid "This test builder allows for simple text and attribute tests.<br>Check the module readme for <a href=\"@url\">tips on writing more complex tests</a>."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:199
+msgid "Select by attributes"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:200
+msgid "Match using CSS selectors.<br>Use :not() to skip elements, e.g. <code>:is(.check1, .check2):not(.ignore, .ignore *)</code>.<br>Use attribute selectors for URLs, e.g. <code>[href*=\".dev/\"]</code>."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:207
+msgid "Select by text"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:208
+msgid "Flag elements containing any of these text strings. One per line."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:214
+msgid "Case sensitive"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:220
+msgid "Exclude elements that match this text"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:221
+msgid "Don't flag elements if they contain any of these words or phrases. E.g., a link to a development server is ok if it contains \"dev.\" One per line."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:281
+msgid "Test key must contain only letters, numbers, and underscores."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:289
+msgid "Tip content must contain visible text."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:294
+msgid "Select at least one rule."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:301
+msgid "Select at least one element type."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:308
+msgid "The filter selector should be a CSS selector, not a CSS rule block."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:320
+msgid "Created new custom test %label."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Ed11yCustomRuleForm.php:321
+msgid "Updated custom test %label."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:92
+msgid "Are you deactivating this site or cancelling altogether?"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:93
+msgid "You can manage your subscriptions at any time in your Freemius account."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:98;132
+msgid "Choose an action"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:100
+msgid "<strong>Deactivate this site</strong>, but keep my subscription active and renewing for use on another site"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:101
+msgid "<strong>Cancel my subscription</strong> to the Editoria11y CSA altogether"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:108
+msgid "Confirm deactivation"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:113
+msgid "Never mind; keep site active"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:126
+msgid "This site appears to be a development or testing environment with an active license."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:127
+msgid "How would you like to proceed?"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:134
+msgid "<strong>Cancel deactivation</strong>; I will manage this from the production site"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:135
+msgid "<strong>Disconnect this copy</strong>; leave the production license active"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:136
+msgid "<strong>Deactivate all copies of this site</strong> (production, dev, and QA)"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:143
+msgid "Confirm"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:164
+msgid "Editoria11y promotes accessibility in a unique way. Its tools are highly effective at helping non-technical authors prepare content that can be enjoyed equally by disabled Web users. We consider this a public good, so Editoria11y will always be free to use."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:166
+msgid "Editoria11y is not, however, free to develop or support."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:168
+msgid "The \"Community Supported Add-ons\" (CSA) project fills the gap: project membership subscriptions fund the development of the Editoria11y library, its CMS plugins, and the CSA suite."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:170
+msgid "<a href=\"@url\"><strong>Join the CSA</strong></a> to support this project"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:172
+msgid "Existing members: <a href=\"@url\"><strong>Manage your subscription</strong></a> or <a href=\"@support_url\"><strong>contact support</strong></a>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:183
+msgid "License management on this site has been locked via Drush. Use <code>drush ed11y-unlock</code> to re-enable changes from this form."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:192
+msgid "Warning: this site matches a dev or QA URL pattern"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:194
+msgid "Shared activations should be managed in the production copy."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:196
+msgid "Use <code>drush ed11y-lock</code> to prevent changing shared activations."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:197
+msgid "Deactivating a shared key deactivates all copies of a site, including production."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:199
+msgid "Separate license activations from a development environment consume an additional key."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:210
+msgid "Trial (@days days remaining)"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:213
+msgid "Trial (expired)"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:217
+msgid "License expired"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:220
+msgid "Active membership"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:225
+msgid "Activate using stored license key"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:228
+msgid "Activate with a different license key"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:229
+msgid "Activate (enter license key below)"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:245
+msgid "<strong>License expired.</strong> Expired on: @date"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:246
+msgid "<strong>License has expired.</strong>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:249
+msgid "<strong>Trial license active.</strong> Trial ends: @date"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:252
+msgid "<strong>License active.</strong> Expires: @date"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:255
+msgid "<strong>Lifetime license active.</strong>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:265
+msgid "Check for license renewal"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:273
+msgid "Deactivate license"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:282
+msgid "A license key is stored but not active"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:283
+msgid "Add a license key to enable CSA features"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:294
+msgid "Enable CSA features"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:303
+msgid "CSA license key"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:306
+msgid "<a href=\"@url\">Join the CSA</a> to enable CSA features. Visit the Freemius dashboard to <a href=\"@freemius\">manage your subscription</a> or recover a lost key."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:326
+msgid "Local, Dev and QA site URL patterns"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:327
+msgid "One pattern per line, up to 5 patterns. Wildcards are supported (e.g. <code>*.test.example.com</code>).<br>Local, dev and QA sites can share an activation with production site, but only production sites check for renewals."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:335
+msgid "Additionally, any hostname consisting only of digits and dots (raw IPv4 address) is treated as a development environment."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:338
+msgid "Built-in development URL patterns"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:356
+msgid "Enter no more than 5 custom domain patterns."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:367
+msgid "Saved license key not found. Please activate with a new key."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:376
+msgid "Enter a license key."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:425
+msgid "Activation failed: @msg"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:445
+msgid "License renewed and active."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:446
+msgid "License is still expired."
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:447
+msgid "Unexpected license status: @status"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:451
+msgid "Could not reach licensing server: @msg"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/src/Form/Editoria11yCSASettings.php:561
+msgid "Deactivation failed: @msg"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/editoria11y_export.info.yml:0
+msgid "Editoria11y Export Batch Processor"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/editoria11y_export.info.yml:0
+msgid "Batching is only needed for very large or heavily customized CSV exports."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Dashboard.php:33
+msgid "hide"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Dashboard.php:34
+msgid "ok"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Dashboard.php:43 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0
+msgid "Yes"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Dashboard.php:44 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0;0
+msgid "No"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:19
+msgid "This alt text is a filename, not a description"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:20;21
+msgid "Is this a clear and concise description of the image?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:22
+msgid "This alt text may be a placeholder"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:23
+msgid "This alt text is unpronounceable"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:24
+msgid "This custom input field is missing a label"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:25
+msgid "Button is missing an accessible label"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:26
+msgid "Button has an invalid ARIA label"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:27
+msgid "Button name repeats the word \"button\""
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:28
+msgid "This button is unpronounceable"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:29
+msgid "Text does not have enough contrast to be easily legible"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:30
+msgid "Graphic or icon does not have enough contrast"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:31
+msgid "Input does not provide enough contrast to be easily legible"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:32
+msgid "Placeholder text does not have enough contrast to be easily legible"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:33
+msgid "Does this placeholder text have enough contrast?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:34
+msgid "Does this text have enough contrast?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:35
+msgid "Does this graphic or icon have enough contrast?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:36
+msgid "Duplicate ID attribute"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:37
+msgid "This link has a tooltip with the same text as the link"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:38
+msgid "Does this audio have a transcript?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:39
+msgid "Is this visualization accessible?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:40
+msgid "Embedded iframes need manual checks"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:41
+msgid "Frame missing \"title\" attribute"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:42
+msgid "Frame with tabindex=\"-1\" will not be keyboard accessible."
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:43
+msgid "Is this video accurately captioned?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:44
+msgid "This heading has no text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:45
+msgid "This image is used as a heading, so it needs alt text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:46
+msgid "The first heading on this page is a subheading"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:47
+msgid "Can this heading be shorter?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:48
+msgid "This page is missing a Heading 1"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:49
+msgid "This heading is tagged at the wrong level"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:50
+msgid "This heading is unpronounceable"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:51
+msgid "This element cannot be described by screen readers"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:52
+msgid "Can this alt text be shorter?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:53
+msgid "Is this image actually meaningless?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:54
+msgid "Image in a carousel or gallery marked as decorative"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:55
+msgid "This captioned image has no alt text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:56
+msgid "Alt text should not be the same as caption text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:57
+msgid "Is there a visible label for this field?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:58
+msgid "Prefer visible labels to placeholders"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:59
+msgid "Is this reset button needed?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:60
+msgid "This input has an empty label"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:61
+msgid "Visible label does not match invisible label"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:62
+msgid "This image input is missing alt text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:63
+msgid "This input is not connected to a label"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:64
+msgid "Language tag does not match the content"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:65
+msgid "This content appears to be in a different language"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:66
+msgid "This alt text appears to be in a different language"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:67
+msgid "Alt text used as a link should not be a URL"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:68;69
+msgid "This linked alt might not be clear and concise"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:70
+msgid "Linked images need pronounceable alt text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:71
+msgid "Manual check: link contains \"click here\""
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:72
+msgid "Link article titles, not DOI numbers"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:73
+msgid "This link contains no words"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:74
+msgid "Link with invalid \"aria-labelledby\" attribute"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:75
+msgid "This link needs a label"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:76
+msgid "Link points to a file without warning"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:77
+msgid "Links with the same text link to different pages"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:78
+msgid "Does this alt text describe the link or the image?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:79
+msgid "Does this alt text make sense as part of this link?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:80
+msgid "Can this linked alt text be shorter?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:81
+msgid "This linked image needs alt text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:82
+msgid "Does this linked image need a description?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:83
+msgid "Is this link actually a button?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:84
+msgid "Does this link open a new tab without warning?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:85
+msgid "This linked alt text may be a placeholder"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:86
+msgid "This link only contains generic words"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:87
+msgid "The purpose of this link is visually hidden"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:88
+msgid "Does this image's alt describe the image or the link?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:89
+msgid "Are the symbols or emoji in this link meaningful?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:90
+msgid "This link is unpronounceable"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:91
+msgid "Link text should not be a URL"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:92
+msgid "Meta tag for page language missing"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:93
+msgid "Did you mean a different language code?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:94
+msgid "Invalid language code"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:95
+msgid "Page language may not match the content"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:96
+msgid "Meta tag limits how much users can enlarge text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:97
+msgid "Meta tag automatically refreshes page"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:98
+msgid "Meta tag prevents users from enlarging text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:99
+msgid "Meta tag for page title missing"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:100
+msgid "Invalid HTML: image has no alt attribute"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:101
+msgid "Invalid HTML: linked image missing alt attribute"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:102
+msgid "Invalid HTML: image in link missing alt attribute"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:103
+msgid "This link target may be invalid"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:104
+msgid "Should this quote be a heading?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:105
+msgid "Has this document been tagged for screen readers?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:106
+msgid "Should this bold text be a heading?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:107
+msgid "Should this have list formatting?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:108
+msgid "Broken same-page link"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:109
+msgid "Do not justify text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:110
+msgid "Nested interactive layout components"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:111
+msgid "Is there an alternative for this PDF?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:112
+msgid "Text is too small"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:113
+msgid "Large blocks of emphasized text are harder to read"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:114
+msgid "Do not use sub/superscript as visual formatting"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:115
+msgid "Only links should be underlined"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:116
+msgid "Is this uppercase text needed?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:117
+msgid "Are there redundant words in this alt text?"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:118
+msgid "Tabindex overrides interrupt the focus order"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:119
+msgid "This header cell needs text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:120
+msgid "This table has an invalid headers attribute"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:121
+msgid "This table needs a header row and/or column"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:122
+msgid "Content headings should not be used inside tables"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:123
+msgid "Invalid HTML list"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:354
+msgid "Linked images"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:358
+msgid "Text formatting"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:359
+msgid "Video, audio, frames"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:360
+msgid "Contrast"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:361
+msgid "Forms"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:362
+msgid "ARIA and focus"
+msgstr ""
+
+#: modules/custom/editoria11y/src/TestNames.php:363
+msgid "Page metadata"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/ApiController.php:136
+msgid "The request could not be processed. Details have been logged."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/ApiController.php:131
+msgid "API request rejected: @message"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/ApiController.php:135
+msgid "API request failed: @message"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/DashboardController.php:61;75
+msgid "Export pages with alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/DashboardController.php:106
+msgid "Install the Editoria11y Export Batch Processor module to download these reports."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/DashboardController.php:115
+msgid "Export results"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/DashboardController.php:155
+msgctxt "problems"
+msgid "Top alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/DashboardController.php:169
+msgctxt "problems"
+msgid "Pages with the most alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Controller/DashboardController.php:200 modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "Recent dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:90
+msgid "Activate the <a href=\"@csa\">Editoria11y CSA submodule</a> to see developer tests."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:101
+msgid "Include all parts of the page that contain your theme and content."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:102
+msgid "Include all parts of the page that contain your editable content."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:114
+msgid "Exclude elements that show unhelpful, repetitive, or inaccurate alerts."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:119
+msgid "<a href=\"@permissions\">Add permissions</a>, especially \"View Editoria11y checker\" and \"Mark OK.\"</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:122
+msgid "If you need help: <a href=\"@config_guide\">Configuration Guide</a> | <a href=\"@issue_queue\">Issue Queue</a> | <a href=\"@help\">Support contacts</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:132
+msgid "Autodetect"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:134
+msgid "Only user-editable content"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:135
+msgid "Other"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:140
+msgid "Parts of the page to test"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:145
+msgid "\"Autodetect\" selects:"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:152
+msgid "Other: specify regions to check for developer and content problems"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:165
+msgid "Provide CSS selectors. For many sites, the site theme is wrapped in <code>.dialog-off-canvas-main-canvas</code> while editing."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:169
+msgid "Do not check for any errors inside these elements"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:174
+msgid "These parts of the page will be ignored entirely."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:176
+msgid "match content settings"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:183
+msgid "Page regions with user-editable content"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:187
+msgid "Default: <code><em>main</em></code><br>Provide <a target=\"_blank\" href=\"https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors\">CSS selectors</a>. Content authors will only see the alerts within these parts of the page. Do not provide selectors that nest within each other, or the inner content will be checked twice."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:188
+msgid "Default: <code><em>main</em></code><br>Provide <a target=\"_blank\" href=\"https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors\">CSS selectors</a>. Do not provide selectors that nest within each other, or the inner content will be checked twice."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:194
+msgid "Errors in these elements should only be shown to developers"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:194
+msgid "Do not check for content errors inside these elements"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:198
+msgid "Content editors are not responsible for errors in these elements. <br>E.g.: <code><em>#sidebar-menu a, .slide [aria-hidden=\"true\"]</em></code>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:209
+msgid "Roles that will see developer alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:214;218
+msgid "All roles with the <a href=\":url\">View editoria11y checker</a> permission see content alerts."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:225
+msgid "Advanced settings"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:230
+msgid "Assertiveness"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:234
+msgid "Checker mode for content roles"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:237;249
+msgid "Start open if there are any alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:238;250
+msgid "Start open if there are new alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:239;251
+msgid "Start minimized"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:242
+msgid "Choose when the control panel should open and show inline tips. \"Start open if there are any alerts\" is recommended, as it helps tips get noticed over time."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:246
+msgid "Checker mode for developer roles"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:259
+msgid "Do not check any content while it is being edited"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:262
+msgid "Use the \"Do not check on pages with these elements\" setting to prevent checking only on specific pages. E.g., exclude: <code><em>form[id^=\"node-article\"]</em></code>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:266
+msgid "Assign headers to CKEditor tables on insert"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:270
+msgid "First row"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:271
+msgid "First column"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:272
+msgid "Both"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:275
+msgid "You will need to clear cache for changes to this setting to appear in CKEditor."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:280
+msgid "Theme compatibility"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:281
+msgid "Configuration tips"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:282
+msgid "If the checker <strong>toggle</strong> does not appear: make sure a z-indexed or overflow-hidden element in your front-end theme is not hiding or covering the <code><em>ed11y-element-panel</em></code> container, make sure that any custom selectors in the \"Disable the scanner if these elements are detected\" field are not present, and make sure that no JavaScript errors are appearing in your <a href=\"https://developer.mozilla.org/en-US/docs/Tools/Browser_Console\"> browser console</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:284
+msgid "If the checker toggle is present but <strong>not detecting</strong> errors, or missing errors that should be flagged: check that your inclusions & exclusion settings below are not missing or ignoring the elements. It is not uncommon for homepages or views to insert editable content outside the <code><em>main</em></code> element."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:289
+msgid "Theme"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:292
+msgid "Sleek"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:293
+msgid "Classic"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:294
+msgid "Dark"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:300
+msgid "Do not check on pages with these elements"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:303
+msgid "Used to block checking on site sections or admin pages.<br>E.g. <code><em>.content-type-example, .tabs__link[href=*\"edit\"]</em></code>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:308
+msgid "Hide all alerts on pages where these elements are not present"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:311
+msgid "Used to limit alerting to nodes where the user can edit something. Suggested selectors:<br> <code><em>.contextual-region a[href*=\"/edit\"], .contextual-region a[href*=\"/manage\"]</em></code>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:320
+msgid "Set to the number of other themes or modules that will be <a href=\"https://editoria11y.princeton.edu/configuration/#customtests\">injecting custom result JS events</a>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:326
+msgid "Positioning"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:329
+msgid "Don't show edit links on tips in these containers"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:332
+msgid "Tips show copies of the \"Edit\" and \"Layout\" links for nodes, users and taxonomy terms. These links are not helpful on lists of content from remote nodes.<br>Provide a comma-separated list of page sections of where these links should not show, E.g.: <code><em>#sidebar-menu, .news-feed</em></code>.<br>To hide the links <strong>everywhere</strong>, set this field to an asterisk (<code><em>*</em></code>).<br>To modify the links, <a href=\"https://editoria11y.princeton.edu/configuration/#modify-tips\" target=\"_blank\">use the ed11yPop event</a> in your theme JS."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:337
+msgid "Pin panel to..."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:340
+msgid "Right"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:341
+msgid "Left"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:347
+msgid "Don't cover these other widgets"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:350
+msgid "Provide a comma-separated list of selectors for other things that appear in the bottom right of the page. <br>If nothing is set, Editoria11y will automatically slide left to accommodate <code><em>#klaro_toggle_dialog, #klaro-cookie-notice .same-page-preview-dialog.ui-dialog-position-side</em></code>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:355
+msgid "Elements with overflow hidden"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:358
+msgid "Sometimes buttons get drawn and visually truncated outside the bounds of a positioned element. Provide a selector list."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:363
+msgid "Theme JS will handle revealing hidden tooltips inside these containers"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:366
+msgid "Editoria11y detects hidden tooltips and warns the user when they try to jump to them from the panel. For elements on this list, Editoria11y will <a href=\"https://itmaybejj.github.io/editoria11y/#dealing-with-alerts-on-hidden-or-size-constrained-content\">dispatch a JS event</a> instead of a warning, so custom JS in your theme can first reveal the hidden tip (e.g., open an accordion or tab panel)."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:372
+msgid "Detecting dynamic and shadow content"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:376
+msgid "Dynamically refresh if new content appears"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:379
+msgid "Watch for changes anywhere on the page"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:380
+msgid "Only watch for changes to content containers present on load"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:381
+msgid "Do not watch for changes"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:384
+msgid "Set to \"anywhere\" if changes are being missed, set to \"ignore\" if you notice performance issues. Themes and modules can also call <code>Drupal.Ed11y.refresh()</code> to refresh results."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:388
+msgid "Check inside these specific Web components"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:392
+msgid "Provide selectors for elements with <a href='https://developer.mozilla.org/en-US/docs/Web/Web_Components'>shadow DOM</a> you want tested. E.g.: <code><em>my-fancy-accordion-widget, my-magical-slideshow</em></code>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:396
+msgid "Auto-detect any Web components"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:399
+msgid "This is easier to configure than specifying components, but may slow test runs on very complicated pages."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:404
+msgid "Syncing results to reports"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:405
+msgid "Remember that results only sync to the dashboard when viewing nodes. Results shown while editing or viewing previews or revisions will not sync."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:408
+msgid "Remove redundant base url from URLs"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:411
+msgid "Provide base URL (\"/mysite\") if your site is installed in a subdirectory. Subdirectories tend to get duplicated (/mysite/mysite/mypage) and throw errors from the API."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:414
+msgid "Preserve query parameters"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:419
+msgid "The dashboard ignores most parameters: results for both /news?f=1 and /news?f=2 will show up as just /news. Provide a comma separated list of parameters that are meaningful, and should appear as separate pages in results."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:423
+msgid "Disable sync altogether"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:426
+msgid "Syncing test results back to Drupal is required for the <a target=\"_blank\" href=\"/admin/reports/editoria11y\">issue</a> and <a target=\"_blank\" href=\"/admin/reports/editoria11y/dismissals\">dismissal</a> dashboards and \"mark OK\" buttons."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:431
+msgid "Heading outline position of editable content"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:432
+msgid "To check headings in CKEditor, Editoria11y needs to know what the first heading level should be in this field. Body fields should generally be at the h2 level."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:435
+msgid "H2 level fields (body content)"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:438
+msgid "Body fields on nodes are preceded by an h1, and their heading outline should start with an h2. Ideally set this for top-level body fields for each of your content types, and set blocks and embedded nodes to h3 or h4.\n        <br>Set all content types: <code><em>form[id^=\"node-\"] #edit-body-wrapper .ck-content</em></code>\n        <br>Set specific content types: <code><em>form[id^=\"node-\"] #edit-body-wrapper .ck-content</em></code>\n        <br>Set up for Gutenberg: <code><em>form[id^=\"node-\"] #edit-body-wrapper .is-root-container</em></code>"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:445
+msgid "H3 level fields (blocks or paragraphs with separate titles)"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:448
+msgid "Sometimes inline and layout builder blocks are grouped under an h2 from a separate field, so their highest heading level should be h3."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:452
+msgid "H4 level fields (deeply nested blocks or paragraphs)"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:455
+msgid "Sometimes inline and layout builder blocks are grouped under an h3 from a separate field, so their highest heading level should be h4."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:462
+msgid "Modify tests that usually detect content issues"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:468
+msgid "Modify tests that usually detect template or configuration issues"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:500
+msgid "Do not check contrast for these elements"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:504
+msgid "Provide a comma-separated list of selectors for elements to ignore for all users."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:513
+msgid "Remind editor that content in these embeds needs manual review"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:516
+msgid "Provide a comma-separated list of selectors you wish to flag for the editor, e.g.: <code><em>.my-embedded-feed, #my-social-link-block</em></code>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:522
+msgid "Default settings should work with both <a href=\"https://www.drupal.org/project/linkpurpose\" target=\"_blank\">Link Purpose Icons</a> and <a target=\"_blank\" href=\"https://www.drupal.org/project/extlink\">External Links</a>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:525
+msgid "Remind the editor that these linked documents need a manual check"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:529
+msgid "Add or remove filetypes. Set to \"false\" to disable the test altogether. Providing any value will override the default, which is <code><em>a[href$='.pdf'], a[href*='.pdf?']</em></code>."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:533
+msgid "Remove elements that match these selectors before testing link text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:537
+msgid "Provide a CSS selector of elements your modules programmatically add to links (usually external or open-in-new-window links), so they can be ignored when the link text is checked for the \"link has no text\" and \"link text is not meaningful\" tests.<br>E.g.: <code><em>.this, .that</em></code>"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:541
+msgid "Remove these strings before testing link text"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:545
+msgid "Provide a pipe-separated (\"|\") list of phrases your modules programmatically add to links to hint a purpose (external, mail, phone, open-in-new-window), so they can be ignored when the link text is checked for the \"link has no text\" and \"link text is not meaningful\" tests; e.g.:  <pre><code><em>(link is external)|(link sends email)</em></code></pre>"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:549
+msgid "Strings in links that indicate new tabs"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:553
+msgid "Provide a pipe-separated list of phrases your site uses to warn users a link opens in a new tab; e.g.:  <pre><code><em>new&nbsp;tab|new&nbsp;window|external</em></code></pre>"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:646
+msgid "Modules like Link Purpose or External Links can mark links automatically."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:658
+msgid "CSA/developer test"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:675;689
+msgid "Show to developers"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Form/Editoria11ySettings.php:676;685
+msgid "Show to everybody"
+msgstr ""
+
+#: modules/custom/editoria11y/src/Plugin/views/area/SyncCheckMessage.php:31
+msgid "Dashboard sync is disabled in Editoria11y configuration."
+msgstr ""
+
+#: modules/custom/editoria11y/src/Plugin/views/field/PageLink.php:57
+msgid "(invalid URL)"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "Editoria11y: Dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Default"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0
+msgid "Node path"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0;0;0;0;0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0;0;0;0;0;0;0;0
+msgid "view"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0
+msgid "Term path"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0
+msgid "User bio path"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "Term title"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0;0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0;0;0;0;0;0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0
+msgid ", "
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "Node title"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "User name"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0
+msgid "Recorded path"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0
+msgid "Computed"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "{% set dynamic_path = view_node ~ view_taxonomy_term ~ view_user  %}{% if dynamic_path is empty %}{% set dynamic_path = page_path %}{% endif %}\r\n{% set dynamic_title = title ~ name_2 ~ name_1 %}{% if dynamic_title is empty %}{% set dynamic_title = page_title %}{% endif %}\r\n<a href=\"{{ dynamic_path }}\" data-ed1ref=\"{{pid}}\">{{ dynamic_title }}</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0
+msgid "Dismissed alert"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0
+msgid "By"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0;0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0;0;0;0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0;0;0;0;0;0;0;0;0
+msgid "1"
+msgid_plural "@count"
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Reset"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0
+msgid "<span class=\"ed11y-reset-dismissal\"><span class=\"ed11y-page-id\">{{ pid }}</span><span class=\"ed11y-dismissal-id\">{{id}}</span></span>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "››"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "‹‹"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "- All -"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Offset"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "« First"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Last »"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Asc"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Desc"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0
+msgid "User who dismissed alert"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "pid"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Node"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Term"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0
+msgid "User bio"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "Dismissals page"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0
+msgid "{% set dynamic_path = view_node ~ view_taxonomy_term ~ view_user  %}{% if dynamic_path is empty %}{% set dynamic_path = page_path %}{% endif %}\r\n<a href=\"{{ dynamic_path }}\" data-ed1ref=\"{{pid}}\">{{ page_title }}</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0;0;0
+msgid "Still on page"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Reset filters"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0;0
+msgid "Issues marked as hidden or OK in Editoria11y."
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "Dismissals filtered by issue"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "No dismissals match these filters."
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0 modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "All"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "Dismissed alerts of type \"{{result_name}}\""
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "<a href=\"/admin/reports/editoria11y/dismissals/\" class=\"button button--primary\">Show all dismissals</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "Recent Editoria11y Dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_action.yml:0
+msgid "Editoria11y - Recent dismissals"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Editoria11y: Alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Top results"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0;0;0
+msgid "Computed title"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0
+msgid "{% set dynamic_path = view_node ~ view_taxonomy_term ~ view_user  %}{% if dynamic_path is empty or \"?\" in page_path|render %}{% set dynamic_path = page_path %}{% endif %}\r\n<a href=\"{{ dynamic_path }}\" data-ed1ref=\"{{pid}}\">{{  page_title_1 }}</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0
+msgid "<a href=\"{{page_path_1}}\" data-ed1ref=\"{{pid}}\">{{page_path_1}}</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "No alerts found."
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0;0;0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0;0;0;0
+msgid "YYYY-MM-DD"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "User bio page"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0
+msgid "Node author"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0
+msgid "All pages with issues"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Block: Pages with the most"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Block: Recent alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Recent Editoria11y Alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0
+msgid "{% set dynamic_path = view_node ~ view_taxonomy_term ~ view_user  %}{% if dynamic_path is empty or \"?\" in page_path|render %}{% set dynamic_path = page_path %}{% endif %}\r\n<a href=\"{{ dynamic_path }}\" data-ed1ref=\"{{pid}}\">{{ page_title_1 }}</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Issue"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Editoria11y - Recent alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Block: Most frequent alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Most Frequent Editoria11y Alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Editoria11y - Most frequent alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0;0
+msgid "Alerts on specified page"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "<a href=\"{{ page_path }}\" data-ed1ref=\"{{pid}}\">{{ page_title_1 }}</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "<p><strong>Author:</strong> {{ uid }}</p>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "<p><strong>Last editor:</strong> {{ uid_1 }}</p>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "<h1>Accessibility issues on: {{page_title_1}}</h1>\r\n<p>{{uid}}{{uid_1}}</p>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "<p><a href=\"../editoria11y/pages\" class=\"button button--primary\">All pages with alerts</a></p>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "<span class=\"ed11y-reset-this-path\" hidden><p class=\"more-link\"><a role=\"button\" class=\"action-link action-link--icon-trash action-link--danger\"><span hidden class=\"ed11y-api-path\">{{ page_path }}</span>Reset results for this page</a></p></span>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Issue types"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Pages with specified alert"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0
+msgid "Published status"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Created by"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Created after"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Created before"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "<h1>Pages with alert \"{{ result_name }}\"</h1>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "<a href=\"../editoria11y/alerts\" class=\"button button--primary\">All alerts</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Pages with issues"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "Next ›"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0
+msgid "‹ Previous"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0;0;0;0;0
+msgid "Authored on"
+msgstr ""
+
+#: modules/custom/editoria11y/config/optional/views.view.ed11y_result.yml:0 modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0;0
+msgid "Changed"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0
+msgid "Editoria11y: Crawler"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0
+msgid "Editoria11y: Crawl Nodes"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0 modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0;0;0;0
+msgid "Authored by"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0
+msgid "Has results"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0
+msgid "Has no alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0;0
+msgid "Has alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_csa/config/optional/views.view.ed11y_crawler.yml:0
+msgid "nid"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Editoria11y: Export"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Export page with alerts"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0
+msgid "Link to Taxonomy term"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0
+msgid "Link to User"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "{% set dynamic_path = view_node ~ view_taxonomy_term ~ view_user  %}{% if dynamic_path is empty or \"?\" in page_path_1|render %}{% set dynamic_path = page_path_1 %}{% endif %}\r\n<a href=\"{{ dynamic_path }}\" data-ed1ref=\"{{pid}}\">{{ page_title }}</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0
+msgid "Path when checked"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0
+msgid "<a href=\"{{page_path_1}}\" data-ed1ref=\"{{pid}}\">{{page_path_1}}"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Current URL"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "{{ view_taxonomy_term }}{{ view_user }}{{ view_node }}"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0
+msgid "{% if type is empty %}{{entity_type}}{%else%}{{type}}{% endif %}"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0
+msgid "Entity Type"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0
+msgid "Langcode (en, fr, de)"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0
+msgid "Referenced node"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0
+msgid "Referenced term"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0;0
+msgid "Referenced user bio"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "<p>Records chosen for export can be filtered and previewed below.</p>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "<a href=\"/admin/reports/editoria11y/export\">Back to dashboard</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Dismissals export"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Link to Content"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Page raw path"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Name"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0;0
+msgid "{% set dynamic_path = view_node ~ view_taxonomy_term ~ view_user  %}{% if dynamic_path is empty or \"?\" in page_path_1|render %}{% set dynamic_path = page_path_1 %}{% endif %}\r\n{% set dynamic_title = title_1 ~ name ~ name_1 %}{% if dynamic_title is empty %}{% set dynamic_title = page_title %}{% endif %}\r\n<a href=\"{{ dynamic_path }}\" data-ed1ref=\"{{pid}}\">{{ dynamic_title }}</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "dismissal"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Page export"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Alerts export"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Editoria11y alerts on pages"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0;0
+msgid "{{ view_taxonomy_term }}{{ view_user }}{{ view_node }} "
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0;0
+msgid "Results for page"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "<a href=\"./export/pages\">Export pages with alerts</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "<a href=\"./export/dismissals\">Export dismissals</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "<a href=\"./export/alerts\">Export alert list</a>"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Export alerts on pages"
+msgstr ""
+
+#: modules/custom/editoria11y/modules/editoria11y_export/config/optional/views.view.ed11y_export.yml:0
+msgid "Result name"
+msgstr ""
+

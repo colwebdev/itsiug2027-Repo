@@ -1,0 +1,36 @@
+{# event_platform_details/templates/home-hero-block.html.twig #}
+<section class="site-hero container grid">
+  <div class="site-hero__details">
+    {% if date_start and date_end %}
+      <span class="site-hero__details-item">
+        {{- date_start|date('M d') -}}
+        -
+        {{- date_end|date('d, Y') -}}
+      </span>
+    {% endif %}
+    {% if location %}
+      <span class="site-hero__details-item">
+        {{ location }}
+      </span>
+    {% endif %}
+  </div>
+  <div class="site-hero__main">
+    {% if org_name %}
+      <h1 class="site-hero__title"><a href="{{ event_url }}">{{ org_name }}</a></h1>
+    {% endif %}
+
+    {% if description %}
+      <div class="site-hero__desc">
+        {{ description }}
+      </div>
+    {% endif %}
+  </div>
+  <div class="site-hero__media">
+    {# media to go in here #}
+    {% if cta_title and cta_url %}
+      <a href="{{ cta_url }}" class="site-hero__media-cta">
+        {{ cta_title }}
+      </a>
+    {% endif %}
+  </div>
+</section>

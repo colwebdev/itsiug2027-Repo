@@ -1,0 +1,41 @@
+uuid: 5952834c-6bd0-482b-bc39-622d237186f2
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.event-info
+  module:
+    - system
+_core:
+  default_config_hash: ODzNa7cQQom8CUEHBJAOQYmiUPSd6YLsGHCLigI9J0Q
+active_version: 4f33f659ef3019b8
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'system_menu_block:event-info'
+        label: 'Event info'
+        label_display: '0'
+        provider: system
+        level: 1
+        depth: null
+        expand_all_items: false
+    fallback_metadata:
+      slot_definitions: null
+  8676209316729a0c:
+    settings:
+      default_settings:
+        id: 'system_menu_block:event-info'
+        label: 'Event info'
+        label_display: '0'
+        provider: system
+        level: 1
+        depth: null
+        expand_all_items: false
+    fallback_metadata:
+      slot_definitions: null
+label: 'Event info'
+id: block.system_menu_block.event-info
+provider: system
+source: block
+source_local_id: 'system_menu_block:event-info'

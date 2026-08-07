@@ -1,0 +1,13 @@
+uuid: f045e18c-3617-4c9d-9a56-0d2a7c586944
+langcode: en
+status: true
+dependencies:
+  config:
+    - simple_sitemap.type.default_hreflang
+_core:
+  default_config_hash: TeJa227jvODyUwZQKbku5lMRSudPPVRwTww-g_PvWIo
+id: default
+label: Default
+description: null
+type: default_hreflang
+weight: 0

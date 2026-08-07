@@ -1,0 +1,21 @@
+uuid: fda4b460-bb72-4c88-9d1d-1485e095da8f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.9_16_small
+    - field.field.media.image.field_media_image
+    - media.type.image
+_core:
+  default_config_hash: 4IylF2G38lwIy0baFHQHq35u7581EgnY0l_9Xdqwe-s
+id: media.image.9_16_small
+targetEntityType: media
+bundle: image
+mode: 9_16_small
+content: {  }
+hidden:
+  created: true
+  field_media_image: true
+  name: true
+  thumbnail: true
+  uid: true

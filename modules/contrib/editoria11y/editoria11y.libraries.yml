@@ -1,0 +1,40 @@
+editoria11y-demo:
+  version: 3.0.1-730
+  js:
+    js/editoria11y-demo.js: {}
+  css:
+    theme:
+      css/editoria11y-demo.css: { preprocess: false }
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+
+editoria11y:
+  version: 3.0.1-730
+  js:
+    js/editoria11y-drupal.js:
+      { attributes: { type: module } }
+  css:
+    theme:
+      css/editoria11y-demo.css: { preprocess: false }
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+
+editoria11y-dashboard:
+  version: 3.0.1-730
+  js:
+    js/editoria11y-dashboard.js: {}
+  css:
+    layout:
+      css/editoria11y-dashboard.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/drupal.message
+
+editoria11y-settings:
+  version: 3.0.1-730
+  css:
+    layout:
+      css/editoria11y-settings.css: {}

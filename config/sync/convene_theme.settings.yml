@@ -1,0 +1,14 @@
+_core:
+  default_config_hash: FLlkxVbXBrcfn419EsezulaDmxkpP8ZRJCeHgupJ7Ik
+favicon:
+  mimetype: image/jpeg
+  path: sites/default/files/webfavicon.jpg
+  use_default: false
+features:
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+  node_user_picture: true
+logo:
+  path: sites/default/files/weblogo.svg
+  use_default: false

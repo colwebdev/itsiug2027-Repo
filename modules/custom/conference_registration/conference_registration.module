@@ -1,0 +1,134 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function conference_registration_theme($existing, $type, $theme, $path) {
+  return [
+    'conference_registration_pin_form' => [
+      'render element' => 'form',
+      'template' => 'conference-registration-pin-form',
+    ],
+    'conference_registration_pin_closed' => [
+      'render element' => 'form',
+      'template' => 'conference-registration-pin-closed',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function conference_registration_entity_presave(EntityInterface $entity) {
+  if (!$entity instanceof NodeInterface || $entity->bundle() !== 'institution') {
+    return;
+  }
+
+  if (!$entity->hasField('field_registration_pin') || !$entity->get('field_registration_pin')->isEmpty()) {
+    return;
+  }
+
+  $entity->set('field_registration_pin', conference_registration_generate_unique_pin());
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function conference_registration_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id !== 'node_institution_form' && $form_id !== 'node_institution_edit_form') {
+    return;
+  }
+
+  if (isset($form['field_registration_pin'])) {
+    // Make the entire field not required.
+    $form['field_registration_pin']['#required'] = FALSE;
+
+    // Add a late after-build callback to remove number widget min/max values and required flags.
+    if (isset($form['field_registration_pin']['widget'])) {
+      $form['field_registration_pin']['widget']['#required'] = FALSE;
+      if (isset($form['field_registration_pin']['widget'][0]['value'])) {
+        $form['field_registration_pin']['widget'][0]['value']['#required'] = FALSE;
+        $form['field_registration_pin']['widget'][0]['value']['#after_build'][] = 'conference_registration_field_registration_pin_input_after_build';
+      }
+    }
+
+    if (isset($form['field_registration_pin']['widget'][0]['value'])) {
+      $description = t('Leave blank to auto-generate a unique PIN.');
+      if (isset($form['field_registration_pin']['widget'][0]['value']['#description']) && !empty($form['field_registration_pin']['widget'][0]['value']['#description'])) {
+        $form['field_registration_pin']['widget'][0]['value']['#description'] .= ' ' . $description;
+      } else {
+        $form['field_registration_pin']['widget'][0]['value']['#description'] = $description;
+      }
+    }
+  }
+}
+
+/**
+ * After build callback for the registration PIN input element.
+ */
+function conference_registration_field_registration_pin_input_after_build(array $element, FormStateInterface $form_state) {
+  if (isset($element['#required'])) {
+    $element['#required'] = FALSE;
+  }
+  unset($element['#min'], $element['#max']);
+  if (isset($element['#attributes'])) {
+    unset($element['#attributes']['min'], $element['#attributes']['max']);
+  }
+  return $element;
+}
+
+/**
+ * Generate a unique 6-digit registration PIN for institutions.
+ */
+function conference_registration_generate_unique_pin() {
+  $storage = \Drupal::entityTypeManager()->getStorage('node');
+  do {
+    $pin = (string) random_int(100000, 999999);
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'institution')
+      ->condition('field_registration_pin', $pin)
+      ->accessCheck(FALSE);
+    $nids = $query->execute();
+  } while (!empty($nids));
+
+  return $pin;
+}
+
+/**
+ * Implements hook_webform_submission_form_alter().
+ */
+function conference_registration_webform_submission_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  if (empty($form['#webform_id']) || $form['#webform_id'] !== 'event_registration') {
+    return;
+  }
+
+  $query = \Drupal::request()->query->all();
+  $prefill_fields = [
+    'institution',
+    'institution_id',
+    'acronym',
+    'representative',
+    'representative_email',
+    'alternate_representative',
+    'alternate_representative_email',
+    'registration_number',
+    'delegate_quota',
+    'registration_count',
+    'token',
+  ];
+
+  foreach ($prefill_fields as $field_name) {
+    if (!isset($query[$field_name]) || !isset($form[$field_name])) {
+      continue;
+    }
+
+    $form[$field_name]['#default_value'] = $query[$field_name];
+    if (isset($form[$field_name]['#value'])) {
+      $form[$field_name]['#value'] = $query[$field_name];
+    }
+  }
+}

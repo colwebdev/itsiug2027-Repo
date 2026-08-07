@@ -1,0 +1,7 @@
+block.settings.event_platform_sessions_confirmation:
+  type: block_settings
+  label: 'Hello block settings'
+  mapping:
+    message:
+      type: string
+      label: 'Message to appear above the confirmation moderation links'

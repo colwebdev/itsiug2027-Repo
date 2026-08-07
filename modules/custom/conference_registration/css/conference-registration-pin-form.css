@@ -1,0 +1,107 @@
+.conference-registration-pin-page {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f5f7fb;
+}
+
+.conference-registration-pin-card {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border: 1px solid #d7dae0;
+  border-radius: 18px;
+  box-shadow: 0 24px 56px rgba(15, 23, 42, 0.08);
+  padding: 36px 32px;
+}
+
+.conference-registration-pin-card__header h1 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+  line-height: 1.1;
+  color: #102a43;
+}
+
+.conference-registration-pin-card__header p {
+  margin: 0 0 30px;
+  color: #52606d;
+  font-size: 1rem;
+}
+
+.conference-registration-pin-card__body {
+  display: grid;
+  gap: 22px;
+}
+
+.conference-registration-pin-card__body .form-item {
+  margin-bottom: 0;
+}
+
+.conference-registration-pin-card__body input[type="text"],
+.conference-registration-pin-card__body input[type="email"],
+.conference-registration-pin-card__body input[type="number"] {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #cbd2d9;
+  border-radius: 10px;
+  background: #f8fbff;
+  font-size: 1rem;
+}
+
+/* PIN field specific styling */
+.conference-registration-pin-card__body .form-item-registration-pin input {
+  width: 200px;
+  max-width: 100%;
+  letter-spacing: 8px;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  padding: 14px 16px;
+}
+
+/* Container for PIN field to center it and stack vertically */
+.conference-registration-pin-card__body .form-item-registration-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Center align the PIN label */
+.conference-registration-pin-card__body .form-item-registration-pin label {
+  text-align: center;
+}
+
+/* Wrapper for PIN input */
+.pin-input-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Wrapper for form actions */
+.form-actions-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Actions container to center the button */
+.conference-registration-pin-card__body .form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.conference-registration-pin-card__body .button {
+  width: auto;
+  padding: 12px 32px;
+  min-width: 140px;
+}
+
+@media (max-width: 640px) {
+  .conference-registration-pin-card {
+    padding: 28px 20px;
+  }
+}

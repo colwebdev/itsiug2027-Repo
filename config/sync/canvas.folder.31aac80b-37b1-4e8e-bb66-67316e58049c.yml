@@ -1,0 +1,17 @@
+uuid: 31aac80b-37b1-4e8e-bb66-67316e58049c
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.navigation_link
+    - canvas.component.block.navigation_shortcuts
+    - canvas.component.block.navigation_user
+_core:
+  default_config_hash: qWCb7quT2vuCtWcYXknvlWnN6T5b7WHqYQIJxQE5Eqo
+name: Navigation
+configEntityTypeId: component
+weight: 0
+items:
+  - block.navigation_link
+  - block.navigation_shortcuts
+  - block.navigation_user

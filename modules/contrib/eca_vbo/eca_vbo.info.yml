@@ -1,0 +1,14 @@
+name: 'ECA VBO'
+type: module
+description: 'Integrates ECA: Event - Condition - Action with Views Bulk Operations (VBO).'
+core_version_requirement: ^10.3 || ^11
+package: ECA
+dependencies:
+  - drupal:views
+  - eca:eca (^2||^3)
+  - views_bulk_operations:views_bulk_operations
+
+# Information added by Drupal.org packaging script on 2025-10-20
+version: '2.2.1'
+project: 'eca_vbo'
+datestamp: 1760960275

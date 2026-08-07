@@ -1,0 +1,30 @@
+uuid: 57b30863-e55d-42b2-92a4-f31ef7c27a4b
+langcode: en
+status: true
+dependencies:
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: heUwY4Bs6U7d2WIlZA3HsKZwJVyLAaeD-05c_XBprHU
+active_version: 442eed26aa9e1b43
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        text:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: 'List Check Item'
+id: sdc.convene_theme.list-check-item
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:list-check-item'

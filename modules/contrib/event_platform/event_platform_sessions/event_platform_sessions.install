@@ -1,0 +1,149 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for Event Platform Sessions.
+ */
+
+use Drupal\Component\Utility\DeprecationHelper;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function event_platform_sessions_install() {
+  // Add permission to view field_r and field_time_slot.
+  foreach (['anonymous', 'authenticated'] as $role) {
+    $role_object = Role::load($role);
+    $role_object->grantPermission('access user profiles');
+    $role_object->grantPermission('view field_r');
+    $role_object->grantPermission('view field_time_slot');
+    $role_object->save();
+  }
+
+  // Update user compact display.
+  $view_storage = \Drupal::entityTypeManager()
+    ->getStorage('entity_view_display');
+  $view_display = $view_storage->load('user.user.compact');
+  $view_display->setComponent('field_display_name', [
+    'type' => 'string',
+    'label' => 'hidden',
+    'settings' => ['link_to_entity' => TRUE],
+    'weight' => 1,
+  ])
+    ->removeComponent('field_bio')
+    ->removeComponent('member_for');
+  $view_display->save();
+
+  // Update user default display.
+  $view_display = $view_storage->load('user.user.default');
+  $view_display->setComponent('field_bio', [
+    'type' => 'text_default',
+    'label' => 'above',
+    'weight' => 3,
+  ])
+    ->setComponent('field_display_name', [
+      'type' => 'string',
+      'label' => 'hidden',
+      'settings' => ['link_to_entity' => FALSE],
+      'weight' => 2,
+    ])
+    ->removeComponent('member_for');
+  $view_display->save();
+
+  // Update user default form.
+  $view_storage = \Drupal::entityTypeManager()->getStorage('entity_form_display');
+  $view_display = $view_storage->load('user.user.default');
+  $view_display->setComponent('field_bio', [
+    'type' => 'text_textarea',
+    'settings' => ['rows' => 5],
+    'weight' => 2,
+  ])
+    ->setComponent('field_display_name', [
+      'type' => 'string_textfield',
+      'settings' => ['size' => 60],
+      'weight' => 1,
+    ])
+    ->removeComponent('path');
+  $view_display->save();
+
+  // Nested array to hold default term data.
+  $terms['session_audience'] = [
+    'All Attendees',
+    'Beginner',
+    'Intermediate',
+    'Advanced',
+  ];
+
+  $terms['session_category'] = [
+    'New to Drupal',
+    'Development & Performance',
+    'Project Management & Consulting',
+    'Off the "Drupal Island"',
+    'Site-Building',
+    'Theming, Design, & Usability',
+  ];
+
+  $terms['room'] = [
+    'Room A',
+    'Room B',
+    'Room C',
+  ];
+
+  foreach ($terms as $vocab => $vocab_terms) {
+    $index = 0;
+    foreach ($vocab_terms as $label) {
+      // Create the taxonomy term.
+      $new_term = Term::create([
+        'name' => $label,
+        'vid' => $vocab,
+      ]);
+      $new_term->setWeight($index);
+
+      // Save the taxonomy term.
+      $new_term->save();
+      $index++;
+    }
+  }
+
+  // Add permission to view field_r and field_time_slot.
+  foreach (['session_moderator'] as $role) {
+    $role_object = Role::load($role);
+    if (!$role_object) {
+      continue;
+    }
+    $role_object->grantPermission('edit any bof content');
+    $role_object->grantPermission('view bof revisions');
+    $role_object->save();
+  }
+
+  // If the My Schedule flag is present, include BOFs.
+  $config_factory = \Drupal::configFactory();
+  $flags = $config_factory->listAll('flag.flag.');
+  if ($flags && in_array('flag.flag.my_schedule', $flags)) {
+    $flag = $config_factory->getEditable('flag.flag.my_schedule');
+    if ($flag) {
+      $bundles = $flag->get('bundles');
+      $bundles[] = 'bof';
+      $flag->set('bundles', $bundles);
+      $flag->save(TRUE);
+    }
+  }
+
+  $cache_config = \Drupal::service('cache.config');
+  DeprecationHelper::backwardsCompatibleCall(
+    \Drupal::VERSION,
+    '11.2.0',
+    fn() => $cache_config->deleteAll(),
+    fn() => $cache_config->invalidateAll(),
+  );
+
+  $cache_config = \Drupal::service('cache.render');
+  DeprecationHelper::backwardsCompatibleCall(
+    \Drupal::VERSION,
+    '11.2.0',
+    fn() => $cache_config->deleteAll(),
+    fn() => $cache_config->invalidateAll(),
+  );
+}

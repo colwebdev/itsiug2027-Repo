@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display modal using dialog api.
+ *
+ * @ingroup templates
+ * @see modal_page_preprocess_html()
+ */
+#}
+<div id="js-modal-page-show-modal" class="modal-dialog-api {{ modal_class }}" data-modal-options="{{ modal_options }}" aria-modal="true" {{ enable_modal_header and display_title ? 'aria-labelledby=' ~ id_label }} aria-describedby="{{ id_desc }}" role="dialog" tabindex="-1">
+  <div class="modal-page-dialog modal-dialog {{ modal_size }}" role="document">
+    <div class="modal-page-content modal-content">
+
+      {# Show Modal Body #}
+      <div id="{{ id_desc }}" class="modal-body modal-page-body">
+        {{ text|raw }}
+        {% if modal_video_link is not null and modal_video_link is not empty %}
+          <iframe src="{{ modal_video_link|raw }}" title="Youtube video player" frameborder="0" allow=" accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% endif %}
+      </div>
+
+      {# Verify if Modal footer is enabled. #}
+      {% if enable_modal_footer %}
+
+          {# Don't Show Again option #}
+          {% if do_not_show_again %}
+            <div id="modal-dont-show-again-container">
+            <label class ="modal-dont-show-again-label">
+            <input type="checkbox" class="modal-page-please-do-not-show-again" value="{{ id }}" id="dnsa-{{ id }}"> {{ do_not_show_again }}</label>
+            </div>
+          {% endif %}
+
+      {% endif %}
+      {# all hidden fields #}
+      <input type="hidden" id="modal_id" name="modal_id" value="{{ id }}">
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+uuid: 33157dd9-79a0-4bf3-b966-c8ca5b4e2e2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.dashboard_placeholder
+_core:
+  default_config_hash: tev0DXuY3dX-LeO0Bm_tLvHGaVTbLDVrkDd2pUTFMkc
+name: Block
+configEntityTypeId: component
+weight: 0
+items:
+  - block.dashboard_placeholder

@@ -1,0 +1,10 @@
+uuid: 049f3659-faf4-46ec-874c-98ebf8fe2737
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: VDaLDdP6EPAxYYFi7HHLp8kAF7RcKCd3mKt0PF7bkd0
+id: tickets
+label: Tickets
+description: ''
+locked: false

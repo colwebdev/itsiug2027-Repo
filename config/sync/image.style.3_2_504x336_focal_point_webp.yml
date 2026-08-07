@@ -1,0 +1,19 @@
+uuid: 168d5596-b07e-4c11-be03-b30e27bd17da
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+_core:
+  default_config_hash: T0MtojhuCHb59bZtxhq3foEcToXkfCoc1YIy87EWRMs
+name: 3_2_504x336_focal_point_webp
+label: '3:2 | 504x336 | Focal Point'
+effects:
+  64530e0e-a690-47c7-b4e6-d7e01eb6e5a5:
+    uuid: 64530e0e-a690-47c7-b4e6-d7e01eb6e5a5
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 504
+      height: 336
+      crop_type: focal_point

@@ -1,0 +1,26 @@
+uuid: 67c8f9f1-b83e-4706-bcd6-76ce39e077db
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.image.field_media_image
+    - media.type.image
+_core:
+  default_config_hash: 9Zvxo3vz8Lb_OLUfdjY1a4JpkCEu3jNCSssC7IxPwbE
+id: media.image.media_library
+targetEntityType: media
+bundle: image
+mode: media_library
+content: {  }
+hidden:
+  created: true
+  field_media_image: true
+  name: true
+  path: true
+  publish_on: true
+  publish_state: true
+  status: true
+  uid: true
+  unpublish_on: true
+  unpublish_state: true

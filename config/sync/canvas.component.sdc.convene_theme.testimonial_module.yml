@@ -1,0 +1,33 @@
+uuid: 470d20d3-838c-4d15-ae6d-d9c4840a52cd
+langcode: en
+status: true
+dependencies:
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: O0nlpvQ7yZmRlRhEZgqHxCIK8CGGoqqdKBdlmiwrBsg
+active_version: ff5afea575146091
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+          description: 'Check to enable Admin Theme styles.'
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: 'Testimonial Items'
+          description: 'Slot for one or more Testimonial Item components.'
+label: 'Testimonial Module'
+id: sdc.convene_theme.testimonial_module
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:testimonial_module'

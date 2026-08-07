@@ -1,0 +1,12 @@
+uuid: 2ce9871c-d216-4cd0-a654-730f2dcd4513
+langcode: en
+status: true
+dependencies:
+  theme:
+    - gin
+_core:
+  default_config_hash: HXle424oTasNQeXpGj5tDTQtfq02lPTqVq0XPXZwHTQ
+id: gin.help
+region: help
+theme: gin
+component_tree: {  }

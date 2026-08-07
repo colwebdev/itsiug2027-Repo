@@ -1,0 +1,41 @@
+name: Event Platform Event Details
+type: module
+description: Provides a config page to set event information
+package: Event Platform
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - drupal:content_moderation
+  - drupal:datetime_range
+  - drupal:path_alias
+  - add_content_by_bundle:add_content_by_bundle
+  - addtocal_augment:addtocal_augment
+  - config_pages:config_pages
+  - eca:eca_base
+  - eca:eca_cache
+  - eca:eca_content
+  - eca:eca_log
+  - eca:eca_misc
+  - eca:eca_user
+  - eca:eca_views
+  - field_group:field_group
+  - field_permissions:field_permissions
+  - focal_point:focal_point
+  - hide_revision_field:hide_revision_field
+  - inline_entity_form:inline_entity_form
+  - metatag:metatag_open_graph
+  - metatag:metatag_twitter_cards
+  - pathauto:pathauto
+  - schema_metatag:schema_metatag
+  - schema_metatag:schema_article
+  - schema_metatag:schema_event
+  - schema_metatag:schema_web_page
+  - schema_metatag:schema_web_site
+  - simple_sitemap:simple_sitemap
+  - smart_date:smart_date
+  - smart_menu_links:smart_menu_links
+  - storage:storage
+
+# Information added by Drupal.org packaging script on 2025-07-13
+version: '2.0.2'
+project: 'event_platform'
+datestamp: 1752442418

@@ -1,0 +1,21 @@
+uuid: cdbd7215-06f6-4636-baef-ea9e8e96befd
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.1_1_square_medium
+    - field.field.media.image.field_media_image
+    - media.type.image
+_core:
+  default_config_hash: 2c4AQTsgDfDdItLPLtv2-JwNPg7R0AojbrPdVzQEl-A
+id: media.image.1_1_square_medium
+targetEntityType: media
+bundle: image
+mode: 1_1_square_medium
+content: {  }
+hidden:
+  created: true
+  field_media_image: true
+  name: true
+  thumbnail: true
+  uid: true

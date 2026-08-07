@@ -1,0 +1,17 @@
+name: Editoria11y Accessibility Checker
+description: 'Checks page content for accessibility and provides a site-wide dashboard.'
+type: module
+core_version_requirement: ^10.3 || ^11
+configure: editoria11y.settings
+dependencies:
+  - drupal:node
+  - drupal:taxonomy
+  - drupal:user
+  - drupal:views
+package: 'Editoria11y'
+interface translation project: editoria11y
+
+# Information added by Drupal.org packaging script on 2026-08-03
+version: '3.0.8'
+project: 'editoria11y'
+datestamp: 1785783812

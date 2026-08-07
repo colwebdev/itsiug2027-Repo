@@ -1,0 +1,42 @@
+{
+    "name": "drupal/event_platform",
+    "type": "drupal-module",
+    "description": "Preconfigured features to enabling creating an event website",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/event_platform",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/event_platform",
+        "source": "https://git.drupalcode.org/project/event_platform"
+    },
+    "require": {
+        "drupal/add_content_by_bundle": "^1.2",
+        "drupal/addtocal_augment": "^1.2",
+        "drupal/auto_entitylabel": "^3.0",
+        "drupal/bpmn_io": "^2.0",
+        "drupal/config_pages": "^2.15",
+        "drupal/content_moderation_link": "^1.1",
+        "drupal/eca": "^2.1.6",
+        "drupal/eca_tamper": "^2.0",
+        "drupal/eca_vbo": "^2.1",
+        "drupal/field_group": "^4.0",
+        "drupal/field_permissions": "^1.2",
+        "drupal/focal_point": "^2.1",
+        "drupal/hide_revision_field": "^2.3",
+        "drupal/inline_entity_form": "^3.0@rc",
+        "drupal/maxlength": "^3.1",
+        "drupal/pathauto": "^1.12",
+        "drupal/schema_metatag": "^3.0",
+        "drupal/simple_sitemap": "^4.2",
+        "drupal/smart_date": "^4.1.2",
+        "drupal/smart_menu_links": "^1.0@alpha",
+        "drupal/storage": "^1.4@beta",
+        "drupal/token_or": "^2.3",
+        "drupal/tvi": "^2.0",
+        "drupal/views_argument_token": "^2.0",
+        "drupal/views_summary_tabs": "^1.0",
+        "drupal/webform": "^6.3@beta",
+        "drupal/webform_views": "^5.5"
+    }
+}

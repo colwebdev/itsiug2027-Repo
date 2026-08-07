@@ -1,0 +1,45 @@
+uuid: e22b1221-93fd-424b-b233-087733d0178c
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.sdc.convene_theme.accordion
+    - canvas.component.sdc.convene_theme.agenda_item
+    - canvas.component.sdc.convene_theme.agenda_item_molecule
+    - canvas.component.sdc.convene_theme.agenda_list_item
+    - canvas.component.sdc.convene_theme.benefit-card
+    - canvas.component.sdc.convene_theme.card-logo
+    - canvas.component.sdc.convene_theme.card-speaker
+    - canvas.component.sdc.convene_theme.card_horizontal
+    - canvas.component.sdc.convene_theme.card_vertical
+    - canvas.component.sdc.convene_theme.info-item
+    - canvas.component.sdc.convene_theme.info-list-item
+    - canvas.component.sdc.convene_theme.partner-card
+    - canvas.component.sdc.convene_theme.pass-card
+    - canvas.component.sdc.convene_theme.pricing-card
+    - canvas.component.sdc.convene_theme.speaker_card
+    - canvas.component.sdc.convene_theme.testimonial_item
+    - canvas.component.sdc.convene_theme.timeline_item
+_core:
+  default_config_hash: Hy1xr0jbW5UT6Z1zzwtksJ-zDRDl-IYojubP8i_3onM
+name: Molecules
+configEntityTypeId: component
+weight: 0
+items:
+  - sdc.convene_theme.accordion
+  - sdc.convene_theme.agenda_item
+  - sdc.convene_theme.agenda_item_molecule
+  - sdc.convene_theme.agenda_list_item
+  - sdc.convene_theme.benefit-card
+  - sdc.convene_theme.card-logo
+  - sdc.convene_theme.card-speaker
+  - sdc.convene_theme.card_horizontal
+  - sdc.convene_theme.card_vertical
+  - sdc.convene_theme.info-item
+  - sdc.convene_theme.info-list-item
+  - sdc.convene_theme.partner-card
+  - sdc.convene_theme.pass-card
+  - sdc.convene_theme.pricing-card
+  - sdc.convene_theme.speaker_card
+  - sdc.convene_theme.testimonial_item
+  - sdc.convene_theme.timeline_item

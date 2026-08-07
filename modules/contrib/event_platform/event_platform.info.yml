@@ -1,0 +1,18 @@
+name: Event Platform Bundle
+type: module
+description: Install multiple configurations in one step
+package: Event Platform
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - event_platform:event_platform_details
+  - event_platform:event_platform_job_listings
+  - event_platform:event_platform_sessions
+  - event_platform:event_platform_speakers
+  - event_platform:event_platform_sponsors
+  - event_platform:event_platform_scheduler
+  - event_platform:event_platform_ratings
+
+# Information added by Drupal.org packaging script on 2025-07-13
+version: '2.0.2'
+project: 'event_platform'
+datestamp: 1752442418

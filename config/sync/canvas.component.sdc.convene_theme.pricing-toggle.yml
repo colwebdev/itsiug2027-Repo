@@ -1,0 +1,40 @@
+uuid: 8e4a5798-019e-4575-9149-e57b97df4f19
+langcode: en
+status: true
+dependencies:
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: SdW03D2HBhOGOM-L-q_mYdopY0K2l3h8UDJyA9rwXDo
+active_version: 5b464e5d3902b090
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        tab_1_text:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        tab_2_text:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: 'Pricing Toggle'
+id: sdc.convene_theme.pricing-toggle
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:pricing-toggle'

@@ -1,0 +1,66 @@
+uuid: e3322e3f-859e-4985-9bb6-46cd7d1e9489
+langcode: en
+status: true
+dependencies:
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: 8BHS0ibm4h3PW0p8amK9GcHSRU9knsl5DPUX3wOjb0I
+active_version: 454fc57974a6ccb4
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+          description: 'Check to enable Admin Theme styles.'
+    fallback_metadata:
+      slot_definitions:
+        title:
+          title: 'Title Slot'
+          description: 'Slot for the accordion trigger text.'
+        content:
+          title: 'Content Slot'
+          description: 'Slot for the hidden/collapsible content.'
+  88b9c0e4b04dbf97:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          description: 'Check to enable Admin Theme styles.'
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+        disable_css:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+    fallback_metadata:
+      slot_definitions:
+        title:
+          title: 'Title Slot'
+          description: 'Slot for the accordion trigger text.'
+        content:
+          title: 'Content Slot'
+          description: 'Slot for the hidden/collapsible content.'
+label: 'Accordion Item'
+id: sdc.convene_theme.accordion
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:accordion'

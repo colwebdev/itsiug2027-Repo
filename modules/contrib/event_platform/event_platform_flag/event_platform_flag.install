@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Event Platform Flag module.
+ */
+
+use Drupal\Component\Utility\DeprecationHelper;
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function event_platform_flag_install() {
+  // Add permission to view field_r and field_time_slot.
+  foreach (['authenticated'] as $role) {
+    $role_object = Role::load($role);
+    $role_object->grantPermission('flag my_schedule');
+    $role_object->grantPermission('unflag my_schedule');
+    $role_object->save();
+  }
+
+  $config_factory = \Drupal::configFactory();
+  $node_types = $config_factory->listAll('node.type.');
+  if (in_array('node.type.bof', $node_types)) {
+    $flag = $config_factory->getEditable('flag.flag.my_schedule');
+    if ($flag) {
+      $bundles = $flag->get('bundles');
+      $bundles[] = 'bof';
+      $flag->set('bundles', $bundles);
+      $flag->save(TRUE);
+    }
+  }
+
+  $cache_config = \Drupal::service('cache.config');
+  DeprecationHelper::backwardsCompatibleCall(
+    \Drupal::VERSION,
+    '11.2.0',
+    fn() => $cache_config->deleteAll(),
+    fn() => $cache_config->invalidateAll(),
+  );
+
+  $cache_config = \Drupal::service('cache.render');
+  DeprecationHelper::backwardsCompatibleCall(
+    \Drupal::VERSION,
+    '11.2.0',
+    fn() => $cache_config->deleteAll(),
+    fn() => $cache_config->invalidateAll(),
+  );
+}

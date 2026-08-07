@@ -1,0 +1,13 @@
+name: 'CSV Import Users'
+type: module
+description: 'Imports users from a CSV file.'
+core_version_requirement: ^10 || ^11
+configure: csv_import_user.import_form
+dependencies:
+  - drupal:user
+  - drupal:file
+
+# Information added by Drupal.org packaging script on 2024-11-21
+version: '1.0.0'
+project: 'csv_import_user'
+datestamp: 1732181963

@@ -1,0 +1,17 @@
+uuid: f1a98401-3094-4db8-a09d-667295b49c61
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: bqehMg8v5Z2l770zo32mbCWaIQiQv4biOkZaR3JLGvA
+name: uncropped_600w_webp
+label: 'Uncropped | 600w'
+effects:
+  e5267027-b558-48af-abe1-3edd8aa95234:
+    uuid: e5267027-b558-48af-abe1-3edd8aa95234
+    id: image_scale
+    weight: 1
+    data:
+      width: 600
+      height: null
+      upscale: false

@@ -1,0 +1,5 @@
+entity.smart_menu_link.add_form:
+  route_name: 'entity.smart_menu_link.add_form'
+  title: 'Add smart menu link'
+  appears_on:
+    - entity.smart_menu_link.collection

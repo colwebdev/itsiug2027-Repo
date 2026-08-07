@@ -1,0 +1,56 @@
+uuid: 14038f83-af26-48bd-b1aa-7d6981aca448
+langcode: en
+status: true
+dependencies:
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: V3k31UKmSHu912_OrwxoDjs-DauG288Fz80SDdAzNSw
+active_version: 5ba36af98c6f9274
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+          description: 'Check to enable Admin Theme styles.'
+        title:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        description:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions:
+        icon:
+          title: 'Icon Slot'
+          description: 'Slot for the SVG/image icon.'
+        action:
+          title: 'Action Slot'
+          description: 'Slot for the action button or link text.'
+label: 'Benefit Card'
+id: sdc.convene_theme.benefit-card
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:benefit-card'

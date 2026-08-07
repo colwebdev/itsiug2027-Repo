@@ -1,0 +1,16 @@
+user_list:
+  js:
+    js/tagify_user_list.js: {}
+  css:
+    component:
+      css/tagify_user_list.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.form
+    - core/once
+    - core/drupal
+    - core/drupalSettings
+    - core/drupal.debounce
+    - core/sortable
+    - tagify/helpers
+    - tagify/default

@@ -1,0 +1,48 @@
+event_platform_scheduler.scheduler:
+  path: '/admin/event-details/scheduler'
+  defaults:
+    _controller: '\Drupal\event_platform_scheduler\Controller\Scheduler::schedulerInterface'
+    _title: 'Schedule Sessions'
+    modal: FALSE
+  requirements:
+    _permission: 'edit any session content'
+
+event_platform_scheduler.settings:
+  path: '/admin/event-details/scheduler/settings'
+  defaults:
+    _form: '\Drupal\event_platform_scheduler\Form\SchedulerSettingsForm'
+    _title: 'Schedule Settings Form'
+  requirements:
+    _permission: 'administer site configuration'
+
+event_platform_scheduler.time_slots:
+  path: '/admin/event-details/scheduler/time_slots'
+  defaults:
+    _form: '\Drupal\event_platform_scheduler\Form\TimeSlotsForm'
+    _title: 'Generate Time Slots'
+  requirements:
+    _permission: 'edit terms in time_slot'
+
+event_platform_scheduler.schedule.ajax:
+  path: '/admin/event-details/scheduler/assign/{node}/{rid}/{tid}'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  defaults:
+    _controller: '\Drupal\event_platform_scheduler\Controller\Scheduler::assign'
+    _title: 'Assign a Session'
+  requirements:
+    _permission: 'edit any session content'
+
+event_platform_scheduler.unschedule.ajax:
+  path: '/admin/event-details/scheduler/unassign/{node}'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  defaults:
+    _controller: '\Drupal\event_platform_scheduler\Controller\Scheduler::unassign'
+    _title: 'Unassign a Session'
+  requirements:
+    _permission: 'edit any session content'

@@ -1,0 +1,17 @@
+uuid: ad88235c-b940-4a3f-86c1-a1df8f038377
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: WUBdfRAhPoB6ZrA_ZFILJMIx5l9JRCDZB363_AmDc2M
+name: uncropped_700w_webp
+label: 'Uncropped | 700w'
+effects:
+  93295bf7-164c-4763-9ce5-014b4007154c:
+    uuid: 93295bf7-164c-4763-9ce5-014b4007154c
+    id: image_scale
+    weight: 1
+    data:
+      width: 700
+      height: null
+      upscale: false

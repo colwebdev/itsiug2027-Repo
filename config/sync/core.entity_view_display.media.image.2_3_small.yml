@@ -1,0 +1,21 @@
+uuid: 5736383c-a37d-443c-836c-cd06e9153c98
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.2_3_small
+    - field.field.media.image.field_media_image
+    - media.type.image
+_core:
+  default_config_hash: uXeXhdIUjxnKzOm8zVGErkZvOoxCD9AZS2ubT0e63FE
+id: media.image.2_3_small
+targetEntityType: media
+bundle: image
+mode: 2_3_small
+content: {  }
+hidden:
+  created: true
+  field_media_image: true
+  name: true
+  thumbnail: true
+  uid: true

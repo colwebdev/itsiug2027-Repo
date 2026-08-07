@@ -1,0 +1,17 @@
+{#
+Theme template for the conference registration PIN page when registration is closed.
+#}
+
+<div class="conference-registration-pin-page conference-registration-pin-page--closed">
+  <div class="conference-registration-pin-card">
+    <div class="conference-registration-pin-card__header">
+      <h2>{{ 'Registration Temporarily Closed'|t }}</h2>
+      <p>{{ 'Registration for your institution is not open at this time.'|t }}</p>
+    </div>
+
+    <div class="conference-registration-pin-card__body">
+      {{ form.closed_message }}
+      {{ form.closed_details }}
+    </div>
+  </div>
+</div>

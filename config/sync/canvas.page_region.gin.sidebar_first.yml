@@ -1,0 +1,12 @@
+uuid: fd3717f2-524d-4176-8690-e53b09a2da98
+langcode: en
+status: true
+dependencies:
+  theme:
+    - gin
+_core:
+  default_config_hash: 5ruUsg_lcyqO6M8A_aqweULqfQQKLGRb-uRrEACNiLM
+id: gin.sidebar_first
+region: sidebar_first
+theme: gin
+component_tree: {  }

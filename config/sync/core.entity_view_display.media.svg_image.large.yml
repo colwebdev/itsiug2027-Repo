@@ -1,0 +1,21 @@
+uuid: ff9622a8-b8c8-46e5-8095-2daec04aea06
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.large
+    - field.field.media.svg_image.field_media_svg_image
+    - media.type.svg_image
+_core:
+  default_config_hash: IBtifUuV-hujtKXWqxunZCTcLRLKNjy8mYKx557YzUw
+id: media.svg_image.large
+targetEntityType: media
+bundle: svg_image
+mode: large
+content: {  }
+hidden:
+  created: true
+  field_media_svg_image: true
+  name: true
+  thumbnail: true
+  uid: true

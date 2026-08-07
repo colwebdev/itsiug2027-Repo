@@ -1,0 +1,16 @@
+uuid: 6fa1f759-5826-421b-9607-33c8af575405
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: MpSUGcg_2Rgydki5-Ndosqmghv3Q-IcJmK8tJE9QfCQ
+name: 'Canvas Full HTML'
+format: canvas_full_html
+weight: 1
+filters:
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: true
+    weight: 10
+    settings: {  }

@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Event Platform Event Sessions module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function event_platform_sessions_theme($existing, $type, $theme, $path) {
+  return [
+    'event_platform_confirmation_block' => [
+      'variables' => [
+        'message' => NULL,
+        'links' => NULL,
+      ],
+    ],
+  ];
+}

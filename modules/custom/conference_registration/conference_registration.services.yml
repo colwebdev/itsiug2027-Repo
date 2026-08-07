@@ -1,0 +1,3 @@
+services:
+  conference_registration.controller:
+    class: Drupal\conference_registration\Controller\RegistrationController

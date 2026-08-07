@@ -1,0 +1,31 @@
+/* Gin theme support, try to use gin variables */
+:root {
+  --ui-icons--wrapper-size: calc(var(--input-padding-vertical) * 2 + var(--input-line-height) - 2px);
+  --ui-icons--preview-size: 1.8rem;
+  --ui-icons--result-size: 1.8rem;
+  --ui-icons--border-radius: var(--gin-border-m);
+  --ui-icons--border-color: var(--gin-border-color-form-element);
+  --ui-icons--preview-bg-color: var(--gin-bg-layer3);
+  --ui-icons-preview-margin: var(--gin-spacing-density-xs);
+  --ui-icons-picker-size: 3rem;
+  --ui-icons-picker-preview-size: 2.7rem;
+}
+
+/* Icon picker: beat Gin .ui-dialog .form-item__label margin so icons stay centered. */
+.ui-dialog.icon-library-widget-modal .icon-picker-modal__content .form-item__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+.ui-dialog.icon-library-widget-modal .icon-picker-modal__content .icon-preview {
+  display: block;
+  flex-shrink: 0;
+  width: var(--ui-icons-picker-preview-size, 2.7rem);
+  height: var(--ui-icons-picker-preview-size, 2.7rem);
+}

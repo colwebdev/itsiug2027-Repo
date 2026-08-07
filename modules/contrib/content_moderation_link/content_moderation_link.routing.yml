@@ -1,0 +1,16 @@
+content_moderation_link.moderate:
+  path: '/content-moderation-link/process/{state}/{type}/{id}'
+  defaults:
+    _title: 'Moderate Content'
+    _controller: '\Drupal\content_moderation_link\Controller\ContentModerationLinkController::moderate'
+  requirements:
+    _permission: 'access content'
+    # _role: 'authenticated'
+
+content_moderation_link.settings_form:
+  path: '/admin/config/content/content-moderation-link'
+  defaults:
+    _title: 'Content Moderation Link settings'
+    _form: 'Drupal\content_moderation_link\Form\SettingsForm'
+  requirements:
+    _permission: 'administer content_moderation_link configuration'

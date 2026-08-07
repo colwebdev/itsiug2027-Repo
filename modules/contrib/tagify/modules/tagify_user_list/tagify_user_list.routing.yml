@@ -1,0 +1,8 @@
+tagify_user_list.entity_autocomplete:
+  path: '/tagify_user_list_autocomplete/{target_type}/{selection_handler}/{selection_settings_key}'
+  defaults:
+    _controller: '\Drupal\tagify_user_list\Controller\TagifyUserListEntityAutocompleteController::handleAutocomplete'
+  requirements:
+    # Access is open: the selection_settings_key is a signed hash validated in
+    # the controller, mirroring core's entity_reference autocomplete route.
+    _access: 'TRUE'

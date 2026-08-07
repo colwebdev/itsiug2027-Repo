@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Event Platform Event Details module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function event_platform_details_theme($existing, $type, $theme, $path) {
+  return [
+    'event_platform_copyright_block' => [
+      'variables' => [
+        'org_name' => NULL,
+        'year' => NULL,
+      ],
+    ],
+    'event_platform_header_cta_block' => [
+      'variables' => [
+        'url' => NULL,
+        'title' => NULL,
+      ],
+    ],
+    'event_platform_home_hero_block' => [
+      'variables' => [
+        'org_name' => NULL,
+        'date_start' => NULL,
+        'date_end' => NULL,
+        'location' => NULL,
+        'description' => NULL,
+        'cta_url' => NULL,
+        'cta_title' => NULL,
+        'event_details' => NULL,
+        'event_url' => NULL,
+      ],
+    ],
+  ];
+}

@@ -1,0 +1,15 @@
+conference_registration.pin:
+  path: '/register'
+  defaults:
+    _form: '\Drupal\conference_registration\Form\InstitutionPinForm'
+    _title: 'Conference Registration'
+  requirements:
+    _permission: 'access content'
+
+conference_registration.register:
+  path: '/register/{token}'
+  defaults:
+    _controller: '\Drupal\conference_registration\Controller\RegistrationController::register'
+    _title: 'Conference Registration'
+  requirements:
+    _permission: 'access content'

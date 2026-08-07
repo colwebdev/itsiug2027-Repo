@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * @file
+ * Hooks to create content when the Event Platform Details module is installed.
+ */
+
+use Drupal\storage\Entity\Storage;
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function event_platform_details_install($is_syncing) {
+  // Create an initial set of CTA storage entities.
+  // Array to hold term data.
+  $ctas = [
+    'Register Today' => 'internal:/user/register',
+    'Newsletter Signup' => 'internal:/newsletter',
+    'Submit a Session' => 'internal:/node/add/session',
+    'View the Playlist' => 'https://www.youtube.com/watch?v=zHgHQD-mL5s&list=PLpeDXSh4nHjQoxtu956lXtiaqIl_rbUKd',
+  ];
+
+  foreach ($ctas as $title => $uri) {
+    // Create the storage entity.
+    $new_cta = Storage::create([
+      'name' => $title,
+      'field_link' => [
+        'title' => $title,
+        'uri' => $uri,
+      ],
+      'type' => 'cta',
+    ]);
+
+    // Save the entity.
+    $new_cta->save();
+  }
+
+  $entity_display = \Drupal::service('entity_display.repository');
+
+  $form_display = $entity_display->getFormDisplay('node', 'article');
+  $form_display->setComponent('field_event', ['type' => 'entity_reference_autocomplete', 'weight' => 4])->enable()->save();
+
+  $view_display = $entity_display->getViewDisplay('node', 'article');
+  $view_display->setComponent('test', ['type' => 'entity_reference_label'])->enable()->save();
+
+  // Allow anonymous account registration.
+  $config_factory = \Drupal::configFactory();
+  $user_config = $config_factory->getEditable('user.settings');
+  $user_config->set('register', 'visitors');
+  $user_config->save(TRUE);
+
+  // Set global metatags.
+  $meta_config = $config_factory->getEditable('metatag.metatag_defaults.global');
+  $meta_config->set('tags', [
+    'canonical_url' => '[current-page:url]',
+    'og_site_name' => '[site:name]',
+    'og_type' => 'website',
+    'og_url' => '[current-page:url:absolute]',
+    'rights' => 'Copyright ©[date:html_year] All rights reserved.',
+    'shortlink' => '[current-page:url:unaliased]',
+    'title' => '[current-page:title] | [site:name]',
+    'twitter_cards_type' => 'summary',
+  ]);
+  $meta_config->save(TRUE);
+
+  // Set front page metatags.
+  $meta_config = $config_factory->getEditable('metatag.metatag_defaults.front');
+  $meta_config->set('tags', [
+    'canonical_url' => '[site:url]',
+    'og_url' => '[site:url]',
+    'shortlink' => '[site:url]',
+    'title' => '[site:name] | [config_page:event_details:field_current:entity:field_dates] | [config_page:event_details:field_current:entity:field_location_short] | [config_page:event_details:field_event_name]',
+  ]);
+  $meta_config->save(TRUE);
+
+  // Set node metatags.
+  $meta_config = $config_factory->getEditable('metatag.metatag_defaults.node');
+  $meta_config->set('tags', [
+    'canonical_url' => '[node:url]',
+    'description' => '[node:summary]',
+    'og_description' => '[node:summary]',
+    'og_site_name' => '[site:name]',
+    'og_title' => '[node:title]',
+    'og_type' => 'website',
+    'og_url' => '[node:url]',
+    'title' => '[node:title] | [site:name]',
+    'twitter_cards_type' => 'summary',
+  ]);
+  $meta_config->save(TRUE);
+
+  // Set term metatags.
+  $meta_config = $config_factory->getEditable('metatag.metatag_defaults.taxonomy_term');
+  $meta_config->set('tags', [
+    'canonical_url' => '[term:url]',
+    'description' => '[term:description]',
+    'og_site_name' => '[site:name]',
+    'og_title' => '[term:name]',
+    'og_type' => 'website',
+    'og_url' => '[term:url]',
+    'title' => '[term:name] | [site:name]',
+    'twitter_cards_type' => 'summary',
+  ]);
+  $meta_config->save(TRUE);
+
+  // Set metatag settings.
+  $meta_config = $config_factory->getEditable('metatag.settings');
+  $schema_assignments = [
+    'node' => [
+      'article' => 'schema_article',
+      'bof' => 'schema_event',
+      'featured_speaker' => 'schema_person',
+      'job_listing' => 'schema_job_posting',
+      'page' => 'schema_web_page',
+      'session' => 'schema_event',
+      'sponsor' => 'schema_organization',
+    ],
+    'taxonomy_term' => [
+      'event' => 'schema_event',
+    ],
+  ];
+  $group_defaults = [
+    'basic' => 'basic',
+    'open_graph' => 'open_graph',
+    'twitter_cards' => 'twitter_cards',
+  ];
+  $entity_type_groups = [];
+  foreach ($schema_assignments as $entity_type => $bundle_assignments) {
+    foreach ($bundle_assignments as $bundle => $schema_type) {
+      $group_values = $group_defaults;
+      $group_values[$schema_type] = $schema_type;
+      $entity_type_groups[$entity_type][$bundle] = $group_values;
+    }
+  }
+  $meta_config->set('entity_type_groups', $entity_type_groups);
+  $meta_config->set('separator', ',');
+  $meta_config->save(TRUE);
+}

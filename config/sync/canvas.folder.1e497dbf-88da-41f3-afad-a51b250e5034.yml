@@ -1,0 +1,29 @@
+uuid: 1e497dbf-88da-41f3-afad-a51b250e5034
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.sdc.mercury.anchor
+    - canvas.component.sdc.mercury.badge
+    - canvas.component.sdc.mercury.blockquote
+    - canvas.component.sdc.mercury.button
+    - canvas.component.sdc.mercury.heading
+    - canvas.component.sdc.mercury.icon
+    - canvas.component.sdc.mercury.image
+    - canvas.component.sdc.mercury.text
+    - canvas.component.sdc.mercury.video
+_core:
+  default_config_hash: AqSaqm-xJ8TXKg7GkU83miX3higDunYfoToUEraL4-0
+name: Base
+configEntityTypeId: component
+weight: 0
+items:
+  - sdc.mercury.anchor
+  - sdc.mercury.badge
+  - sdc.mercury.blockquote
+  - sdc.mercury.button
+  - sdc.mercury.heading
+  - sdc.mercury.icon
+  - sdc.mercury.image
+  - sdc.mercury.text
+  - sdc.mercury.video

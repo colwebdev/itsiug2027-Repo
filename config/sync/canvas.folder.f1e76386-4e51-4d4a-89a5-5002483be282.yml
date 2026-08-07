@@ -1,0 +1,13 @@
+uuid: f1e76386-4e51-4d4a-89a5-5002483be282
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.inline_block.basic_block
+_core:
+  default_config_hash: 3i8TcYsT3vO7nw-kR653CRd49jrbqdhlnmyEYbX46P4
+name: 'Inline blocks'
+configEntityTypeId: component
+weight: 0
+items:
+  - block.inline_block.basic_block

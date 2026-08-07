@@ -1,0 +1,31 @@
+entity.smart_menu_link.collection:
+  path: '/admin/structure/smart-menu-link'
+  defaults:
+    _entity_list: 'smart_menu_link'
+    _title: 'Smart menu links configuration'
+  requirements:
+    _permission: 'administer smart_menu_link'
+
+entity.smart_menu_link.add_form:
+  path: '/admin/structure/smart_menu_link/add'
+  defaults:
+    _entity_form: 'smart_menu_link.add'
+    _title: 'Add a smart menu link'
+  requirements:
+    _permission: 'administer smart_menu_link'
+
+entity.smart_menu_link.edit_form:
+  path: '/admin/structure/smart-menu-link/{smart_menu_link}'
+  defaults:
+    _entity_form: 'smart_menu_link.edit'
+    _title: 'Edit a smart menu link'
+  requirements:
+    _permission: 'administer smart_menu_link'
+
+entity.smart_menu_link.delete_form:
+  path: '/admin/structure/smart-menu-link/{smart_menu_link}/delete'
+  defaults:
+    _entity_form: 'smart_menu_link.delete'
+    _title: 'Delete a smart menu link'
+  requirements:
+    _permission: 'administer smart_menu_link'

@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Event Platform Event Scheduler module.
+ */
+
+use Drupal\Core\Database\Query\AlterableInterface;
+
+/**
+ * Implements hook_query_TAG_alter().
+ */
+function event_platform_scheduler_query_moderation_state_alter(AlterableInterface $query) {
+  $states = $query->getMetaData('states') ?? [];
+  if ($states) {
+    $query->addJoin('LEFT', 'content_moderation_state_field_data', 'md', 'md.content_entity_revision_id = base_table.vid');
+    $query->condition('md.moderation_state', $states, 'IN');
+  }
+}

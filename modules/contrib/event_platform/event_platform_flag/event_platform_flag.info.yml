@@ -1,0 +1,14 @@
+name: Event Platform Flag
+type: module
+description: Creates an ability for users to add sessions to a personal schedule.
+package: Event Platform
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - event_platform:event_platform_sessions
+  - flag:flag
+  - views_flag_refresh:views_flag_refresh
+
+# Information added by Drupal.org packaging script on 2025-07-13
+version: '2.0.2'
+project: 'event_platform'
+datestamp: 1752442418

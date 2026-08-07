@@ -1,0 +1,23 @@
+{#
+Theme template for the conference registration PIN page.
+#}
+
+<div class="conference-registration-pin-page">
+  <div class="conference-registration-pin-card">
+    <div class="conference-registration-pin-card__header">
+      <h1 style="text-align: center;">{{ 'Conference Registration'|t }}</h1>
+      <p>{{ 'Enter your institution PIN to continue with delegate registration.'|t }}</p>
+    </div>
+
+    <div class="conference-registration-pin-card__body">
+      {{ form.help }}
+      <div class="pin-input-wrapper">
+        {{ form.registration_pin }}
+      </div>
+      <div class="form-actions-wrapper">
+        {{ form.actions }}
+      </div>
+      {{ form|without('help', 'registration_pin', 'actions') }}
+    </div>
+  </div>
+</div>

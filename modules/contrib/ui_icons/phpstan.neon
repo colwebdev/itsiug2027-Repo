@@ -1,0 +1,36 @@
+includes:
+  # - phar://phpstan.phar/conf/bleedingEdge.neon
+
+parameters:
+  level: 5
+
+  excludePaths:
+    analyseAndScan:
+      - */node_modules/*
+      - */vendor/*
+      - */tests/*
+      # Depends on the canvas module, not in require-dev.
+      - */ui_icons_canvas/src/Hook/UiIconsCanvasHooks.php
+      # Depends on the ui_patterns module, not in require-dev.
+      - */ui_icons_patterns/src/Plugin/UiPatterns/*
+      - */ui_icons_patterns/src/Plugin/Derivative/FieldIconSourceDeriver.php
+  fileExtensions:
+    - php
+    - module
+    - inc
+    - install
+    - theme
+    - profile
+
+  treatPhpDocTypesAsCertain: false
+  inferPrivatePropertyTypeFromConstructor: true
+  # There is no baseline, so an entry below that stops matching is dead weight
+  # and should be removed rather than left to rot.
+  reportUnmatchedIgnoredErrors: true
+
+  ignoreErrors:
+    # new static() is a best practice in Drupal, so we cannot fix that.
+    - "#^Unsafe usage of new static#"
+    # Ignore common errors for now.
+    - "#Drupal calls should be avoided in classes, use dependency injection instead#"
+    - "#^Class .* extends @internal class#"

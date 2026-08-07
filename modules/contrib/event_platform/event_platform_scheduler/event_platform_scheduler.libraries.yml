@@ -1,0 +1,10 @@
+scheduler:
+  version: 3.x
+  css:
+    component:
+      css/scheduler.css: {}
+  js:
+    js/scheduler.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

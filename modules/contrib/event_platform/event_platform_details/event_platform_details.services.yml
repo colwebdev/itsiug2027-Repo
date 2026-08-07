@@ -1,0 +1,11 @@
+services:
+  event_platform_details.event_helper:
+    class: Drupal\event_platform_details\EventHelper
+  cache_context.sessions_open:
+    class: Drupal\event_platform_details\Cache\Context\SessionsOpen
+    tags:
+      - { name: cache.context }
+  event_platform_details.access_policy.sessions_open:
+    class: Drupal\event_platform_details\Access\SessionsOpenAccessPolicy
+    tags:
+      - { name: access_policy }

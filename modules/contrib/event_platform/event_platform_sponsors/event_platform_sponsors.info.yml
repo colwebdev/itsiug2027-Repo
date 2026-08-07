@@ -1,0 +1,22 @@
+name: Event Platform Sponsors
+type: module
+description: Provides a content type and views for managing sponsors
+package: Event Platform
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - event_platform:event_platform_details
+  - add_content_by_bundle:add_content_by_bundle
+  - field_permissions:field_permissions
+  - metatag:metatag_open_graph
+  - metatag:metatag_twitter_cards
+  - schema_metatag:schema_metatag
+  - schema_metatag:schema_organization
+  - simple_sitemap:simple_sitemap
+  - smart_menu_links:smart_menu_links
+  - storage:storage
+  - views_argument_token:views_argument_token
+
+# Information added by Drupal.org packaging script on 2025-07-13
+version: '2.0.2'
+project: 'event_platform'
+datestamp: 1752442418

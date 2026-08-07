@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Contains layout_builder_reorder module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function layout_builder_reorder_element_info_alter(array &$types): void {
+  if (isset($types['layout_builder'])) {
+    $types['layout_builder']['#pre_render'][] = '\Drupal\layout_builder_reorder\SectionRearrangeRender::preRender';
+  }
+}

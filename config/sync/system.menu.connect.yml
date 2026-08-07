@@ -1,0 +1,10 @@
+uuid: ed97bcec-c84f-4a1b-8720-f018b6c6cb3b
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: ueVUPMKeBI60U8sxTGmVOfBbJBAg1hloXworp7Te-9s
+id: connect
+label: Connect
+description: ''
+locked: false

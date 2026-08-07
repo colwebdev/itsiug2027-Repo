@@ -1,0 +1,7 @@
+name: Conference Registration
+type: module
+description: Custom registration system
+dependencies:
+  - webform
+core_version_requirement: ^11
+package: Custom

@@ -1,0 +1,10 @@
+name: 'Smart Menu Links'
+type: module
+description: 'Creates links relative to path-determined entities, with validation.'
+package: Menu
+core_version_requirement: ^10 || ^11
+
+# Information added by Drupal.org packaging script on 2025-05-04
+version: '1.0.0-alpha1'
+project: 'smart_menu_links'
+datestamp: 1746387064

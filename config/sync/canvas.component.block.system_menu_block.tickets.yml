@@ -1,0 +1,41 @@
+uuid: d2a1d81d-05e5-4433-a3b1-03df1abbdead
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.tickets
+  module:
+    - system
+_core:
+  default_config_hash: IDuXAyMd5NwdNcGU9u80NKWnwz8KhaD6XK5ZsnepEn4
+active_version: 5ca8d00013ab75bb
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'system_menu_block:tickets'
+        label: Tickets
+        label_display: '0'
+        provider: system
+        level: 1
+        depth: null
+        expand_all_items: false
+    fallback_metadata:
+      slot_definitions: null
+  7df4036b602d0b6f:
+    settings:
+      default_settings:
+        id: 'system_menu_block:tickets'
+        label: Tickets
+        label_display: '0'
+        provider: system
+        level: 1
+        depth: null
+        expand_all_items: false
+    fallback_metadata:
+      slot_definitions: null
+label: Tickets
+id: block.system_menu_block.tickets
+provider: system
+source: block
+source_local_id: 'system_menu_block:tickets'

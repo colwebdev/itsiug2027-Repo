@@ -1,0 +1,13 @@
+uuid: e0a5cb79-ca92-467b-a7a5-1953c99e7627
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.webform_block
+_core:
+  default_config_hash: 604SNLajZCSOgSsVt-pNot40K-kyl15xRJ0viki3vw4
+name: Webform
+configEntityTypeId: component
+weight: 0
+items:
+  - block.webform_block

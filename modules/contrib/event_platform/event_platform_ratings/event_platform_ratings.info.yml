@@ -1,0 +1,23 @@
+name: Event Platform Ratings
+type: module
+description: Creates a system to rate and moderate session proposals
+package: Event Platform
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - content_moderation
+  - node
+  - user
+  - views
+  - event_platform:event_platform_sessions
+  - event_platform:event_platform_speakers
+  - event_platform:event_platform_details
+  - eca:eca_user
+  - eca:eca_workflow
+  - eca_vbo:eca_vbo
+  - webform:webform
+  - webform_views:webform_views
+
+# Information added by Drupal.org packaging script on 2025-07-13
+version: '2.0.2'
+project: 'event_platform'
+datestamp: 1752442418

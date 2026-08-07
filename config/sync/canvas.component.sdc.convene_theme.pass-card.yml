@@ -1,0 +1,66 @@
+uuid: a655d953-9835-44b6-94ea-30f380d24eed
+langcode: en
+status: true
+dependencies:
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: UEnOtLxSgJbMxgs-ZH2Hrp46w1tMbrjsWD2i9acSIFo
+active_version: 35df4eaee61ef511
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+          description: 'Check to enable Admin Theme styles.'
+        eyebrow:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        title:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        description:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions:
+        media:
+          title: 'Media Slot'
+          description: 'Slot for the image placeholder at the top of the pass card.'
+        action:
+          title: 'Action Slot'
+          description: "Slot for the action button or link text (e.g., 'Select >')."
+label: 'Pass Card'
+id: sdc.convene_theme.pass-card
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:pass-card'

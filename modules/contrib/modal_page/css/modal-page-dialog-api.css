@@ -1,0 +1,47 @@
+.modal-dialog-api {
+  display: none;
+}
+
+.modal-sm iframe {
+  height: auto;
+  width: 100%;
+}
+.modal-md iframe {
+  min-height: 315px;
+  width: 100%;
+}
+.modal-lg iframe {
+  width: 100%;
+  min-height: 472.5px;
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 600px !important;
+    margin: 30px auto;
+  }
+  .modal-sm {
+    width: 300px !important;
+  }
+}
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 900px !important;
+  }
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+.no-header .ui-dialog-titlebar {
+  display: none;
+}
+
+.modal-page-ui-dialog-buttonset .ui-dialog-buttonset {
+  float: right;
+}
+
+.modal-page-ui-dialog-buttonset #modal-dont-show-again-container {
+  float: left;
+}

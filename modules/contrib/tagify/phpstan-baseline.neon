@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '''
+				#^Call to deprecated function image_style_options\(\)\:
+				in drupal\:11\.4\.0 and is removed from drupal\:13\.0\.0\. Use
+				  ImageDerivativeUtilities\:\:styleOptions\(\) instead\.$#
+			'''
+			identifier: function.deprecated
+			count: 1
+			path: modules/tagify_user_list/src/Plugin/Field/FieldWidget/TagifyUserListEntityReferenceAutocompleteWidget.php

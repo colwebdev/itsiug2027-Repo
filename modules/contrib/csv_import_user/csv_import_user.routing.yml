@@ -1,0 +1,7 @@
+csv_import_user.import_form:
+  path: '/admin/config/people/user-import'
+  defaults:
+    _controller: '\Drupal\csv_import_user\Controller\UserImportController::importForm'
+    _title: 'Import Users from CSV'
+  requirements:
+    _permission: 'administer users'

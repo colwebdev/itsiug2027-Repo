@@ -1,0 +1,108 @@
+uuid: 51c0eb70-455c-4d5d-864d-1f5e98ab9049
+langcode: en
+status: true
+dependencies:
+  theme:
+    - convene_theme
+_core:
+  default_config_hash: sdBho9kLoN928AapHzlKiaKvMZg37QX9JGQZ_-sk6lM
+active_version: d54c07467ce52a25
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+          description: 'Check to enable Admin Theme styles.'
+    fallback_metadata:
+      slot_definitions:
+        heading:
+          title: 'Heading Slot'
+          description: 'Row heading.'
+        description:
+          title: 'Description Slot'
+          description: 'Optional subtext below or beside the heading.'
+        items:
+          title: 'Items Slot'
+          description: 'Slot for individual speaker card components.'
+  f69ee7da94476358:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          description: 'Check to enable Admin Theme styles.'
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+        disable_css:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+    fallback_metadata:
+      slot_definitions:
+        heading:
+          title: 'Heading Slot'
+          description: 'Row heading.'
+        description:
+          title: 'Description Slot'
+          description: 'Optional subtext below or beside the heading.'
+        items:
+          title: 'Items Slot'
+          description: 'Slot for individual speaker card components.'
+  32f5733d158b9ba7:
+    settings:
+      prop_field_definitions:
+        admin_theme:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          description: 'Check to enable Admin Theme styles.'
+          default_value: null
+          expression: ℹ︎boolean␟value
+          derived_schema_metadata: {  }
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata: {  }
+        description:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata: {  }
+    fallback_metadata:
+      slot_definitions:
+        cards:
+          title: Cards
+          description: 'The slot for individual speaker card components.'
+label: 'Speakers Grid'
+id: sdc.convene_theme.grid-speakers
+provider: convene_theme
+source: sdc
+source_local_id: 'convene_theme:grid-speakers'

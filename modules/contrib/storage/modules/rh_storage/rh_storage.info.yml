@@ -1,0 +1,12 @@
+name: Rabbit Hole Storage entities integration
+type: module
+description: Adds Rabbit Hole functionality for Storage entities.
+core_version_requirement: '^10.1 || ^11'
+dependencies:
+  - rabbit_hole:rabbit_hole
+  - storage:storage
+
+# Information added by Drupal.org packaging script on 2025-09-24
+version: '1.4.0'
+project: 'storage'
+datestamp: 1758739659
