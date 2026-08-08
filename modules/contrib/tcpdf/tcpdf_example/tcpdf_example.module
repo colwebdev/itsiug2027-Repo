@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Provide examples of using the TCPDF module.
+ */
+
+use Drupal\tcpdf\TCPDFDrupal;
+
+/**
+ * Implements hook_theme().
+ */
+function tcpdf_example_theme(): array {
+  return [
+    'tcpdf_example_basic_html' => [
+      'template' => 'tcpdf_example_basic_html',
+      'variables' => [],
+    ],
+  ];
+}
+
+/**
+ * Callback for generating the header.
+ *
+ * This function acts as if it overridded the \TCPDF::Header method of \TCPDF
+ *  class, except the tcpdf instance is not $this but a parameter.
+ *
+ * @param \Drupal\tcpdf\TCPDFDrupal $tcpdf
+ *   It can be used as $this in the
+ *   Header() function of a sibling of TCPDF.
+ */
+function tcpdf_example_default_header(TCPDFDrupal $tcpdf, array $context): void {
+  global $base_url;
+
+  $default_theme = \Drupal::config('system.theme')->get('default');
+  if (is_string($default_theme)) {
+    /** @var array{logo:array} $theme_settings */
+    $theme_settings = \Drupal::config($default_theme . '.settings')->get();
+    if (isset($theme_settings['logo']['path']) && (file_exists($theme_settings['logo']['path']))) {
+      $file = (string) \Drupal::service('file_system')->realpath($theme_settings['logo']['path']);
+      $tcpdf->Image($file, 10, 10, 30, 30, '', $base_url, '', TRUE, 150);
+    }
+    $tcpdf->Write(0, $context['welcome_message'], '', FALSE, 'L', TRUE, 0, FALSE, TRUE);
+  }
+}

@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * @file
+ * TCPDF module provides an API to use TCPDF in Drupal environment.
+ */
+
+use Drupal\tcpdf\TCPDFDrupal;
+
+/**
+ * Gets an instance of TCPDFDrupal.
+ *
+ * Always use this function to get a fresh instance of the class.
+ *
+ * @param array $params
+ *   Associative array of parameters for the TCPDF constructor. Check out the
+ *   documentation of TCPDF.
+ * @param array $class
+ *   Associative array that tells tcpdf_get_instance to use a custom class instead
+ *   of TCPDFDrupal. The class should be the sibling of TCPDFDrupal. Note that this
+ *   functionality is not mature and may be changed in later releases.
+ *     'class' => Name of the class.
+ *     'filetype' => Container file's type.
+ *     'filename' => Container file's name.
+ *     'module' => Module where the container file is.
+ * @param array $config
+ *   Associative array that tells tcdf_get_instance to use a different config file.
+ *     'filetype' => Config file's type.
+ *     'filename' => Config file's name.
+ *     'module' => Module where the config file is.
+ */
+function tcpdf_get_instance(array $params = [], array $class = [], array $config = []): TCPDFDrupal {
+  $default_params = [
+    'orientation' => 'P',
+    'unit' => 'mm',
+    'format' => 'A4',
+    'unicode' => TRUE,
+    'encoding' => 'UTF-8',
+    'diskcache' => FALSE,
+    'pdfa' => FALSE,
+  ];
+
+  $params = array_merge($default_params, $params);
+
+  if (!isset($class['class'])) {
+    $class = [
+      'class' => TCPDFDrupal::class,
+    ];
+  }
+
+  if (!isset($config['filename'])) {
+    $config = [
+      'filetype' => 'inc',
+      'filename' => 'tcpdf.config',
+      'module' => 'tcpdf',
+    ];
+  }
+
+  if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
+    define('K_TCPDF_EXTERNAL_CONFIG', TRUE);
+  }
+
+  \Drupal::moduleHandler()->loadInclude($config['module'], $config['filetype'], $config['filename']);
+  $instance = new $class['class']($params['orientation'], $params['unit'], $params['format'], $params['unicode'], $params['encoding'], $params['diskcache'], $params['pdfa']);
+  assert($instance instanceof TCPDFDrupal, '$class[\'class\'] must be a instance or subclass of \Drupal\tcpdf\TCPDFDrupal.');
+  return $instance;
+}

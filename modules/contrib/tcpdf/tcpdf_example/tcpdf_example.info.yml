@@ -1,0 +1,12 @@
+name: TCPDF Example
+description: Examples for how to use the tcpdf module.
+core_version_requirement: ^9 || ^10 || ^11
+package: PDF
+type: module
+dependencies:
+  - tcpdf:tcpdf
+
+# Information added by Drupal.org packaging script on 2025-07-26
+version: '2.0.4'
+project: 'tcpdf'
+datestamp: 1753562313

@@ -1,0 +1,10 @@
+{
+    "name": "drupal/tcpdf",
+    "description": "TCPDF wrapper for Drupal.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "require" : {
+        "tecnickcom/tcpdf": "^6.8.0",
+        "drupal/core": "^9.5 || ^10.4 || ^11"
+    }
+}

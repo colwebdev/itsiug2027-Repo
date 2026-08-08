@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains requirements for the TCPDF module.
+ */
+
+use Drupal\Core\File\FileSystemInterface;
+
+/**
+ * Implements hook_requirements().
+ */
+function tcpdf_requirements(string $phase): array {
+  $requirements = [];
+  if ($phase === 'runtime') {
+    $tcpdf_file_dir = 'temporary://tcpdf/cache';
+    $problematic_uris = [];
+    $cache_dir = $tcpdf_file_dir . 'cache';
+    if (!\Drupal::service('file_system')->prepareDirectory($cache_dir, FileSystemInterface::CREATE_DIRECTORY)) {
+      $problematic_uris['cachedir'] = $cache_dir;
+    }
+    else {
+      $requirements['tcpdf_cachedir'] = [
+        'title' => t('TCPDF cache directory'),
+        'severity' => REQUIREMENT_OK,
+        'value' => t('Exists'),
+      ];
+    }
+
+    foreach ($problematic_uris as $uri) {
+      $requirements['tcpdf_cache']['description'] = t('The TCPDF cache directory, %path could not be created or modified due to a misconfigured files directory. Please ensure that the files directory is correctly configured and that the webserver has permission to create directories.', ['%path' => $uri]);
+      $requirements['tcpdf_cache']['severity'] = REQUIREMENT_ERROR;
+      $requirements['tcpdf_cache']['value'] = t('Unable to create');
+    }
+
+    $requirements["tcpdf_available"] = [
+      'title' => t('TCPDF library'),
+      'value' => class_exists('TCPDF') ? t('Available') : t('Not available'),
+      'severity' => class_exists('TCPDF') ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+    ];
+  }
+
+  return $requirements;
+}

@@ -4,3 +4,46 @@
  * @file
  * Convene Theme theme file.
  */
+
+/**
+ * Applies the active theme logo to Gin Login auth pages.
+ */
+function _convene_theme_apply_auth_logo(array &$variables): void {
+	$active_theme = \Drupal::theme()->getActiveTheme()->getName();
+	$logo_path = theme_get_setting('logo.path', $active_theme);
+	$use_default_logo = (bool) theme_get_setting('logo.use_default', $active_theme);
+
+	// Ensure login uses the same logo source as the site header branding.
+	if (!$use_default_logo && !empty($logo_path)) {
+		$variables['icon_path'] = $logo_path;
+		$variables['icon_default'] = FALSE;
+		return;
+	}
+
+	$logo_url = theme_get_setting('logo.url', $active_theme);
+	if (!empty($logo_url)) {
+		$variables['icon_path'] = $logo_url;
+		$variables['icon_default'] = FALSE;
+	}
+}
+
+/**
+ * Implements hook_preprocess_page__user__login().
+ */
+function convene_theme_preprocess_page__user__login(array &$variables): void {
+	_convene_theme_apply_auth_logo($variables);
+}
+
+/**
+ * Implements hook_preprocess_page__user__password().
+ */
+function convene_theme_preprocess_page__user__password(array &$variables): void {
+	_convene_theme_apply_auth_logo($variables);
+}
+
+/**
+ * Implements hook_preprocess_page__user__register().
+ */
+function convene_theme_preprocess_page__user__register(array &$variables): void {
+	_convene_theme_apply_auth_logo($variables);
+}
