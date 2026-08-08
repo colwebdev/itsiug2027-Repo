@@ -55,3 +55,19 @@ itsiug_registration.test_certificate:
   requirements:
     _access: 'TRUE'
     registration: '\d+'
+    
+itsiug_registration.reports:
+  path: '/register/reports'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::reports'
+    _title: 'ITSIUG 2027 Reports'
+  requirements:
+    _permission: 'access itsiug reports'
+
+itsiug_registration.reports_csv:
+  path: '/register/reports/csv'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::reportsCsv'
+    _title: 'ITSIUG 2027 Delegate Report'
+  requirements:
+    _permission: 'access itsiug reports'
