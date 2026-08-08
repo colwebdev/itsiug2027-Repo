@@ -1,0 +1,57 @@
+itsiug_registration.access:
+  path: '/register'
+  defaults:
+    _form: '\Drupal\itsiug_registration\Form\InstitutionAccessForm'
+    _title: 'Institution Registration'
+  requirements:
+    _access: 'TRUE'
+
+itsiug_registration.logout:
+  path: '/register/logout'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::logout'
+    _title: 'Registration Access'
+  requirements:
+    _access: 'TRUE'
+
+itsiug_registration.delegate:
+  path: '/register/delegate'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::delegateForm'
+    _title: 'Delegate Registration'
+  requirements:
+    _custom_access: '\Drupal\itsiug_registration\Access\RegistrationAccessCheck::access'
+    
+itsiug_registration.dashboard:
+  path: '/register/dashboard'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::dashboard'
+    _title: 'Institution Delegate Dashboard'
+  requirements:
+    _custom_access: '\Drupal\itsiug_registration\Access\RegistrationAccessCheck::access'
+    
+itsiug_registration.scanner:
+  path: '/register/scanner'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::scanner'
+    _title: 'Conference Scanner'
+  requirements:
+    _access: 'TRUE'
+
+itsiug_registration.scanner_process:
+  path: '/register/scanner/process'
+  methods: [POST]
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::scannerProcess'
+  requirements:
+    _access: 'TRUE'
+    _csrf_request_header_token: 'TRUE'
+
+itsiug_registration.test_certificate:
+  path: '/register/test-certificate/{registration}'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::testCertificate'
+    _title: 'Test Certificate'
+  requirements:
+    _access: 'TRUE'
+    registration: '\d+'

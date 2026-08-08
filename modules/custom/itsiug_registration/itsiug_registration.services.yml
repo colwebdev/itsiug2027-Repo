@@ -1,0 +1,7 @@
+services:
+  itsiug_registration.certificate_generator:
+    class: Drupal\itsiug_registration\Service\CertificateGenerator
+    arguments:
+      - '@entity_type.manager'
+      - '@file.repository'
+      - '@file_system'

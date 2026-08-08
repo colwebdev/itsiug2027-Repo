@@ -1,0 +1,3 @@
+perform conference qr checkin:
+  title: 'Perform conference QR check-in'
+  description: 'Allows staff to scan delegate QR codes and perform registration desk check-in.'

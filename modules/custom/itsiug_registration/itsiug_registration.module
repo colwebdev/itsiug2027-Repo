@@ -1,0 +1,347 @@
+<?php
+
+use Drupal\node\Entity\Node;
+use Drupal\webform\WebformSubmissionInterface;
+
+/**
+ * Implements hook_webform_submission_insert().
+ */
+function itsiug_registration_webform_submission_insert(
+  WebformSubmissionInterface $webform_submission
+) {
+
+  // Only process the Delegate Registration Webform.
+  if ($webform_submission->getWebform()->id() !== 'delegate_registration') {
+    return;
+  }
+
+  // ------------------------------------------------------------
+  // Get the institution from the authenticated registration session.
+  // ------------------------------------------------------------
+
+  $session = \Drupal::request()->getSession();
+  $registration_context = $session->get('itsiug_registration');
+
+  if (empty($registration_context['institution_nid'])) {
+    \Drupal::logger('itsiug_registration')->error(
+      'Delegate registration submitted without an institution session.'
+    );
+    return;
+  }
+
+  $institution_nid = $registration_context['institution_nid'];
+
+  $institution = Node::load($institution_nid);
+
+  if (!$institution) {
+    \Drupal::logger('itsiug_registration')->error(
+      'Institution @nid could not be loaded.',
+      [
+        '@nid' => $institution_nid,
+      ]
+    );
+    return;
+  }
+
+  // ------------------------------------------------------------
+  // Get Webform submission data.
+  // ------------------------------------------------------------
+
+  $data = $webform_submission->getData();
+
+  // ------------------------------------------------------------
+  // Convert Webform values to taxonomy term IDs.
+  // ------------------------------------------------------------
+
+  $country_tid = itsiug_find_taxonomy_term(
+    $data['country'] ?? NULL,
+    'countries'
+  );
+
+  $track_tid = itsiug_find_taxonomy_term(
+    $data['track_preference'] ?? NULL,
+    'conference_tracks'
+  );
+
+  $dietary_tid = itsiug_find_taxonomy_term(
+    $data['dietary_requirements'] ?? NULL,
+    'dietry_requirements'
+  );
+
+  // ------------------------------------------------------------
+  // Create Delegate.
+  // ------------------------------------------------------------
+
+  $delegate = Node::create([
+    'type' => 'delegate',
+
+    'title' => trim(
+      ($data['first_name'] ?? '') . ' ' .
+      ($data['last_name'] ?? '')
+    ),
+
+    'status' => 1,
+
+    'field_title' => $data['title'] ?? '',
+    'field_first_name' => $data['first_name'] ?? '',
+    'field_last_name' => $data['last_name'] ?? '',
+    'field_email' => $data['email'] ?? '',
+    'field_mobile' => $data['mobile'] ?? '',
+
+    // Institution comes from the PIN session.
+    'field_institution' => [
+      'target_id' => $institution->id(),
+    ],
+
+    // Taxonomy references.
+    'field_country' => $country_tid
+      ? ['target_id' => $country_tid]
+      : [],
+
+    'field_track_preference' => $track_tid
+      ? ['target_id' => $track_tid]
+      : [],
+
+    'field_dietry_requirements' => $dietary_tid
+      ? ['target_id' => $dietary_tid]
+      : [],
+  ]);
+
+// ------------------------------------------------------------
+// Generate Delegate Reference.
+// Example: UP-2027-0001
+// ------------------------------------------------------------
+
+$institution_code = trim(
+  $institution->get('field_institution_code')->value
+);
+
+if (empty($institution_code)) {
+  \Drupal::logger('itsiug_registration')->error(
+    'Institution @institution has no institution code.',
+    [
+      '@institution' => $institution->label(),
+    ]
+  );
+
+  return;
+}
+
+// Find existing delegates for this institution.
+$existing_delegate_nids = \Drupal::entityQuery('node')
+  ->accessCheck(FALSE)
+  ->condition('type', 'delegate')
+  ->condition('field_institution', $institution->id())
+  ->execute();
+
+$next_number = 1;
+
+foreach ($existing_delegate_nids as $existing_nid) {
+
+  $existing_delegate = Node::load($existing_nid);
+
+  if (!$existing_delegate) {
+    continue;
+  }
+
+  if (!$existing_delegate->hasField('field_delegate_reference')) {
+    continue;
+  }
+
+  $existing_reference = trim(
+    $existing_delegate->get('field_delegate_reference')->value
+  );
+
+  if (preg_match(
+    '/^' . preg_quote($institution_code, '/') . '-2027-(\d{4})$/',
+    $existing_reference,
+    $matches
+  )) {
+    $existing_number = (int) $matches[1];
+
+    if ($existing_number >= $next_number) {
+      $next_number = $existing_number + 1;
+    }
+  }
+}
+
+$delegate_reference = sprintf(
+  '%s-2027-%04d',
+  $institution_code,
+  $next_number
+);
+
+// Set the Delegate Reference.
+$delegate->set(
+  'field_delegate_reference',
+  $delegate_reference
+);
+
+// Confirm the value before saving.
+\Drupal::logger('itsiug_registration')->notice(
+  'Generated Delegate Reference: @reference',
+  [
+    '@reference' => $delegate_reference,
+  ]
+);
+
+// Save the Delegate.
+$delegate->save();
+
+  // ------------------------------------------------------------
+  // Load ITSIUG 2027 Conference.
+  // ------------------------------------------------------------
+
+  $conference = Node::load(2);
+
+  if (!$conference || $conference->bundle() !== 'conference') {
+    \Drupal::logger('itsiug_registration')->error(
+      'ITSIUG 2027 conference node 2 could not be loaded.'
+    );
+    return;
+  }
+
+  // ------------------------------------------------------------
+  // Create Conference Registration.
+  // ------------------------------------------------------------
+
+  $registration = Node::create([
+  'type' => 'conference_registration',
+
+  'title' => $delegate->label(),
+
+  'status' => 1,
+
+  'field_conference' => [
+    'target_id' => $conference->id(),
+  ],
+
+  'field_delegate' => [
+    'target_id' => $delegate->id(),
+  ],
+
+  'field_institution1' => [
+    'target_id' => $institution->id(),
+  ],
+
+  'field_qr_code' => $delegate_reference,
+
+  'field_registration_status' => 'pending',
+
+  'field_checkin_status' => 'not_checked_in',
+
+  'field_conference_gift' => 'not_received',
+
+  'field_monday_attendance' => 'not_present',
+
+  'field_tuesday_attendance' => 'not_present',
+
+  'field_wednesday_attendance' => 'not_present',
+
+  'field_certificate_eligibility' => 'not_eligible',
+
+  'field_certificate_status' => 'not_generated',
+]);
+
+  $registration->save();
+
+  // ------------------------------------------------------------
+  // Log successful registration.
+  // ------------------------------------------------------------
+
+  \Drupal::logger('itsiug_registration')->notice(
+    'Delegate @delegate registered for @conference through @institution. Reference: @reference',
+    [
+      '@delegate' => $delegate->label(),
+      '@conference' => $conference->label(),
+      '@institution' => $institution->label(),
+      '@reference' => $delegate_reference,
+    ]
+  );
+}
+
+
+/**
+ * Find a taxonomy term by name.
+ *
+ * @param mixed $value
+ *   The Webform value.
+ * @param string $vocabulary
+ *   The taxonomy vocabulary machine name.
+ *
+ * @return int|null
+ *   The taxonomy term ID, or NULL if not found.
+ */
+function itsiug_find_taxonomy_term($value, $vocabulary) {
+
+  // Some Webform elements can return an array.
+  if (is_array($value)) {
+    $value = reset($value);
+  }
+
+  if (empty($value)) {
+    return NULL;
+  }
+
+  $terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties([
+      'vid' => $vocabulary,
+      'name' => $value,
+    ]);
+
+  if (empty($terms)) {
+    \Drupal::logger('itsiug_registration')->warning(
+      'Taxonomy term "@value" was not found in vocabulary "@vocabulary".',
+      [
+        '@value' => $value,
+        '@vocabulary' => $vocabulary,
+      ]
+    );
+
+    return NULL;
+  }
+
+  $term = reset($terms);
+
+  return $term->id();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Determines certificate eligibility for conference registrations.
+ *
+ * A delegate is eligible for a certificate only when they have attended
+ * all three conference days.
+ */
+function itsiug_registration_node_presave(\Drupal\node\NodeInterface $node) {
+
+  // Only process Conference Registration nodes.
+  if ($node->bundle() !== 'conference_registration') {
+    return;
+  }
+
+  // A certificate requires attendance on all three conference days.
+  $monday = $node->get('field_monday_attendance')->value;
+  $tuesday = $node->get('field_tuesday_attendance')->value;
+  $wednesday = $node->get('field_wednesday_attendance')->value;
+
+  if (
+    $monday === 'present' &&
+    $tuesday === 'present' &&
+    $wednesday === 'present'
+  ) {
+    $node->set(
+      'field_certificate_eligibility',
+      'eligible'
+    );
+  }
+  else {
+    $node->set(
+      'field_certificate_eligibility',
+      'not_eligible'
+    );
+  }
+}
+
