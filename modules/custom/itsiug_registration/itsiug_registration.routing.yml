@@ -55,6 +55,15 @@ itsiug_registration.test_certificate:
   requirements:
     _access: 'TRUE'
     registration: '\d+'
+
+itsiug_registration.admin_certificate_generate:
+  path: '/register/admin/certificates/{registration}/generate'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminGenerateCertificate'
+    _title: 'Generate Certificate'
+  requirements:
+    _permission: 'access itsiug admin'
+    registration: '\d+'
     
 itsiug_registration.reports:
   path: '/register/reports'
@@ -71,3 +80,35 @@ itsiug_registration.reports_csv:
     _title: 'ITSIUG 2027 Delegate Report'
   requirements:
     _permission: 'access itsiug reports'
+
+itsiug_registration.admin_delegates:
+  path: '/register/admin/delegates'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminDelegates'
+    _title: 'ITSIUG 2027 Delegate Management'
+  requirements:
+    _permission: 'access itsiug admin'
+
+itsiug_registration.badge_scanner:
+  path: '/badge/scanner'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::badgeScanner'
+    _title: 'Delegate Badge'
+  requirements:
+    _access: 'TRUE'
+    
+itsiug_registration.admin:
+  path: '/register/admin'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::admin'
+    _title: 'ITSIUG 2027 Administration'
+  requirements:
+    _permission: 'access itsiug admin'
+
+itsiug_registration.admin_certificates:
+  path: '/register/admin/certificates'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminCertificates'
+    _title: 'ITSIUG 2027 Certificate Management'
+  requirements:
+    _permission: 'access itsiug admin'

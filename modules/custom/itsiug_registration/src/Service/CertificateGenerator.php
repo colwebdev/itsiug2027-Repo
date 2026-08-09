@@ -7,6 +7,8 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\file\FileRepositoryInterface;
 use Drupal\node\NodeInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
+use Drupal\Core\Mail\MailManagerInterface;
 use TCPDF;
 
 /**
@@ -35,18 +37,36 @@ class CertificateGenerator {
    */
   protected FileSystemInterface $fileSystem;
 
+/**
+ * The file URL generator.
+ *
+ * @var \Drupal\Core\File\FileUrlGeneratorInterface
+ */
+protected FileUrlGeneratorInterface $fileUrlGenerator;
+
+/**
+ * The mail manager.
+ *
+ * @var \Drupal\Core\Mail\MailManagerInterface
+ */
+protected MailManagerInterface $mailManager;
+
   /**
    * Constructs the certificate generator.
    */
-  public function __construct(
-    EntityTypeManagerInterface $entity_type_manager,
-    FileRepositoryInterface $file_repository,
-    FileSystemInterface $file_system,
-  ) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->fileRepository = $file_repository;
-    $this->fileSystem = $file_system;
-  }
+public function __construct(
+  EntityTypeManagerInterface $entity_type_manager,
+  FileRepositoryInterface $file_repository,
+  FileSystemInterface $file_system,
+  FileUrlGeneratorInterface $file_url_generator,
+  MailManagerInterface $mail_manager,
+) {
+  $this->entityTypeManager = $entity_type_manager;
+  $this->fileRepository = $file_repository;
+  $this->fileSystem = $file_system;
+  $this->fileUrlGenerator = $file_url_generator;
+  $this->mailManager = $mail_manager;
+}
 
   /**
    * Generates a certificate for a conference registration.
@@ -694,20 +714,126 @@ class CertificateGenerator {
       'generated'
     );
 
-    $registration->save();
+$registration->save();
 
-    // ------------------------------------------------------------
-    // Return result.
-    // ------------------------------------------------------------
+// ------------------------------------------------------------
+// Email certificate download link.
+// ------------------------------------------------------------
 
-    return [
-      'success' => TRUE,
-      'message' => 'Certificate generated successfully.',
-      'file_id' => $file->id(),
-      'filename' => $filename,
-      'uri' => $file->getFileUri(),
+$delegate_email = '';
+
+if ($delegate->hasField('field_email') &&
+    !$delegate->get('field_email')->isEmpty()) {
+  $delegate_email = trim(
+    $delegate->get('field_email')->value
+  );
+}
+
+if ($delegate_email && filter_var($delegate_email, FILTER_VALIDATE_EMAIL)) {
+
+  $download_url = $this->fileUrlGenerator
+    ->generate($file->getFileUri())
+    ->setAbsolute()
+    ->toString();
+
+  $mail_result = $this->mailManager->mail(
+    'itsiug_registration',
+    'certificate',
+    $delegate_email,
+    $registration->language()->getId(),
+    [
+      'delegate' => $delegate->label(),
+      'conference' => $conference_name,
       'certificate_number' => $certificate_number,
-    ];
+      'download_url' => $download_url,
+    ]
+  );
+
+  if (empty($mail_result['result'])) {
+    \Drupal::logger('itsiug_registration')->error(
+      'Certificate email could not be sent to @email for registration @registration.',
+      [
+        '@email' => $delegate_email,
+        '@registration' => $registration->id(),
+      ]
+    );
+  }
+  else {
+    \Drupal::logger('itsiug_registration')->notice(
+      'Certificate email sent to @email for registration @registration.',
+      [
+        '@email' => $delegate_email,
+        '@registration' => $registration->id(),
+      ]
+    );
+  }
+}
+
+// ------------------------------------------------------------
+// Email certificate download link.
+// ------------------------------------------------------------
+
+$email_sent = FALSE;
+$email = '';
+
+if (
+  $delegate->hasField('field_email') &&
+  !$delegate->get('field_email')->isEmpty()
+) {
+  $email = trim($delegate->get('field_email')->value);
+
+  if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+    $download_url = $this->fileUrlGenerator
+      ->generate($file->getFileUri())
+      ->setAbsolute(TRUE)
+      ->toString();
+
+    $mail_result = $this->mailManager->mail(
+      'itsiug_registration',
+      'certificate',
+      $email,
+      'en',
+      [
+        'delegate' => $delegate->label(),
+        'conference' => $conference_name,
+        'certificate_number' => $certificate_number,
+        'download_url' => $download_url,
+      ],
+      NULL,
+      TRUE
+    );
+
+    $email_sent = !empty($mail_result['result']);
+
+    if (!$email_sent) {
+      \Drupal::logger('itsiug_registration')->error(
+        'Certificate generated for @delegate, but certificate email could not be sent to @email.',
+        [
+          '@delegate' => $delegate->label(),
+          '@email' => $email,
+        ]
+      );
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Return result.
+// ------------------------------------------------------------
+
+return [
+  'success' => TRUE,
+  'message' => $email_sent
+    ? 'Certificate generated successfully and emailed to the delegate.'
+    : 'Certificate generated successfully, but the certificate email could not be sent.',
+  'file_id' => $file->id(),
+  'filename' => $filename,
+  'uri' => $file->getFileUri(),
+  'certificate_number' => $certificate_number,
+  'email_sent' => $email_sent,
+  'email' => $email,
+];
   }
 
 }

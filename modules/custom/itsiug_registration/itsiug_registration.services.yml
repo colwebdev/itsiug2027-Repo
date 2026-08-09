@@ -5,3 +5,5 @@ services:
       - '@entity_type.manager'
       - '@file.repository'
       - '@file_system'
+      - '@file_url_generator'
+      - '@plugin.manager.mail'

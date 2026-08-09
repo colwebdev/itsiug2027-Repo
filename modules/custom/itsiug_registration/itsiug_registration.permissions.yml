@@ -5,3 +5,7 @@ perform conference qr checkin:
 access itsiug reports:
   title: 'Access ITSIUG reports'
   description: 'Allows access to ITSIUG 2027 registration and attendance reports.'
+
+access itsiug admin:
+  title: 'Access ITSIUG administration'
+  description: 'Allows access to ITSIUG 2027 administration and delegate management.'
