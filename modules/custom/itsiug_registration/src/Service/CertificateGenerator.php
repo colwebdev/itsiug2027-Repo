@@ -17,6 +17,30 @@ use TCPDF;
 class CertificateGenerator {
 
   /**
+   * Conference field for the chairperson signature image/media reference.
+   */
+  private const CHAIR_SIGNATURE_FIELD =
+    'field_chairperson_signature';
+
+  /**
+   * Conference field for the administrator signature image/media reference.
+   */
+  private const ADMIN_SIGNATURE_FIELD =
+    'field_administrator_signature';
+
+  /**
+   * Default signature file URI for the ITSIUG Chairperson signature.
+   */
+  private const CHAIR_SIGNATURE_URI =
+    'public://certificates/signatures/chairperson-signature.png';
+
+  /**
+   * Default signature file URI for the ITSIUG Administrator signature.
+   */
+  private const ADMIN_SIGNATURE_URI =
+    'public://certificates/signatures/administrator-signature.png';
+
+  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -612,6 +636,70 @@ public function __construct(
       178
     );
 
+    // ------------------------------------------------------------
+    // Signature images (optional).
+    //
+    // Drop PNG files at:
+    // - public://certificates/signatures/chairperson-signature.png
+    // - public://certificates/signatures/administrator-signature.png
+    // ------------------------------------------------------------
+
+    $chair_signature_path = $this->resolveConferenceSignaturePath(
+      $conference,
+      self::CHAIR_SIGNATURE_FIELD,
+      self::CHAIR_SIGNATURE_URI
+    );
+
+    if ($chair_signature_path && file_exists($chair_signature_path)) {
+      $pdf->Image(
+        $chair_signature_path,
+        67,
+        162,
+        46,
+        14,
+        'PNG',
+        '',
+        '',
+        TRUE,
+        300,
+        '',
+        FALSE,
+        FALSE,
+        0,
+        FALSE,
+        FALSE,
+        FALSE
+      );
+    }
+
+    $admin_signature_path = $this->resolveConferenceSignaturePath(
+      $conference,
+      self::ADMIN_SIGNATURE_FIELD,
+      self::ADMIN_SIGNATURE_URI
+    );
+
+    if ($admin_signature_path && file_exists($admin_signature_path)) {
+      $pdf->Image(
+        $admin_signature_path,
+        167,
+        162,
+        46,
+        14,
+        'PNG',
+        '',
+        '',
+        TRUE,
+        300,
+        '',
+        FALSE,
+        FALSE,
+        0,
+        FALSE,
+        FALSE,
+        FALSE
+      );
+    }
+
     $pdf->SetFont(
       'helvetica',
       '',
@@ -623,7 +711,7 @@ public function __construct(
     $pdf->Cell(
       90,
       6,
-      'Conference Chair',
+      'ITSIUG Chairperson',
       0,
       0,
       'C'
@@ -634,7 +722,7 @@ public function __construct(
     $pdf->Cell(
       90,
       6,
-      'ITSIUG Representative',
+      'ITSIUG Administrator',
       0,
       0,
       'C'
@@ -834,6 +922,65 @@ return [
   'email_sent' => $email_sent,
   'email' => $email,
 ];
+  }
+
+  /**
+   * Resolve signature image path from conference field or fallback URI.
+   */
+  private function resolveConferenceSignaturePath(
+    NodeInterface $conference,
+    string $field_name,
+    string $fallback_uri
+  ): ?string {
+
+    if (
+      $conference->hasField($field_name) &&
+      !$conference->get($field_name)->isEmpty()
+    ) {
+      $signature_entity = $conference
+        ->get($field_name)
+        ->entity;
+
+      if ($signature_entity) {
+
+        // Handle image media.
+        if ($signature_entity->hasField('field_media_image')) {
+
+          if (!$signature_entity->get('field_media_image')->isEmpty()) {
+
+            $file = $signature_entity
+              ->get('field_media_image')
+              ->entity;
+
+            if ($file) {
+              $path = $this->fileSystem
+                ->realpath($file->getFileUri());
+
+              if ($path && file_exists($path)) {
+                return $path;
+              }
+            }
+          }
+        }
+
+        // Handle direct file references.
+        elseif ($signature_entity->getEntityTypeId() === 'file') {
+          $path = $this->fileSystem
+            ->realpath($signature_entity->getFileUri());
+
+          if ($path && file_exists($path)) {
+            return $path;
+          }
+        }
+      }
+    }
+
+    $fallback_path = $this->fileSystem
+      ->realpath($fallback_uri);
+
+    return ($fallback_path && file_exists($fallback_path))
+      ? $fallback_path
+      : NULL;
   }
 
 }

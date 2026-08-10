@@ -1,0 +1,105 @@
+<?php
+
+/**
+ * @file
+ * Install and update hooks for the ITSIUG registration module.
+ */
+
+/**
+ * Add conference signature fields used by certificate generation.
+ */
+function itsiug_registration_update_9001() {
+
+  $messages = [];
+
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $field_storage_storage = $entity_type_manager->getStorage('field_storage_config');
+  $field_config_storage = $entity_type_manager->getStorage('field_config');
+  $form_display_storage = $entity_type_manager->getStorage('entity_form_display');
+
+  $definitions = [
+    [
+      'name' => 'field_chairperson_signature',
+      'label' => 'Chairperson Signature',
+      'description' => 'Signature image used on certificates for the chairperson.',
+      'weight' => 60,
+    ],
+    [
+      'name' => 'field_administrator_signature',
+      'label' => 'Administrator Signature',
+      'description' => 'Signature image used on certificates for the ITSIUG administrator.',
+      'weight' => 61,
+    ],
+  ];
+
+  foreach ($definitions as $definition) {
+
+    $field_name = $definition['name'];
+
+    if (!$field_storage_storage->load('node.' . $field_name)) {
+      $storage = $field_storage_storage->create([
+        'field_name' => $field_name,
+        'entity_type' => 'node',
+        'type' => 'entity_reference',
+        'cardinality' => 1,
+        'translatable' => FALSE,
+        'settings' => [
+          'target_type' => 'media',
+        ],
+      ]);
+      $storage->save();
+      $messages[] = 'Created field storage for ' . $field_name . '.';
+    }
+
+    if (!$field_config_storage->load('node.conference.' . $field_name)) {
+      $field = $field_config_storage->create([
+        'field_name' => $field_name,
+        'entity_type' => 'node',
+        'bundle' => 'conference',
+        'label' => $definition['label'],
+        'description' => $definition['description'],
+        'required' => FALSE,
+        'translatable' => FALSE,
+        'settings' => [
+          'handler' => 'default:media',
+          'handler_settings' => [],
+        ],
+      ]);
+      $field->save();
+      $messages[] = 'Attached ' . $field_name . ' to conference content type.';
+    }
+
+    $display_id = 'node.conference.default';
+    $form_display = $form_display_storage->load($display_id);
+
+    if (!$form_display) {
+      $form_display = $form_display_storage->create([
+        'targetEntityType' => 'node',
+        'bundle' => 'conference',
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+    }
+
+    if (!$form_display->getComponent($field_name)) {
+      $form_display->setComponent($field_name, [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => $definition['weight'],
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => 60,
+          'placeholder' => '',
+        ],
+        'third_party_settings' => [],
+      ]);
+      $form_display->save();
+      $messages[] = 'Added ' . $field_name . ' to conference form display.';
+    }
+  }
+
+  if (empty($messages)) {
+    return 'Conference signature fields already exist.';
+  }
+
+  return implode(' ', $messages);
+}
