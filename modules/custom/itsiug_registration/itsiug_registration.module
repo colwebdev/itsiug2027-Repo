@@ -2,6 +2,9 @@
 
 use Drupal\node\Entity\Node;
 use Drupal\webform\WebformSubmissionInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_webform_submission_insert().
@@ -346,6 +349,46 @@ function itsiug_registration_node_presave(\Drupal\node\NodeInterface $node) {
 }
 
 /**
+ * Implements hook_node_access().
+ */
+function itsiug_registration_node_access(
+  NodeInterface $node,
+  $operation,
+  AccountInterface $account
+) {
+
+  if ($operation !== 'update' || $node->bundle() !== 'delegate') {
+    return AccessResult::neutral();
+  }
+
+  if ($account->isAnonymous()) {
+    return AccessResult::forbidden()->cachePerUser();
+  }
+
+  if ($node->hasField('field_institution') && !$node->get('field_institution')->isEmpty()) {
+    $institution = $node->get('field_institution')->entity;
+
+    if ($institution) {
+      $institution_ids = \Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+        ->condition('type', 'institution')
+        ->condition('field_representative', $account->id())
+        ->condition('nid', $institution->id())
+        ->range(0, 1)
+        ->execute();
+
+      if (!empty($institution_ids)) {
+        return AccessResult::allowed()
+          ->cachePerUser()
+          ->addCacheableDependency($node);
+      }
+    }
+  }
+
+  return AccessResult::neutral()->cachePerUser()->addCacheableDependency($node);
+}
+
+/**
  * Implements hook_mail().
  */
 function itsiug_registration_mail(
@@ -472,4 +515,155 @@ function itsiug_registration_mail(
 
     </div>
   ';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function itsiug_registration_form_webform_submission_delegate_registration_add_form_alter(
+  &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state,
+  $form_id
+) {
+  $form['#attributes']['class'][] = 'itsiug-delegate-registration';
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function itsiug_registration_form_node_form_alter(
+  &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state,
+  $form_id
+) {
+
+  $node = $form_state->getFormObject()->getEntity();
+
+  if ($node->bundle() !== 'delegate') {
+    return;
+  }
+
+  if (isset($form['title'])) {
+    $form['title']['#access'] = FALSE;
+  }
+
+  $form['#after_build'][] = 'itsiug_registration_delegate_form_after_build';
+}
+
+/**
+ * After build callback for delegate node forms.
+ */
+function itsiug_registration_delegate_form_after_build(
+  array $form,
+  \Drupal\Core\Form\FormStateInterface $form_state
+) {
+
+  $node = $form_state->getFormObject()->getEntity();
+
+  if ($node->bundle() !== 'delegate') {
+    return $form;
+  }
+
+  if (isset($form['title'])) {
+    $form['title']['#access'] = FALSE;
+  }
+
+  if (isset($form['field_title'])) {
+    $form['field_title']['#weight'] = -1000;
+  }
+
+  return $form;
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function itsiug_registration_preprocess_node(array &$variables) {
+
+  if (($variables['view_mode'] ?? '') !== 'full') {
+    return;
+  }
+
+  if (empty($variables['node']) || !$variables['node'] instanceof NodeInterface) {
+    return;
+  }
+
+  $node = $variables['node'];
+
+  if ($node->bundle() !== 'delegate') {
+    return;
+  }
+
+  $variables['content']['#attached']['library'][] = 'itsiug_theme/global-styling';
+
+  $existing_prefix = $variables['content']['#prefix'] ?? '';
+  $existing_suffix = $variables['content']['#suffix'] ?? '';
+
+  $variables['content']['#prefix'] =
+    $existing_prefix .
+    '<div class="itsiug-reports-page itsiug-delegate-view-page">';
+
+  $variables['content']['#suffix'] =
+    '</div>' .
+    $existing_suffix;
+
+  if (isset($variables['content']['field_title'])) {
+    $variables['content']['field_title']['#weight'] = -100;
+  }
+
+  if (isset($variables['content']['field_first_name'])) {
+    $variables['content']['field_first_name']['#weight'] = -90;
+  }
+
+  $variables['content']['return_to_dashboard'] = [
+    '#type' => 'link',
+    '#title' => t('Return to Dashboard'),
+    '#url' => \Drupal\Core\Url::fromRoute('itsiug_registration.dashboard'),
+    '#attributes' => [
+      'class' => [
+        'button',
+      ],
+      'style' => 'display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border:0;border-radius:5px;background:#1f4b6b;color:#ffffff !important;font-size:16px;font-weight:600;line-height:1.2;text-decoration:none !important;box-sizing:border-box;transition:background-color 0.2s ease,transform 0.1s ease,box-shadow 0.2s ease;',
+    ],
+    '#weight' => 1000,
+  ];
+}
+
+/**
+ * Implements hook_webform_access().
+ *
+ * Prevents the previous-submission notification from appearing
+ * on the ITSIUG Delegate Registration form.
+ */
+function itsiug_registration_webform_access(
+  \Drupal\Core\Entity\EntityInterface $entity,
+  $operation,
+  \Drupal\Core\Session\AccountInterface $account
+) {
+
+  if ($operation === 'submission_view_own') {
+
+    $route_name = \Drupal::routeMatch()->getRouteName();
+
+    if ($route_name === 'itsiug_registration.delegate') {
+      return \Drupal\Core\Access\AccessResult::forbidden();
+    }
+  }
+
+  return \Drupal\Core\Access\AccessResult::neutral();
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function itsiug_registration_form_alter(
+  &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state,
+  $form_id
+) {
+
+  if ($form_id === 'webform_submission_delegate_registration_add_form') {
+    $form['#attributes']['class'][] = 'itsiug-delegate-registration';
+  }
+
 }

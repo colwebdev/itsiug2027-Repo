@@ -23,7 +23,9 @@ class InstitutionAccessForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
+    
+    $form['#attributes']['class'][] = 'itsiug-institution-access';
+    $form['#attached']['library'][] = 'itsiug_theme/global-styling';
     $form['institution_code'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Institution Code'),

@@ -9,3 +9,888 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
 .testimonial-module {
   background-color: #1f4b6b !important;
 }
+
+/* ==========================================================
+ * ITSIUG Institution Registration Access
+ * ========================================================== */
+
+.itsiug-institution-access {
+  width: 100%;
+  max-width: 480px;
+  margin: 50px auto;
+  padding: 38px 40px 40px;
+  background: #ffffff;
+  border: 1px solid #e2e8ee;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+  box-sizing: border-box;
+}
+
+/* Form fields */
+
+.itsiug-institution-access .form-item {
+  margin-bottom: 24px;
+}
+
+.itsiug-institution-access label {
+  display: block;
+  margin-bottom: 8px;
+  color: #1f4b6b;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.itsiug-institution-access input[type="text"],
+.itsiug-institution-access input[type="password"] {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid #cbd5df;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #333333;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.itsiug-institution-access input[type="text"]:focus,
+.itsiug-institution-access input[type="password"]:focus {
+  border-color: #1f4b6b;
+  box-shadow: 0 0 0 3px rgba(31, 75, 107, 0.15);
+  outline: none;
+}
+
+/* Continue button */
+
+.itsiug-institution-access .form-actions {
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+
+.itsiug-institution-access .form-submit {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 5px;
+  background: #1f4b6b;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.itsiug-institution-access .form-submit:hover {
+  background: #163a53;
+}
+
+.itsiug-institution-access .form-submit:active {
+  transform: translateY(1px);
+}
+
+/* Required-field marker */
+
+.itsiug-institution-access .form-required {
+  color: #1f4b6b;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .itsiug-institution-access {
+    max-width: calc(100% - 30px);
+    margin: 30px auto;
+    padding: 30px 24px;
+  }
+
+}
+
+/* ==========================================================
+ * ITSIUG — Delegate Registration
+ * ========================================================== */
+
+.itsiug-delegate-registration {
+  width: 100%;
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 40px 45px 45px;
+  background: #ffffff;
+  border: 1px solid #e2e8ee;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+  box-sizing: border-box;
+}
+
+/* Form title and description */
+
+.itsiug-delegate-registration .webform-title {
+  color: #1f4b6b;
+}
+
+.itsiug-delegate-registration .webform-submission-form {
+  margin-top: 10px;
+}
+
+/* Form fields */
+
+.itsiug-delegate-registration .form-item {
+  margin-bottom: 22px;
+}
+
+.itsiug-delegate-registration label {
+  display: block;
+  margin-bottom: 8px;
+  color: #1f4b6b;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* Text inputs, email and selects */
+
+.itsiug-delegate-registration input[type="text"],
+.itsiug-delegate-registration input[type="email"],
+.itsiug-delegate-registration input[type="tel"],
+.itsiug-delegate-registration input[type="password"],
+.itsiug-delegate-registration select {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid #cbd5df;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #333333;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Focus */
+
+.itsiug-delegate-registration input[type="text"]:focus,
+.itsiug-delegate-registration input[type="email"]:focus,
+.itsiug-delegate-registration input[type="tel"]:focus,
+.itsiug-delegate-registration input[type="password"]:focus,
+.itsiug-delegate-registration select:focus {
+  border-color: #1f4b6b;
+  box-shadow: 0 0 0 3px rgba(31, 75, 107, 0.15);
+  outline: none;
+}
+
+/* Tableselect / Country */
+
+.itsiug-delegate-registration .form-type-tableselect {
+  margin-bottom: 24px;
+}
+
+.itsiug-delegate-registration .form-type-tableselect table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.itsiug-delegate-registration .form-type-tableselect th,
+.itsiug-delegate-registration .form-type-tableselect td {
+  padding: 10px 12px;
+  border: 1px solid #e2e8ee;
+}
+
+.itsiug-delegate-registration .form-type-tableselect th {
+  background: #f4f7f9;
+  color: #1f4b6b;
+  font-weight: 600;
+}
+
+/* Required marker */
+
+.itsiug-delegate-registration .form-required {
+  color: #1f4b6b;
+}
+
+/* Submit area */
+
+.itsiug-delegate-registration .form-actions {
+  margin-top: 30px;
+  margin-bottom: 0;
+  text-align: right;
+}
+
+.itsiug-delegate-registration .form-submit {
+  min-height: 48px;
+  padding: 12px 30px;
+  border: 0;
+  border-radius: 5px;
+  background: #1f4b6b;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.itsiug-delegate-registration .form-submit:hover {
+  background: #163a53;
+}
+
+.itsiug-delegate-registration .form-submit:active {
+  transform: translateY(1px);
+}
+
+/* Error messages */
+
+.itsiug-delegate-registration .form-item--error-message {
+  margin-top: 6px;
+  color: #b42318;
+  font-size: 14px;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+  .itsiug-delegate-registration {
+    max-width: calc(100% - 30px);
+    margin: 30px auto;
+    padding: 30px 24px;
+  }
+
+  .itsiug-delegate-registration .form-actions {
+    text-align: center;
+  }
+
+  .itsiug-delegate-registration .form-submit {
+    width: 100%;
+  }
+
+}
+
+/* ==========================================================
+ * ITSIUG 2027 - Delegate Management
+ * ========================================================== */
+
+.itsiug-delegate-management-table {
+  width: 100%;
+  margin: 30px 0 35px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border: 1px solid #dfe6eb;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* Table header */
+
+.itsiug-delegate-management-table thead th {
+  padding: 15px 14px;
+  background: #1f4b6b;
+  color: #ffffff;
+  border: 0;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Table body */
+
+.itsiug-delegate-management-table tbody td {
+  padding: 14px;
+  color: #333333;
+  border-top: 1px solid #e7edf1;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* Alternating rows */
+
+.itsiug-delegate-management-table tbody tr:nth-child(even) {
+  background: #f7f9fb;
+}
+
+.itsiug-delegate-management-table tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+/* Row hover */
+
+.itsiug-delegate-management-table tbody tr:hover {
+  background: #eef5f8;
+}
+
+/* Delegate links */
+
+.itsiug-delegate-management-table tbody td:first-child a {
+  color: #1f4b6b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.itsiug-delegate-management-table tbody td:first-child a:hover {
+  color: #163a53;
+  text-decoration: underline;
+}
+
+/* Certificate links */
+
+.itsiug-delegate-management-table a {
+  color: #1f4b6b;
+}
+
+.itsiug-delegate-management-table a:hover {
+  color: #163a53;
+}
+
+/* Back button */
+
+.itsiug-admin-table + .button {
+  margin-top: 10px;
+}
+
+/* Mobile / narrow screens */
+
+@media (max-width: 900px) {
+
+  .itsiug-delegate-management-table {
+    font-size: 13px;
+  }
+
+  .itsiug-delegate-management-table thead th,
+  .itsiug-delegate-management-table tbody td {
+    padding: 10px;
+  }
+
+}
+/* ==========================================================
+ * ITSIUG 2027 - Delegate Management
+ * ========================================================== */
+
+.itsiug-admin-page {
+  width: 100%;
+  max-width: 1500px;
+  margin: 45px auto;
+  padding: 40px 45px 45px;
+  background: #ffffff;
+  border: 1px solid #e2e8ee;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+  box-sizing: border-box;
+}
+
+.itsiug-admin-page h1 {
+  margin: 0 0 10px;
+  color: #1f4b6b;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+/* ==========================================================
+ * ITSIUG Administration Dashboard Buttons
+ * ========================================================== */
+
+.itsiug-admin-dashboard .itsiug-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.itsiug-admin-dashboard .itsiug-admin-actions a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 6px;
+  background-color: #1f4b6b;
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none !important;
+  box-sizing: border-box;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+}
+
+.itsiug-admin-dashboard .itsiug-admin-actions a.button:hover {
+  background-color: #163a53;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.itsiug-admin-dashboard .itsiug-admin-actions a.button:active {
+  transform: translateY(1px);
+}
+
+.itsiug-admin-dashboard .itsiug-admin-actions a.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 75, 107, 0.20);
+}
+
+.itsiug-admin-intro {
+  margin: 0 0 28px;
+  color: #5b6873;
+  font-size: 16px;
+}
+
+.itsiug-delegate-management-table {
+  width: 100%;
+  margin: 0 0 30px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border: 1px solid #dfe6eb;
+  border-radius: 10px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.itsiug-delegate-management-table thead th {
+  padding: 15px 14px;
+  background: #1f4b6b;
+  color: #ffffff;
+  border: 0;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.itsiug-delegate-management-table tbody td {
+  padding: 14px;
+  color: #333333;
+  border-top: 1px solid #e7edf1;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.itsiug-delegate-management-table tbody tr:nth-child(even) {
+  background: #f7f9fb;
+}
+
+.itsiug-delegate-management-table tbody tr:hover {
+  background: #eef5f8;
+}
+
+.itsiug-delegate-management-table a {
+  color: #1f4b6b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.itsiug-delegate-management-table a:hover {
+  color: #163a53;
+  text-decoration: underline;
+}
+
+.itsiug-institution-dashboard .itsiug-edit-delegate-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 6px;
+  background-color: #1f4b6b;
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none !important;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+}
+
+.itsiug-institution-dashboard .itsiug-edit-delegate-button:hover {
+  background-color: #163a53;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.itsiug-institution-dashboard .itsiug-edit-delegate-button:active {
+  transform: translateY(1px);
+}
+
+.itsiug-institution-dashboard .itsiug-edit-delegate-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 75, 107, 0.20);
+}
+
+.itsiug-admin-page > .button {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 11px 22px;
+  border-radius: 5px;
+  background: #1f4b6b;
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.itsiug-admin-page > .button:hover {
+  background: #163a53;
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .itsiug-admin-page {
+    max-width: calc(100% - 30px);
+    margin: 30px auto;
+    padding: 30px 24px;
+  }
+
+  .itsiug-admin-page h1 {
+    font-size: 25px;
+  }
+
+  .itsiug-delegate-management-table {
+    font-size: 13px;
+  }
+
+  .itsiug-delegate-management-table thead th,
+  .itsiug-delegate-management-table tbody td {
+    padding: 10px;
+  }
+}
+
+/* ==========================================================
+ * ITSIUG 2027 — Reports
+ * ========================================================== */
+
+.itsiug-reports-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 40px 45px 50px;
+  background: #ffffff;
+  border: 1px solid #e2e8ee;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+  box-sizing: border-box;
+}
+
+.itsiug-reports-page h2,
+.itsiug-reports-page h3 {
+  color: #1f4b6b;
+  font-weight: 600;
+}
+
+.itsiug-reports-page h2 {
+  margin: 0 0 10px;
+  font-size: 30px;
+}
+
+.itsiug-reports-page h3 {
+  margin: 38px 0 16px;
+  font-size: 22px;
+}
+
+.itsiug-reports-page .button {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 12px 24px;
+  border-radius: 5px;
+  background: #1f4b6b;
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.itsiug-reports-page .button:hover {
+  background: #163a53;
+  color: #ffffff;
+}
+
+/* Conference summary */
+
+.itsiug-report-summary-table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.itsiug-report-summary-table th {
+  background: #1f4b6b;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.itsiug-report-summary-table th,
+.itsiug-report-summary-table td {
+  padding: 12px 15px;
+  border: 1px solid #e2e8ee;
+}
+
+.itsiug-report-summary-table tbody tr:nth-child(even) {
+  background: #f7f9fb;
+}
+
+/* Institution and delegate tables */
+
+.itsiug-reports-page .itsiug-delegate-management-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* ==========================================================
+ * ITSIUG Delegate View
+ * ========================================================== */
+
+.itsiug-delegate-view-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 40px 45px 50px;
+  background: #ffffff;
+  border: 1px solid #e2e8ee;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+  box-sizing: border-box;
+}
+
+.itsiug-delegate-view-page .node__meta,
+.itsiug-delegate-view-page .node__submitted,
+.itsiug-delegate-view-page .submitted,
+.itsiug-delegate-view-page .field--name-uid,
+.itsiug-delegate-view-page .field--name-created {
+  color: #5b6873;
+  font-size: 14px;
+}
+
+.itsiug-delegate-view-page .field--name-title {
+  margin-bottom: 22px;
+}
+
+.itsiug-delegate-view-page .field {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #edf1f4;
+}
+
+.itsiug-delegate-view-page .field:last-of-type {
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+
+/* Convene theme renders these fields as generic nested divs (no field classes). */
+.itsiug-delegate-view-page > div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #edf1f4;
+}
+
+.itsiug-delegate-view-page > div:last-of-type {
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+
+.itsiug-delegate-view-page > div > div:first-child {
+  color: #1f4b6b;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.itsiug-delegate-view-page > div > div:first-child::after {
+  content: ':';
+  margin-left: 2px;
+}
+
+.itsiug-delegate-view-page > div > div:last-child {
+  color: #333333;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.itsiug-delegate-view-page > div > div:last-child a {
+  color: #1f4b6b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.itsiug-delegate-view-page > div > div:last-child a:hover {
+  color: #163a53;
+  text-decoration: underline;
+}
+
+.itsiug-delegate-view-page .field__label {
+  display: inline;
+  margin: 0;
+  color: #1f4b6b;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.itsiug-delegate-view-page .field__label::after {
+  content: ':';
+  margin-left: 2px;
+}
+
+.itsiug-delegate-view-page .field__item,
+.itsiug-delegate-view-page .field__items {
+  display: inline;
+  color: #333333;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.itsiug-delegate-view-page .field__item a {
+  color: #1f4b6b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.itsiug-delegate-view-page .field__item a:hover {
+  color: #163a53;
+  text-decoration: underline;
+}
+
+.itsiug-delegate-view-page .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 5px;
+  background: #1f4b6b;
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none !important;
+  box-sizing: border-box;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+}
+
+.itsiug-delegate-view-page .button:hover {
+  background: #163a53;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.itsiug-delegate-view-page .button:active {
+  transform: translateY(1px);
+}
+
+.itsiug-delegate-view-page .button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 75, 107, 0.20);
+}
+
+.itsiug-delegate-view-page .button + .button {
+  margin-left: 12px;
+}
+
+@media (max-width: 800px) {
+
+  .itsiug-delegate-view-page {
+    max-width: calc(100% - 30px);
+    margin: 30px auto;
+    padding: 30px 24px;
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width: 800px) {
+
+  .itsiug-reports-page {
+    max-width: calc(100% - 30px);
+    margin: 30px auto;
+    padding: 30px 24px;
+  }
+
+  .itsiug-reports-page h2 {
+    font-size: 25px;
+  }
+
+  .itsiug-reports-page h3 {
+    font-size: 20px;
+  }
+
+}
+
+/* ==========================================================
+ * ITSIUG Institution Dashboard Buttons
+ * ========================================================== */
+
+.itsiug-institution-dashboard .itsiug-institution-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.itsiug-institution-dashboard .itsiug-institution-actions a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 6px;
+  background-color: #1f4b6b;
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none !important;
+  box-sizing: border-box;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+}
+
+.itsiug-institution-dashboard .itsiug-institution-actions a.button:hover {
+  background-color: #163a53;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.itsiug-institution-dashboard .itsiug-institution-actions a.button:active {
+  transform: translateY(1px);
+}
+
+.itsiug-institution-dashboard .itsiug-institution-actions a.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 75, 107, 0.20);
+}

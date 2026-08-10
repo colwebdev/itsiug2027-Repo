@@ -15,24 +15,36 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegistrationController extends ControllerBase {
 
-  /**
-   * Display the delegate registration Webform.
-   */
-  public function delegateForm() {
+/**
+ * Display the delegate registration Webform.
+ */
+public function delegateForm() {
 
-    $webform = Webform::load('delegate_registration');
+  $webform = Webform::load('delegate_registration');
 
-    if (!$webform) {
-      throw new \RuntimeException(
-        'The Delegate Registration Webform could not be found.'
-      );
-    }
-
-    return [
-      '#type' => 'webform',
-      '#webform' => $webform,
-    ];
+  if (!$webform) {
+    throw new \RuntimeException(
+      'The Delegate Registration Webform could not be found.'
+    );
   }
+
+  return [
+    '#type' => 'webform',
+    '#webform' => $webform,
+
+    '#attributes' => [
+      'class' => [
+        'itsiug-delegate-registration',
+      ],
+    ],
+
+    '#attached' => [
+      'library' => [
+        'itsiug_theme/global-styling',
+      ],
+    ],
+  ];
+}
 
 /**
  * Process a scanned conference QR code.
@@ -790,6 +802,26 @@ public function logout() {
 
         'certificate' => $this->buildCertificateLink($registration),
 
+        'actions' => [
+          'data' => $delegate->access('update', $account)
+            ? [
+              '#type' => 'link',
+              '#title' => $this->t('Edit Delegate'),
+              '#url' => Url::fromRoute(
+                'entity.node.edit_form',
+                ['node' => $delegate->id()]
+              ),
+              '#attributes' => [
+                'class' => [
+                  'button',
+                  'button--primary',
+                  'itsiug-edit-delegate-button',
+                ],
+              ],
+            ]
+            : '',
+        ],
+
       ];
     }
 
@@ -803,6 +835,22 @@ public function logout() {
     );
 
     return [
+
+  '#type' => 'container',
+
+  '#attached' => [
+    'library' => [
+      'itsiug_theme/global-styling',
+    ],
+  ],
+
+  '#attributes' => [
+    'class' => [
+      'itsiug-admin-page',
+      'itsiug-admin-dashboard',
+      'itsiug-institution-dashboard',
+    ],
+  ],
 
       'header' => [
         '#markup' =>
@@ -823,19 +871,29 @@ public function logout() {
           '</p>',
       ],
 
-      'delegates' => [
-        '#type' => 'table',
+'delegates' => [
+  '#type' => 'table',
 
-        '#header' => [
-          $this->t('Delegate'),
-          $this->t('Email'),
-          $this->t('Registration'),
-          $this->t('Check-in'),
-          $this->t('Monday'),
-          $this->t('Tuesday'),
-          $this->t('Wednesday'),
-          $this->t('Certificate'),
-        ],
+  '#attributes' => [
+    'class' => [
+      'itsiug-admin-table',
+      'itsiug-delegate-management-table',
+    ],
+  ],
+
+  '#responsive' => TRUE,
+
+  '#header' => [
+    $this->t('Delegate'),
+    $this->t('Email'),
+    $this->t('Registration'),
+    $this->t('Check-in'),
+    $this->t('Monday'),
+    $this->t('Tuesday'),
+    $this->t('Wednesday'),
+    $this->t('Certificate'),
+    $this->t('Actions'),
+  ],
 
         '#rows' => $rows,
 
@@ -850,6 +908,7 @@ public function logout() {
         '#attributes' => [
           'class' => [
             'itsiug-registration-actions',
+            'itsiug-admin-actions',
           ],
         ],
 
@@ -1157,9 +1216,9 @@ public function logout() {
 
       $institutions[$institution_nid]['registered']++;
 
-      if ($checkin_status === 'Checked in') {
-        $institutions[$institution_nid]['checked_in']++;
-      }
+if (strtolower(trim($checkin_status)) === 'checked in') {
+  $institutions[$institution_nid]['checked_in']++;
+}
 
       if ($monday_status === 'Present') {
         $institutions[$institution_nid]['monday']++;
@@ -1219,6 +1278,22 @@ public function logout() {
 
     return [
 
+  'report_page' => [
+    '#type' => 'container',
+
+    '#attached' => [
+      'library' => [
+        'itsiug_theme/global-styling',
+      ],
+    ],
+
+    '#attributes' => [
+      'class' => [
+        'itsiug-admin-page',
+        'itsiug-reports-page',
+      ],
+    ],
+
       /*
        * Page heading.
        */
@@ -1256,8 +1331,14 @@ public function logout() {
           '</h3>',
       ],
 
-      'summary' => [
-        '#type' => 'table',
+'summary' => [
+  '#type' => 'table',
+
+  '#attributes' => [
+    'class' => [
+      'itsiug-report-summary-table',
+    ],
+  ],
 
         '#header' => [
           $this->t('Measure'),
@@ -1314,8 +1395,14 @@ public function logout() {
           '</h3>',
       ],
 
-      'institutions' => [
-        '#type' => 'table',
+'institutions' => [
+  '#type' => 'table',
+
+  '#attributes' => [
+    'class' => [
+      'itsiug-delegate-management-table',
+    ],
+  ],
 
         '#header' => [
           $this->t('Institution'),
@@ -1344,8 +1431,14 @@ public function logout() {
           '</h3>',
       ],
 
-      'delegates' => [
-        '#type' => 'table',
+'delegates' => [
+  '#type' => 'table',
+
+  '#attributes' => [
+    'class' => [
+      'itsiug-delegate-management-table',
+    ],
+  ],
 
         '#header' => [
           $this->t('Delegate'),
@@ -1366,8 +1459,8 @@ public function logout() {
         ),
 
         '#sticky' => TRUE,
+        ],
       ],
-
     ];
   }
 
@@ -1617,6 +1710,21 @@ return $response;
 
     return [
 
+  'admin_page' => [
+    '#type' => 'container',
+
+    '#attached' => [
+      'library' => [
+        'itsiug_theme/global-styling',
+      ],
+    ],
+
+    '#attributes' => [
+      'class' => [
+        'itsiug-admin-page',
+        'itsiug-admin-dashboard',
+      ],
+    ],
       'heading' => [
         '#markup' => '<h1>' .
           $this->t('ITSIUG 2027 Administration') .
@@ -1707,8 +1815,8 @@ return $response;
           ],
         ],
 
+        ],
       ],
-
     ];
   }
 
@@ -1820,59 +1928,84 @@ return $response;
       ];
     }
 
-    return [
+return [
 
-      'heading' => [
-        '#markup' =>
-          '<h1>' .
-          $this->t('ITSIUG 2027 Delegate Management') .
-          '</h1>',
-      ],
+'delegate_management' => [
+  '#type' => 'container',
 
-      'intro' => [
-        '#markup' =>
-          '<p>' .
-          $this->t(
-            'Manage and review all registered ITSIUG 2027 delegates.'
-          ) .
-          '</p>',
-      ],
+  '#attached' => [
+    'library' => [
+      'itsiug_theme/global-styling',
+    ],
+  ],
 
-      'delegates' => [
-        '#type' => 'table',
+  '#attributes' => [
+    'class' => [
+      'itsiug-admin-page',
+      'itsiug-delegate-management',
+    ],
+  ],
 
-        '#header' => [
-          $this->t('Delegate'),
-          $this->t('Institution'),
-          $this->t('Email'),
-          $this->t('Registration'),
-          $this->t('Check-in'),
-          $this->t('Monday'),
-          $this->t('Tuesday'),
-          $this->t('Wednesday'),
-          $this->t('Certificate'),
-        ],
+    'heading' => [
+      '#markup' =>
+        '<h1>' .
+        $this->t('ITSIUG 2027 Delegate Management') .
+        '</h1>',
+    ],
 
-        '#rows' => $rows,
+    'intro' => [
+      '#markup' =>
+        '<p class="itsiug-admin-intro">' .
+        $this->t(
+          'Manage and review all registered ITSIUG 2027 delegates.'
+        ) .
+        '</p>',
+    ],
 
-        '#empty' => $this->t(
-          'No ITSIUG 2027 delegates have been registered.'
-        ),
-      ],
+    'delegates' => [
+      '#type' => 'table',
 
-      'back' => [
-        '#type' => 'link',
-        '#title' => $this->t('← Back to Administration'),
-        '#url' => Url::fromRoute(
-          'itsiug_registration.admin'
-        ),
-        '#attributes' => [
-          'class' => [
-            'button',
-          ],
+      '#attributes' => [
+        'class' => [
+          'itsiug-delegate-management-table',
         ],
       ],
-    ];
+
+      '#header' => [
+        $this->t('Delegate'),
+        $this->t('Institution'),
+        $this->t('Email'),
+        $this->t('Registration'),
+        $this->t('Check-in'),
+        $this->t('Monday'),
+        $this->t('Tuesday'),
+        $this->t('Wednesday'),
+        $this->t('Certificate'),
+      ],
+
+      '#rows' => $rows,
+
+      '#empty' => $this->t(
+        'No ITSIUG 2027 delegates have been registered.'
+      ),
+    ],
+
+    'back' => [
+      '#type' => 'link',
+      '#title' => $this->t('← Back to Administration'),
+      '#url' => Url::fromRoute(
+        'itsiug_registration.admin'
+      ),
+      '#attributes' => [
+        'class' => [
+          'button',
+        ],
+      ],
+    ],
+
+  ],
+
+];
   }
 
   /**
@@ -1880,268 +2013,319 @@ return $response;
    */
   public function adminCertificates() {
 
-    $registration_ids = \Drupal::entityQuery('node')
-      ->accessCheck(FALSE)
-      ->condition('type', 'conference_registration')
-      ->condition('field_conference', 2)
-      ->sort('created', 'ASC')
-      ->execute();
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'conference_registration')
+    ->condition('field_conference', 2)
+    ->sort('created', 'ASC')
+    ->execute();
 
-    $rows = [];
+  $rows = [];
 
-    foreach ($registration_ids as $registration_id) {
+  foreach ($registration_ids as $registration_id) {
 
-      $registration = Node::load($registration_id);
+    $registration = Node::load($registration_id);
 
-      if (!$registration) {
-        continue;
-      }
-
-      // Get delegate.
-      $delegate = NULL;
-
-      if (!$registration->get('field_delegate')->isEmpty()) {
-        $delegate = $registration->get('field_delegate')->entity;
-      }
-
-      if (!$delegate) {
-        continue;
-      }
-
-      // Get institution.
-      $institution = NULL;
-
-      if (!$registration->get('field_institution1')->isEmpty()) {
-        $institution = $registration->get('field_institution1')->entity;
-      }
-
-      // ----------------------------------------------------------
-      // Certificate eligibility.
-      // ----------------------------------------------------------
-
-      $eligibility_value = '';
-      $eligibility = '';
-
-      if (!$registration->get('field_certificate_eligibility')->isEmpty()) {
-
-        $eligibility_value = $registration
-          ->get('field_certificate_eligibility')
-          ->value;
-
-        $allowed_values = $registration
-          ->get('field_certificate_eligibility')
-          ->first()
-          ->getFieldDefinition()
-          ->getSetting('allowed_values');
-
-        $eligibility =
-          $allowed_values[$eligibility_value]
-          ?? $eligibility_value;
-      }
-
-      // ----------------------------------------------------------
-      // Certificate status.
-      // ----------------------------------------------------------
-
-      $certificate_status_value = '';
-      $certificate_status = '';
-
-      if (!$registration->get('field_certificate_status')->isEmpty()) {
-
-        $certificate_status_value = $registration
-          ->get('field_certificate_status')
-          ->value;
-
-        $allowed_values = $registration
-          ->get('field_certificate_status')
-          ->first()
-          ->getFieldDefinition()
-          ->getSetting('allowed_values');
-
-        $certificate_status =
-          $allowed_values[$certificate_status_value]
-          ?? $certificate_status_value;
-      }
-
-      // ----------------------------------------------------------
-      // Existing certificate download link.
-      // ----------------------------------------------------------
-
-      $certificate = $this->buildCertificateLink(
-        $registration
-      );
-
-      // ----------------------------------------------------------
-      // Certificate action.
-      // ----------------------------------------------------------
-
-      $certificate_action = $certificate;
-
-      if (!$certificate_action) {
-
-        if ($eligibility_value === 'eligible') {
-
-          $certificate_action = [
-            'data' => [
-              '#type' => 'link',
-              '#title' => $this->t('Generate Certificate'),
-              '#url' => Url::fromRoute(
-                'itsiug_registration.admin_certificate_generate',
-                [
-                  'registration' => $registration->id(),
-                ]
-              ),
-              '#attributes' => [
-                'class' => [
-                  'button',
-                  'button--primary',
-                ],
-              ],
-            ],
-          ];
-
-        }
-        else {
-
-          $certificate_action = [
-            'data' => [
-              '#markup' => $this->t('Not generated'),
-            ],
-          ];
-
-        }
-
-      }
-
-      // ----------------------------------------------------------
-      // Attendance status.
-      // ----------------------------------------------------------
-
-      $monday = '';
-
-      if (!$registration
-        ->get('field_monday_attendance')
-        ->isEmpty()
-      ) {
-        $monday = $registration
-          ->get('field_monday_attendance')
-          ->value;
-      }
-
-      $tuesday = '';
-
-      if (!$registration
-        ->get('field_tuesday_attendance')
-        ->isEmpty()
-      ) {
-        $tuesday = $registration
-          ->get('field_tuesday_attendance')
-          ->value;
-      }
-
-      $wednesday = '';
-
-      if (!$registration
-        ->get('field_wednesday_attendance')
-        ->isEmpty()
-      ) {
-        $wednesday = $registration
-          ->get('field_wednesday_attendance')
-          ->value;
-      }
-
-      // ----------------------------------------------------------
-      // Build table row.
-      // ----------------------------------------------------------
-
-      $rows[] = [
-
-        'delegate' => [
-          'data' => [
-            '#type' => 'link',
-            '#title' => $delegate->label(),
-            '#url' => Url::fromRoute(
-              'entity.node.canonical',
-              [
-                'node' => $delegate->id(),
-              ]
-            ),
-          ],
-        ],
-
-        'institution' => $institution
-          ? $institution->label()
-          : '',
-
-        'monday' => $monday,
-
-        'tuesday' => $tuesday,
-
-        'wednesday' => $wednesday,
-
-        'eligibility' => $eligibility,
-
-        'certificate_status' => $certificate_status,
-
-        'certificate' => $certificate_action,
-
-      ];
+    if (!$registration) {
+      continue;
     }
 
-    return [
+    // Get delegate.
+    $delegate = NULL;
 
-      'heading' => [
-        '#markup' =>
-          '<h1>' .
-          $this->t('ITSIUG 2027 Certificate Management') .
-          '</h1>',
-      ],
+    if (!$registration->get('field_delegate')->isEmpty()) {
+      $delegate = $registration->get('field_delegate')->entity;
+    }
 
-      'intro' => [
-        '#markup' =>
-          '<p>' .
-          $this->t(
-            'Review certificate eligibility and download or generate certificates.'
-          ) .
-          '</p>',
-      ],
+    if (!$delegate) {
+      continue;
+    }
 
-      'certificates' => [
-        '#type' => 'table',
+    // Get institution.
+    $institution = NULL;
 
-        '#header' => [
-          $this->t('Delegate'),
-          $this->t('Institution'),
-          $this->t('Monday'),
-          $this->t('Tuesday'),
-          $this->t('Wednesday'),
-          $this->t('Eligibility'),
-          $this->t('Certificate Status'),
-          $this->t('Certificate'),
-        ],
+    if (!$registration->get('field_institution1')->isEmpty()) {
+      $institution = $registration->get('field_institution1')->entity;
+    }
 
-        '#rows' => $rows,
+    // ----------------------------------------------------------
+    // Certificate eligibility.
+    // ----------------------------------------------------------
 
-        '#empty' => $this->t(
-          'No ITSIUG 2027 registrations were found.'
-        ),
-      ],
+    $eligibility_value = '';
+    $eligibility = '';
 
-      'back' => [
-        '#type' => 'link',
-        '#title' => $this->t('← Back to Administration'),
-        '#url' => Url::fromRoute(
-          'itsiug_registration.admin'
-        ),
-        '#attributes' => [
-          'class' => [
-            'button',
+    if (!$registration
+      ->get('field_certificate_eligibility')
+      ->isEmpty()
+    ) {
+
+      $eligibility_value = $registration
+        ->get('field_certificate_eligibility')
+        ->value;
+
+      $allowed_values = $registration
+        ->get('field_certificate_eligibility')
+        ->first()
+        ->getFieldDefinition()
+        ->getSetting('allowed_values');
+
+      $eligibility =
+        $allowed_values[$eligibility_value]
+        ?? $eligibility_value;
+    }
+
+    // ----------------------------------------------------------
+    // Certificate status.
+    // ----------------------------------------------------------
+
+    $certificate_status_value = '';
+    $certificate_status = '';
+
+    if (!$registration
+      ->get('field_certificate_status')
+      ->isEmpty()
+    ) {
+
+      $certificate_status_value = $registration
+        ->get('field_certificate_status')
+        ->value;
+
+      $allowed_values = $registration
+        ->get('field_certificate_status')
+        ->first()
+        ->getFieldDefinition()
+        ->getSetting('allowed_values');
+
+      $certificate_status =
+        $allowed_values[$certificate_status_value]
+        ?? $certificate_status_value;
+    }
+
+    // ----------------------------------------------------------
+    // Existing certificate download link.
+    // ----------------------------------------------------------
+
+    $certificate = $this->buildCertificateLink(
+      $registration
+    );
+
+    // ----------------------------------------------------------
+    // Certificate action.
+    // ----------------------------------------------------------
+
+    $certificate_action = $certificate;
+
+    if (!$certificate_action) {
+
+      if ($eligibility_value === 'eligible') {
+
+        $certificate_action = [
+          'data' => [
+            '#type' => 'link',
+            '#title' => $this->t('Generate Certificate'),
+            '#url' => Url::fromRoute(
+              'itsiug_registration.admin_certificate_generate',
+              [
+                'registration' => $registration->id(),
+              ]
+            ),
+            '#attributes' => [
+              'class' => [
+                'button',
+                'button--primary',
+              ],
+            ],
           ],
+        ];
+
+      }
+      else {
+
+        $certificate_action = [
+          'data' => [
+            '#markup' => $this->t('Not generated'),
+          ],
+        ];
+
+      }
+    }
+
+    // ----------------------------------------------------------
+    // Attendance status.
+    // ----------------------------------------------------------
+
+    $monday_status = '';
+
+    if (!$registration
+      ->get('field_monday_attendance')
+      ->isEmpty()
+    ) {
+
+      $monday_value = $registration
+        ->get('field_monday_attendance')
+        ->value;
+
+      $monday_status = match ($monday_value) {
+        'present' => $this->t('Present'),
+        'not_present' => $this->t('Not Present'),
+        default => $monday_value,
+      };
+    }
+
+    $tuesday_status = '';
+
+    if (!$registration
+      ->get('field_tuesday_attendance')
+      ->isEmpty()
+    ) {
+
+      $tuesday_value = $registration
+        ->get('field_tuesday_attendance')
+        ->value;
+
+      $tuesday_status = match ($tuesday_value) {
+        'present' => $this->t('Present'),
+        'not_present' => $this->t('Not Present'),
+        default => $tuesday_value,
+      };
+    }
+
+    $wednesday_status = '';
+
+    if (!$registration
+      ->get('field_wednesday_attendance')
+      ->isEmpty()
+    ) {
+
+      $wednesday_value = $registration
+        ->get('field_wednesday_attendance')
+        ->value;
+
+      $wednesday_status = match ($wednesday_value) {
+        'present' => $this->t('Present'),
+        'not_present' => $this->t('Not Present'),
+        default => $wednesday_value,
+      };
+    }
+
+    // ----------------------------------------------------------
+    // Build table row.
+    // ----------------------------------------------------------
+
+    $rows[] = [
+
+      'delegate' => [
+        'data' => [
+          '#type' => 'link',
+          '#title' => $delegate->label(),
+          '#url' => Url::fromRoute(
+            'entity.node.canonical',
+            [
+              'node' => $delegate->id(),
+            ]
+          ),
         ],
       ],
+
+      'institution' => $institution
+        ? $institution->label()
+        : '',
+
+      'monday' => $monday_status,
+
+      'tuesday' => $tuesday_status,
+
+      'wednesday' => $wednesday_status,
+
+      'eligibility' => $eligibility,
+
+      'certificate_status' => $certificate_status,
+
+      'certificate' => $certificate_action,
 
     ];
   }
+
+return [
+
+  'certificate_management' => [
+    '#type' => 'container',
+
+    '#attached' => [
+      'library' => [
+        'itsiug_theme/global-styling',
+      ],
+    ],
+
+    '#attributes' => [
+      'class' => [
+        'itsiug-admin-page',
+        'itsiug-certificate-management',
+      ],
+    ],
+
+    'heading' => [
+      '#markup' =>
+        '<h1>' .
+        $this->t('ITSIUG 2027 Certificate Management') .
+        '</h1>',
+    ],
+
+    'intro' => [
+      '#markup' =>
+        '<p class="itsiug-admin-intro">' .
+        $this->t(
+          'Review certificate eligibility and download or generate certificates.'
+        ) .
+        '</p>',
+    ],
+
+    'certificates' => [
+      '#type' => 'table',
+
+      '#attributes' => [
+        'class' => [
+          'itsiug-delegate-management-table',
+        ],
+      ],
+
+      '#header' => [
+        $this->t('Delegate'),
+        $this->t('Institution'),
+        $this->t('Monday'),
+        $this->t('Tuesday'),
+        $this->t('Wednesday'),
+        $this->t('Eligibility'),
+        $this->t('Certificate Status'),
+        $this->t('Certificate'),
+      ],
+
+      '#rows' => $rows,
+
+      '#empty' => $this->t(
+        'No ITSIUG 2027 registrations were found.'
+      ),
+    ],
+
+    'back' => [
+      '#type' => 'link',
+      '#title' => $this->t('← Back to Administration'),
+      '#url' => Url::fromRoute(
+        'itsiug_registration.admin'
+      ),
+      '#attributes' => [
+        'class' => [
+          'button',
+        ],
+      ],
+    ],
+
+  ],
+
+];
+
+}
 
   /**
    * Generate a certificate from the Admin area.
