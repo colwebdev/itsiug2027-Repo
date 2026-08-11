@@ -1,0 +1,47 @@
+institution_title,institution_code,registration_pin,institution_status,payment_status,delegate_limit,contact_email,representative_email,representative_first_name,representative_last_name,representative_username
+Adapt IT (Pty) Ltd,ADAPTIT,,active,pending,40,pravie.govender@adaptit.com,pravie.govender@adaptit.com,Pravie,Govender,ADAPTIT2027
+Cape Peninsula University of Technology,CPUT,,active,pending,40,mbambanisik@cput.ac.za,mbambanisik@cput.ac.za,Kolosa,Mbambanisi,CPUT2027
+Central Johannesburg TVET College,CJC,,active,pending,40,thobakgalea@cjc.edu.za,thobakgalea@cjc.edu.za,Ado,Thobakgale,CJC2027
+Central University of Technology,CUT,,active,pending,40,lpillay@cut.ac.za,lpillay@cut.ac.za,Lance,Pillay,CUT2027
+Coastal KZN TVET College,COAST,,active,pending,40,bongani.mavuso@kzntvet.edu.za,bongani.mavuso@kzntvet.edu.za,Bongani,Mavuso,COAST2027
+Ehlanzeni TVET College,EHL,,active,pending,40,thapelo.morupane@ehlanzenicollege.co.za,thapelo.morupane@ehlanzenicollege.co.za,Thapelo,Morupane,EHL2027
+Ekurhuleni East TVET College,EEC,,active,pending,40,mpho.mzangwe@eec.edu.za,mpho.mzangwe@eec.edu.za,Mpho ,Mzangwe,EEC2027
+Ekurhuleni West TVET College,EWC,,active,pending,40,emmanuelk@ewc.edu.za,emmanuelk@ewc.edu.za,Emmanuel,Koma,EWC2027
+Gert Sibande TVET College,GSC,,active,pending,40,itmanager@gscollege.edu.za,itmanager@gscollege.edu.za,Sizwe,Hlongwane,GSC2027
+Ghana Institute for Management and Public Administration,GIMPA,,active,pending,40,sdartey@gimpa.edu.gh,sdartey@gimpa.edu.gh,Solomom,Dartey,GIMPA2027
+Ingwe TVET College,INGWE,,active,pending,40,amtembu@ingwecollege.edu.za,amtembu@ingwecollege.edu.za,Ayanda,Mtembu,INGWE2027
+King Hintsa TVET College,KHC,,active,pending,40,siyabongas@kinghintsacollege.edu.za,siyabongas@kinghintsacollege.edu.za,Siya,Sixabayi,KHC2027
+King Sabata Dalindyebo TVET College,KSD,,active,pending,40,tdawuwa@ksdtvet.edu.za,tdawuwa@ksdtvet.edu.za,Thandi,Dawuwa,KSD2027
+Mangosuthu University of Technology,MANGO,,active,pending,40,sanelem@mut.ac.za,sanelem@mut.ac.za,Sanele,Mngadi,MANGO2027
+Maynooth University,MAYNOOTH,,active,pending,40,Grainne.Coughlan@mu.ie,Grainne.Coughlan@mu.ie,Grainne,Couglan,MAYNOOTH2027
+Namibia University of Science and Technology,NUST,,active,pending,40,jfrans@nust.na,jfrans@nust.na,Juanita,Frans,NUST2027
+Namibian College of Open Learning,NAMCOL,,active,pending,40,abisai@namcol.edu.na,abisai@namcol.edu.na,Abisai,Kamati,NAMCOL2027
+National University of Lesotho,UL,,active,pending,40,mr.masilo@nul.ls,mr.masilo@nul.ls,Mosa,Masilo,UL2027
+Nelson Mandela University,NMU,,active,pending,40,greg.saunders@mandela.ac.za,greg.saunders@mandela.ac.za,Greg,Saunders,NMU2027
+Northern Cape Urban TVET College,NCU,,active,pending,40,gngzambuza@ncutvet.edu.za,gngzambuza@ncutvet.edu.za,Gloria,Ngxambuza,NCU2027
+Northlink TVET College,NORTHLINK,,active,pending,40,sandra.raubenheimer@northlink.co.za,sandra.raubenheimer@northlink.co.za,Sandy,Raubenheimer,NORTHLINK2027
+Orbit TVET College,ORBIT,,active,pending,40,jviljoen@orbitcollege.co.za,jviljoen@orbitcollege.co.za,Joe,Viljoen,ORBIT2027
+Port Elizabeth TVET College,PEC,,active,pending,40,brigidm@pec.edu.za,brigidm@pec.edu.za,Brigid,Mosola,PEC2027
+Sefako Makgatho University,SMU,,active,pending,40,tony.masunyane@smu.ac.za,tony.masunyane@smu.ac.za,Tony,Masunyane,SMU2027
+Sol Plaatje University,SPU,,active,pending,40,karen.cupido@spu.ac.za,karen.cupido@spu.ac.za,Karen,Cupido,SPU2027
+South West Gauteng TVET College,SWGC,,active,pending,40,nkuthas@swgc.co.za,nkuthas@swgc.co.za,Simon,Nkutha,SWGC2027
+Te Aho o Te Kura Pounamu,TEKURA,,active,pending,40,julian.guedon@tekura.school.nz,julian.guedon@tekura.school.nz,Julian,Guedon,TEKURA2027
+Tshwane North TVET College,TNC,,active,pending,40,thokozile.vilakazi@tnc.edu.za,thokozile.vilakazi@tnc.edu.za,Thoko,Vilakazi,TNC2027
+Tshwane University of Technology,TUT,,active,pending,40,XabaSMS@tut.ac.za,XabaSMS@tut.ac.za,Siphiwe,Xaba,TUT2027
+University College Cork,UCC,,active,pending,40,m.martin@ucc.ie,m.martin@ucc.ie,Mary,Martin,UCC2027
+University of Eswatini,ESWATINI,,active,pending,40,bmdziniso@uniswa.sz,bmdziniso@uniswa.sz,Bhekisisa,Mdziniso,ESWATINI2027
+University of Fort Hare,UFH,,active,pending,40,cstevens@ufh.ac.za,cstevens@ufh.ac.za,Cedric,Stevens,UFH2027
+University of Johannesburg,UJ,,active,pending,40,louisf@uj.ac.za,louisf@uj.ac.za,Louis,Fourie,UJ2027
+University of Limpopo,UL,,active,pending,40,Tshililo.Ramovha@ul.ac.za,Tshililo.Ramovha@ul.ac.za,Tshililo,Ramovha,UL2027
+University of Mpumalanga,UMP,,active,pending,40,Joel.Vele@ump.ac.za,Joel.Vele@ump.ac.za,Joel,Vele,UMP2027
+University of Namibia,UNAM,,active,pending,40,cmbeukes@unam.na,cmbeukes@unam.na,Maggy,Beukes-Amiss,UNAM2027
+University of Rwanda,UR,,active,pending,40,rrutaboba@ur.ac.rw,rrutaboba@ur.ac.rw,Raymond,Rutaboba,UR2027
+University of Venda,UNIVEN,,active,pending,40,tebogo.makhambeni@univen.ac.za,tebogo.makhambeni@univen.ac.za,Tebogo,Makhambeni,UNIVEN2027
+University of the Western Cape,UWC,,active,pending,40,qambe@wcc.ac.za,qambe@wcc.ac.za,Queen,Ambe,UWC2027
+University of Zululand,UNIZULU,,active,pending,40,gaguz@unizulu.ac.za,gaguz@unizulu.ac.za,Zukile,Gagu,UNIZULU2027
+Vaal University of Technology,VUT,,active,pending,40,monalet@vut.ac.za,monalet@vut.ac.za,Monale,Tabane,VUT2027
+Vhembe TVET College,VHEMBE,,active,pending,40,ramarumo.mv@vhembecollege.edu.za,ramarumo.mv@vhembecollege.edu.za,Vincent,Ramarumo,VHEMBE2027
+Vuselela TVET College,VUSELELA,,active,pending,40,jwilliams@vuselelacollege.co.za,jwilliams@vuselelacollege.co.za,Juanita,Williams,VUSELELA2027
+Walter Sisulu University,WSU,,active,pending,40,nzulu@wsu.ac.za,nzulu@wsu.ac.za,Nathi,Zulu,WSU2027
+West Coast TVET College,WCC,,active,pending,40,smaeresera@westcoastcollege.co.za,smaeresera@westcoastcollege.co.za,Sulaiman,Maeresera,WCC2027
+ITS Integrator User Group,ITSIUG,,active,pending,40,bella@itsiug.org.za,bella@itsiug.org.za,Bella,Lamprecht,ITSIUG2027

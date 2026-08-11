@@ -1,0 +1,47 @@
+institution_name,institution_code,registration_pin,institution_status,payment_status,representative_email
+"Adapt IT (Pty) Ltd",ADAPTIT,7156,active,pending,pravie.govender@adaptit.com
+"Cape Peninsula University of Technology",CPUT,8549,active,pending,mbambanisik@cput.ac.za
+"Central Johannesburg TVET College",CJC,8521,active,pending,thobakgalea@cjc.edu.za
+"Central University of Technology",CUT,7561,active,pending,lpillay@cut.ac.za
+"Coastal KZN TVET College",COAST,6619,active,pending,bongani.mavuso@kzntvet.edu.za
+"Ehlanzeni TVET College",EHL,5714,active,pending,thapelo.morupane@ehlanzenicollege.co.za
+"Ekurhuleni East TVET College",EEC,6437,active,pending,mpho.mzangwe@eec.edu.za
+"Ekurhuleni West TVET College",EWC,2157,active,pending,emmanuelk@ewc.edu.za
+"Gert Sibande TVET College",GSC,6272,active,pending,itmanager@gscollege.edu.za
+"Ghana Institute for Management and Public Administration",GIMPA,6806,active,pending,sdartey@gimpa.edu.gh
+"Ingwe TVET College",INGWE,1709,active,pending,amtembu@ingwecollege.edu.za
+"ITS Integrator User Group",ITSIUG,6917,active,pending,bella@itsiug.org.za
+"King Hintsa TVET College",KHC,2352,active,pending,siyabongas@kinghintsacollege.edu.za
+"King Sabata Dalindyebo TVET College",KSD,9390,active,pending,tdawuwa@ksdtvet.edu.za
+"Mangosuthu University of Technology",MANGO,3510,active,pending,sanelem@mut.ac.za
+"Maynooth University",MAYNOOTH,1753,active,pending,grainne.coughlan@mu.ie
+"Namibia University of Science and Technology",NUST,8129,active,pending,jfrans@nust.na
+"Namibian College of Open Learning",NAMCOL,1093,active,pending,abisai@namcol.edu.na
+"Nelson Mandela University",NMU,6810,active,pending,greg.saunders@mandela.ac.za
+"Northern Cape Urban TVET College",NCU,2433,active,pending,gngzambuza@ncutvet.edu.za
+"Northlink TVET College",NORTHLINK,3102,active,pending,sandra.raubenheimer@northlink.co.za
+"Orbit TVET College",ORBIT,5365,active,pending,jviljoen@orbitcollege.co.za
+"Port Elizabeth TVET College",PEC,9123,active,pending,brigidm@pec.edu.za
+"Sefako Makgatho University",SMU,2674,active,pending,tony.masunyane@smu.ac.za
+"Sol Plaatje University",SPU,1187,active,pending,karen.cupido@spu.ac.za
+"South West Gauteng TVET College",SWGC,6752,active,pending,nkuthas@swgc.co.za
+"Te Aho o Te Kura Pounamu",TEKURA,8308,active,pending,julian.guedon@tekura.school.nz
+"Tshwane North TVET College",TNC,9922,active,pending,thokozile.vilakazi@tnc.edu.za
+"Tshwane University of Technology",TUT,5221,active,pending,xabasms@tut.ac.za
+"University College Cork",UCC,6636,active,pending,m.martin@ucc.ie
+"University of Eswatini",ESWATINI,5970,active,pending,bmdziniso@uniswa.sz
+"University of Fort Hare",UFH,3278,active,pending,cstevens@ufh.ac.za
+"University of Johannesburg",UJ,6106,active,pending,louisf@uj.ac.za
+"University of Limpopo",UL,2393,active,pending,tshililo.ramovha@ul.ac.za
+"University of Mpumalanga",UMP,9571,active,pending,joel.vele@ump.ac.za
+"University of Namibia",UNAM,8502,active,pending,cmbeukes@unam.na
+"University of Pretoria",UP,842915,active,pending,bobby@colwebdev.co.za
+"University of Rwanda",UR,8302,active,pending,rrutaboba@ur.ac.rw
+"University of the Western Cape",UWC,6595,active,pending,qambe@wcc.ac.za
+"University of Venda",UNIVEN,1615,active,pending,tebogo.makhambeni@univen.ac.za
+"University of Zululand",UNIZULU,3341,active,pending,gaguz@unizulu.ac.za
+"Vaal University of Technology",VUT,9688,active,pending,monalet@vut.ac.za
+"Vhembe TVET College",VHEMBE,6445,active,pending,ramarumo.mv@vhembecollege.edu.za
+"Vuselela TVET College",VUSELELA,3238,active,pending,jwilliams@vuselelacollege.co.za
+"Walter Sisulu University",WSU,5345,active,pending,nzulu@wsu.ac.za
+"West Coast TVET College",WCC,1774,active,pending,smaeresera@westcoastcollege.co.za
