@@ -103,3 +103,107 @@ function itsiug_registration_update_9001() {
 
   return implode(' ', $messages);
 }
+
+/**
+ * Backfill delegate and conference registration synchronisation.
+ */
+function itsiug_registration_update_9002() {
+
+  $delegate_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'delegate')
+    ->execute();
+
+  if (empty($delegate_ids)) {
+    return 'No delegate nodes found to backfill.';
+  }
+
+  $delegate_updated = 0;
+  $registration_updated = 0;
+
+  foreach ($delegate_ids as $delegate_id) {
+
+    $delegate = \Drupal\node\Entity\Node::load($delegate_id);
+
+    if (!$delegate) {
+      continue;
+    }
+
+    $first_name = '';
+    $last_name = '';
+
+    if (
+      $delegate->hasField('field_first_name') &&
+      !$delegate->get('field_first_name')->isEmpty()
+    ) {
+      $first_name = trim($delegate->get('field_first_name')->value);
+    }
+
+    if (
+      $delegate->hasField('field_last_name') &&
+      !$delegate->get('field_last_name')->isEmpty()
+    ) {
+      $last_name = trim($delegate->get('field_last_name')->value);
+    }
+
+    $expected_title = trim($first_name . ' ' . $last_name);
+
+    if ($expected_title !== '' && $delegate->label() !== $expected_title) {
+      $delegate->setTitle($expected_title);
+      $delegate->save();
+      $delegate_updated++;
+    }
+
+    $delegate_reference = '';
+
+    if (
+      $delegate->hasField('field_delegate_reference') &&
+      !$delegate->get('field_delegate_reference')->isEmpty()
+    ) {
+      $delegate_reference = trim($delegate->get('field_delegate_reference')->value);
+    }
+
+    $registration_ids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'conference_registration')
+      ->condition('field_delegate', $delegate->id())
+      ->execute();
+
+    foreach ($registration_ids as $registration_id) {
+
+      $registration = \Drupal\node\Entity\Node::load($registration_id);
+
+      if (!$registration) {
+        continue;
+      }
+
+      $changed = FALSE;
+
+      if ($registration->getTitle() !== $delegate->label()) {
+        $registration->setTitle($delegate->label());
+        $changed = TRUE;
+      }
+
+      if (
+        $delegate_reference !== '' &&
+        $registration->hasField('field_qr_code')
+      ) {
+        $current_qr = (string) $registration->get('field_qr_code')->value;
+
+        if ($current_qr !== $delegate_reference) {
+          $registration->set('field_qr_code', $delegate_reference);
+          $changed = TRUE;
+        }
+      }
+
+      if ($changed) {
+        $registration->save();
+        $registration_updated++;
+      }
+    }
+  }
+
+  return 'Backfill complete: updated ' .
+    $delegate_updated . ' delegate node(s) and ' .
+    $registration_updated . ' conference registration node(s).';
+}

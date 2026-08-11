@@ -20,7 +20,24 @@ itsiug_registration.delegate:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::delegateForm'
     _title: 'Delegate Registration'
   requirements:
-    _custom_access: '\Drupal\itsiug_registration\Access\RegistrationAccessCheck::access'
+    _access: 'TRUE'
+
+itsiug_registration.delegate_confirmation:
+  path: '/register/delegate/confirmation'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::delegateConfirmation'
+    _title: 'Delegate Registration'
+  requirements:
+    _access: 'TRUE'
+
+itsiug_registration.delegate_cancel:
+  path: '/register/delegate/{delegate}/cancel'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::cancelDelegate'
+    _title: 'Cancel Delegate'
+  requirements:
+    _access: 'TRUE'
+    delegate: '\d+'
     
 itsiug_registration.dashboard:
   path: '/register/dashboard'

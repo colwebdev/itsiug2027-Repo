@@ -320,6 +320,29 @@ function itsiug_find_taxonomy_term($value, $vocabulary) {
  */
 function itsiug_registration_node_presave(\Drupal\node\NodeInterface $node) {
 
+  // Keep Delegate title in sync with first and last name edits.
+  if ($node->bundle() === 'delegate') {
+
+    $first_name = '';
+    $last_name = '';
+
+    if ($node->hasField('field_first_name') && !$node->get('field_first_name')->isEmpty()) {
+      $first_name = trim($node->get('field_first_name')->value);
+    }
+
+    if ($node->hasField('field_last_name') && !$node->get('field_last_name')->isEmpty()) {
+      $last_name = trim($node->get('field_last_name')->value);
+    }
+
+    $title = trim($first_name . ' ' . $last_name);
+
+    if ($title !== '') {
+      $node->setTitle($title);
+    }
+
+    return;
+  }
+
   // Only process Conference Registration nodes.
   if ($node->bundle() !== 'conference_registration') {
     return;
@@ -349,6 +372,115 @@ function itsiug_registration_node_presave(\Drupal\node\NodeInterface $node) {
 }
 
 /**
+ * Implements hook_node_update().
+ *
+ * Synchronises linked conference registrations when a delegate is edited.
+ */
+function itsiug_registration_node_update(NodeInterface $node) {
+
+  if ($node->bundle() !== 'delegate') {
+    return;
+  }
+
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'conference_registration')
+    ->condition('field_delegate', $node->id())
+    ->execute();
+
+  if (empty($registration_ids)) {
+    return;
+  }
+
+  $delegate_reference = '';
+
+  if (
+    $node->hasField('field_delegate_reference') &&
+    !$node->get('field_delegate_reference')->isEmpty()
+  ) {
+    $delegate_reference = trim($node->get('field_delegate_reference')->value);
+  }
+
+  foreach ($registration_ids as $registration_id) {
+
+    $registration = Node::load($registration_id);
+
+    if (!$registration) {
+      continue;
+    }
+
+    $changed = FALSE;
+
+    if ($registration->getTitle() !== $node->label()) {
+      $registration->setTitle($node->label());
+      $changed = TRUE;
+    }
+
+    if (
+      $delegate_reference !== '' &&
+      $registration->hasField('field_qr_code')
+    ) {
+      $current_qr = (string) $registration->get('field_qr_code')->value;
+
+      if ($current_qr !== $delegate_reference) {
+        $registration->set('field_qr_code', $delegate_reference);
+        $changed = TRUE;
+      }
+    }
+
+    if ($changed) {
+      $registration->save();
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_operation_alter().
+ */
+function itsiug_registration_entity_operation_alter(
+  array &$operations,
+  \Drupal\Core\Entity\EntityInterface $entity
+) {
+
+  if (
+    $entity->getEntityTypeId() === 'node' &&
+    $entity instanceof NodeInterface &&
+    $entity->bundle() === 'delegate'
+  ) {
+    unset($operations['delete']);
+  }
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function itsiug_registration_user_login(
+  \Drupal\Core\Session\AccountInterface $account
+) {
+
+  $institution_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'institution')
+    ->condition('field_representative', $account->id())
+    ->range(0, 1)
+    ->execute();
+
+  if (empty($institution_ids)) {
+    return;
+  }
+
+  $request = \Drupal::requestStack()->getCurrentRequest();
+  $current_destination = $request->query->get('destination');
+
+  if (!empty($current_destination) && $current_destination !== '/user') {
+    return;
+  }
+
+  \Drupal::service('redirect.destination')
+    ->set('/register/dashboard');
+}
+
+/**
  * Implements hook_node_access().
  */
 function itsiug_registration_node_access(
@@ -357,7 +489,31 @@ function itsiug_registration_node_access(
   AccountInterface $account
 ) {
 
-  if ($operation !== 'update' || $node->bundle() !== 'delegate') {
+  if ($node->bundle() !== 'delegate') {
+    return AccessResult::neutral();
+  }
+
+  if ($operation === 'delete') {
+
+    $registration_ids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'conference_registration')
+      ->condition('field_delegate', $node->id())
+      ->range(0, 1)
+      ->execute();
+
+    if (!empty($registration_ids)) {
+      return AccessResult::forbidden()
+        ->cachePerUser()
+        ->addCacheableDependency($node);
+    }
+
+    return AccessResult::neutral()
+      ->cachePerUser()
+      ->addCacheableDependency($node);
+  }
+
+  if ($operation !== 'update') {
     return AccessResult::neutral();
   }
 
@@ -664,6 +820,84 @@ function itsiug_registration_form_alter(
 
   if ($form_id === 'webform_submission_delegate_registration_add_form') {
     $form['#attributes']['class'][] = 'itsiug-delegate-registration';
+
+    if (isset($form['actions']['submit'])) {
+      $form['actions']['submit']['#submit'][] =
+        'itsiug_registration_delegate_registration_redirect_submit';
+    }
   }
 
+  if ($form_id === 'user_login_form') {
+    $form['#validate'][] =
+      'itsiug_registration_user_login_redirect_validate';
+    $form['#submit'][] =
+      'itsiug_registration_user_login_redirect_submit';
+  }
+
+}
+
+/**
+ * Redirect delegate registrations to custom confirmation page.
+ */
+function itsiug_registration_delegate_registration_redirect_submit(
+  array &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state
+) {
+  $form_state->setRedirect('itsiug_registration.delegate_confirmation');
+}
+
+/**
+ * Force destination for institution representative login.
+ */
+function itsiug_registration_user_login_redirect_validate(
+  array &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state
+) {
+
+  $uid = $form_state->get('uid');
+
+  if (empty($uid)) {
+    return;
+  }
+
+  $institution_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'institution')
+    ->condition('field_representative', (int) $uid)
+    ->range(0, 1)
+    ->execute();
+
+  if (empty($institution_ids)) {
+    return;
+  }
+
+  $request = \Drupal::requestStack()->getCurrentRequest();
+  $request->request->set('destination', '/register/dashboard');
+  $request->query->set('destination', '/register/dashboard');
+}
+
+/**
+ * Ensure institution representative login lands on /register/dashboard.
+ */
+function itsiug_registration_user_login_redirect_submit(
+  array &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state
+) {
+
+  $uid = $form_state->get('uid');
+
+  if (empty($uid)) {
+    return;
+  }
+
+  $institution_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'institution')
+    ->condition('field_representative', (int) $uid)
+    ->range(0, 1)
+    ->execute();
+
+  if (!empty($institution_ids)) {
+    $form_state->setRedirect('itsiug_registration.dashboard');
+  }
 }

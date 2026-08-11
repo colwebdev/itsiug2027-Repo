@@ -538,6 +538,12 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
   box-shadow: 0 0 0 3px rgba(31, 75, 107, 0.20);
 }
 
+.itsiug-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .itsiug-admin-page > .button {
   display: inline-block;
   margin-top: 5px;

@@ -30,5 +30,5 @@ actions:
     label: 'Back to login after logout'
     plugin: action_goto_action
     configuration:
-      url: /user/login
+      url: /home
     successors: {  }

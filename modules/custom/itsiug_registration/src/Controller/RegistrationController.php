@@ -20,6 +20,16 @@ class RegistrationController extends ControllerBase {
  */
 public function delegateForm() {
 
+  // Require an established institution registration session.
+  $session = \Drupal::request()->getSession();
+  $registration = $session->get('itsiug_registration');
+
+  if (empty($registration['institution_nid'])) {
+    return new RedirectResponse(
+      Url::fromRoute('itsiug_registration.access')->toString()
+    );
+  }
+
   $webform = Webform::load('delegate_registration');
 
   if (!$webform) {
@@ -35,6 +45,91 @@ public function delegateForm() {
     '#attributes' => [
       'class' => [
         'itsiug-delegate-registration',
+      ],
+    ],
+
+    '#attached' => [
+      'library' => [
+        'itsiug_theme/global-styling',
+      ],
+    ],
+  ];
+}
+
+/**
+ * Display the delegate registration confirmation page.
+ */
+public function delegateConfirmation() {
+
+  $session = \Drupal::request()->getSession();
+  $registration = $session->get('itsiug_registration');
+
+  // The institution session must still be active.
+  if (empty($registration['institution_nid'])) {
+    return new RedirectResponse(
+      Url::fromRoute('itsiug_registration.access')->toString()
+    );
+  }
+
+  return [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => [
+        'itsiug-admin-page',
+        'itsiug-admin-dashboard',
+        'itsiug-reports-page',
+        'itsiug-registration-confirmation',
+      ],
+    ],
+
+    'title' => [
+      '#markup' => '<h2>' .
+        $this->t('Delegate Registration Complete') .
+        '</h2>',
+    ],
+
+    'message' => [
+      '#markup' => '<p class="itsiug-admin-intro">' .
+        $this->t('New submission added to Delegate Registration.') .
+        '</p>',
+    ],
+
+    'actions' => [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'itsiug-admin-actions',
+          'itsiug-registration-confirmation-actions',
+        ],
+      ],
+
+      'register' => [
+        '#type' => 'link',
+        '#title' => $this->t('Register Another Delegate'),
+        '#url' => Url::fromRoute(
+          'itsiug_registration.delegate'
+        ),
+        '#attributes' => [
+          'class' => [
+            'button',
+            'button--primary',
+          ],
+        ],
+      ],
+
+      'logout' => [
+        '#type' => 'link',
+        '#title' => $this->t('Logout'),
+        '#url' => Url::fromRoute(
+          'itsiug_registration.logout',
+          [],
+          ['query' => ['destination' => '/home']]
+        ),
+        '#attributes' => [
+          'class' => [
+            'button',
+          ],
+        ],
       ],
     ],
 
@@ -648,13 +743,120 @@ public function logout() {
   // Clear the institution registration session.
   $session->remove('itsiug_registration');
 
-  $this->messenger()->addStatus(
-    $this->t('Registration access has been closed.')
-  );
+  if (!\Drupal::currentUser()->isAnonymous()) {
+    user_logout();
+  }
 
-  $url = Url::fromRoute('itsiug_registration.access');
+  // Prevent query-string destination overrides from sending users to login.
+  \Drupal::service('redirect_response_subscriber')->setIgnoreDestination(TRUE);
+
+  // Explicitly redirect to the public home alias after logout.
+  $url = Url::fromUserInput('/home');
 
   return new RedirectResponse($url->toString());
+}
+
+/**
+ * Cancel a delegate's linked conference registration(s).
+ */
+public function cancelDelegate($delegate) {
+
+  $account = \Drupal::currentUser();
+
+  if ($account->isAnonymous()) {
+    return new RedirectResponse(
+      Url::fromRoute('itsiug_registration.access')->toString()
+    );
+  }
+
+  $delegate_node = Node::load((int) $delegate);
+
+  if (!$delegate_node || $delegate_node->bundle() !== 'delegate') {
+    throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+  }
+
+  $can_cancel = $account->hasPermission('access itsiug admin');
+
+  if (!$can_cancel) {
+    $institution_id = $delegate_node->get('field_institution')->target_id ?? NULL;
+
+    if ($institution_id) {
+      $institution_ids = \Drupal::entityQuery('node')
+        ->accessCheck(FALSE)
+        ->condition('type', 'institution')
+        ->condition('nid', $institution_id)
+        ->condition('field_representative', $account->id())
+        ->range(0, 1)
+        ->execute();
+
+      $can_cancel = !empty($institution_ids);
+    }
+  }
+
+  if (!$can_cancel) {
+    throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+  }
+
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'conference_registration')
+    ->condition('field_delegate', $delegate_node->id())
+    ->execute();
+
+  foreach ($registration_ids as $registration_id) {
+    $registration = Node::load($registration_id);
+
+    if (!$registration) {
+      continue;
+    }
+
+    if (
+      $registration->hasField('field_checkin_status') &&
+      $registration->get('field_checkin_status')->value === 'checked_in'
+    ) {
+      $this->messenger()->addWarning(
+        $this->t('Delegate cannot be cancelled after check-in.')
+      );
+
+      return new RedirectResponse(
+        Url::fromRoute('itsiug_registration.dashboard')->toString()
+      );
+    }
+  }
+
+  $updated = 0;
+
+  foreach ($registration_ids as $registration_id) {
+    $registration = Node::load($registration_id);
+
+    if (!$registration) {
+      continue;
+    }
+
+    if (
+      $registration->hasField('field_registration_status') &&
+      $registration->get('field_registration_status')->value !== 'cancelled'
+    ) {
+      $registration->set('field_registration_status', 'cancelled');
+      $registration->save();
+      $updated++;
+    }
+  }
+
+  if ($updated > 0) {
+    $this->messenger()->addStatus(
+      $this->t('Delegate has been marked as Cancelled.')
+    );
+  }
+  else {
+    $this->messenger()->addStatus(
+      $this->t('Delegate was already marked as Cancelled.')
+    );
+  }
+
+  return new RedirectResponse(
+    Url::fromRoute('itsiug_registration.dashboard')->toString()
+  );
 }
   
   /**
@@ -745,6 +947,10 @@ public function logout() {
         continue;
       }
 
+      $is_checked_in =
+        $registration->hasField('field_checkin_status') &&
+        $registration->get('field_checkin_status')->value === 'checked_in';
+
       $rows[] = [
 
         'delegate' => [
@@ -805,19 +1011,43 @@ public function logout() {
         'actions' => [
           'data' => $delegate->access('update', $account)
             ? [
-              '#type' => 'link',
-              '#title' => $this->t('Edit Delegate'),
-              '#url' => Url::fromRoute(
-                'entity.node.edit_form',
-                ['node' => $delegate->id()]
-              ),
+              '#type' => 'container',
               '#attributes' => [
                 'class' => [
-                  'button',
-                  'button--primary',
-                  'itsiug-edit-delegate-button',
+                  'itsiug-row-actions',
                 ],
               ],
+              'edit' => [
+                '#type' => 'link',
+                '#title' => $this->t('Edit Delegate'),
+                '#url' => Url::fromRoute(
+                  'entity.node.edit_form',
+                  ['node' => $delegate->id()]
+                ),
+                '#attributes' => [
+                  'class' => [
+                    'button',
+                    'button--primary',
+                    'itsiug-edit-delegate-button',
+                  ],
+                ],
+              ],
+              'cancel' => !$is_checked_in
+                ? [
+                  '#type' => 'link',
+                  '#title' => $this->t('Cancel Delegate'),
+                  '#url' => Url::fromRoute(
+                    'itsiug_registration.delegate_cancel',
+                    ['delegate' => $delegate->id()]
+                  ),
+                  '#attributes' => [
+                    'class' => [
+                      'button',
+                      'itsiug-edit-delegate-button',
+                    ],
+                  ],
+                ]
+                : [],
             ]
             : '',
         ],
@@ -838,11 +1068,11 @@ public function logout() {
 
   '#type' => 'container',
 
-  '#attached' => [
-    'library' => [
-      'itsiug_theme/global-styling',
-    ],
+'#attached' => [
+  'library' => [
+    'itsiug_theme/global-styling',
   ],
+],
 
   '#attributes' => [
     'class' => [
@@ -932,7 +1162,9 @@ public function logout() {
           '#type' => 'link',
           '#title' => $this->t('Logout'),
           '#url' => \Drupal\Core\Url::fromRoute(
-            'itsiug_registration.logout'
+            'itsiug_registration.logout',
+            [],
+            ['query' => ['destination' => '/home']]
           ),
           '#attributes' => [
             'class' => [
