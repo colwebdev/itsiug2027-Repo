@@ -6,3 +6,9 @@ scanner:
   dependencies:
     - core/drupal
     - core/drupalSettings
+
+registerinfo_modal:
+  version: 1.x
+  css:
+    theme:
+      css/registerinfo-modal.css: {}

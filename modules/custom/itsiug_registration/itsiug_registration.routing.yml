@@ -6,6 +6,14 @@ itsiug_registration.access:
   requirements:
     _access: 'TRUE'
 
+itsiug_registration.info:
+  path: '/registerinfo'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::registerInfo'
+    _title: 'Registration Information'
+  requirements:
+    _access: 'TRUE'
+
 itsiug_registration.logout:
   path: '/register/logout'
   defaults:

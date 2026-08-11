@@ -16,6 +16,72 @@ use Symfony\Component\HttpFoundation\Request;
 class RegistrationController extends ControllerBase {
 
 /**
+ * Display the registration information modal page.
+ */
+public function registerInfo() {
+
+  return [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => [
+        'itsiug-registerinfo-page',
+      ],
+    ],
+
+    'overlay' => [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'itsiug-registerinfo-modal-overlay',
+        ],
+      ],
+
+      'modal' => [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'itsiug-registerinfo-modal',
+          ],
+        ],
+
+        'message' => [
+          '#markup' =>
+            '<p><strong>Welcome to the Registration Pages.</strong></p>' .
+            '<p>Your registration wil remain PENDING until the Good Standing of the Institutional Membership is confirmed.</p>',
+        ],
+
+        'actions' => [
+          '#type' => 'container',
+          '#attributes' => [
+            'class' => [
+              'itsiug-registerinfo-actions',
+            ],
+          ],
+
+          'register' => [
+            '#type' => 'link',
+            '#title' => $this->t('Register Now!'),
+            '#url' => Url::fromRoute('itsiug_registration.access'),
+            '#attributes' => [
+              'class' => [
+                'itsiug-registerinfo-button',
+              ],
+            ],
+          ],
+        ],
+      ],
+    ],
+
+    '#attached' => [
+      'library' => [
+        'itsiug_theme/global-styling',
+        'itsiug_registration/registerinfo_modal',
+      ],
+    ],
+  ];
+}
+
+/**
  * Display the delegate registration Webform.
  */
 public function delegateForm() {

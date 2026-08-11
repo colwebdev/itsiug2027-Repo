@@ -5,6 +5,7 @@ use Drupal\webform\WebformSubmissionInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_webform_submission_insert().
@@ -682,6 +683,55 @@ function itsiug_registration_form_webform_submission_delegate_registration_add_f
   $form_id
 ) {
   $form['#attributes']['class'][] = 'itsiug-delegate-registration';
+
+  // Add institution context heading above the registration form fields.
+  $session = \Drupal::request()->getSession();
+  $registration_context = $session->get('itsiug_registration');
+
+  if (empty($registration_context['institution_nid'])) {
+    return;
+  }
+
+  $institution = Node::load((int) $registration_context['institution_nid']);
+
+  if (!$institution || $institution->bundle() !== 'institution') {
+    return;
+  }
+
+  $institution_name = $institution->label();
+  $membership_status = '';
+
+  if ($institution->hasField('field_payment_status') && !$institution->get('field_payment_status')->isEmpty()) {
+    $status_item = $institution->get('field_payment_status')->first();
+
+    // Entity reference field: use referenced entity label.
+    if (isset($status_item->entity) && $status_item->entity) {
+      $membership_status = $status_item->entity->label();
+    }
+    // List/text field: try to resolve a human label from allowed values.
+    elseif (isset($status_item->value) && $status_item->value !== '') {
+      $status_value = $status_item->value;
+      $membership_status = $status_value;
+
+      $field_definition = $institution->getFieldDefinition('field_payment_status');
+      $allowed_values = $field_definition->getSetting('allowed_values');
+
+      if (is_array($allowed_values) && isset($allowed_values[$status_value])) {
+        $membership_status = $allowed_values[$status_value];
+      }
+    }
+  }
+
+  if ($membership_status === '') {
+    $membership_status = 'Not available';
+  }
+
+  $form['institution_membership_heading'] = [
+    '#type' => 'markup',
+    '#weight' => -1000,
+    '#markup' => '<p><strong>Institution:</strong> ' . Html::escape($institution_name) . '</p>'
+      . '<p><strong>Membership Status:</strong> ' . Html::escape($membership_status) . '</p>',
+  ];
 }
 
 /**
