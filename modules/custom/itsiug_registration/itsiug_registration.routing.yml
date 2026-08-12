@@ -81,6 +81,15 @@ itsiug_registration.test_certificate:
     _access: 'TRUE'
     registration: '\d+'
 
+itsiug_registration.test_badge:
+  path: '/register/test-badge/{registration}'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::testBadge'
+    _title: 'Test Badge'
+  requirements:
+    _access: 'TRUE'
+    registration: '\d+'
+
 itsiug_registration.admin_certificate_generate:
   path: '/register/admin/certificates/{registration}/generate'
   defaults:
@@ -89,6 +98,31 @@ itsiug_registration.admin_certificate_generate:
   requirements:
     _permission: 'access itsiug admin'
     registration: '\d+'
+
+itsiug_registration.admin_badges:
+  path: '/register/admin/badges'
+  defaults:
+    _form: '\Drupal\itsiug_registration\Form\BadgeManagementForm'
+    _title: 'ITSIUG 2027 Badge Management'
+  requirements:
+    _permission: 'access itsiug admin'
+
+itsiug_registration.admin_badge_generate:
+  path: '/register/admin/badges/{registration}/generate'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminGenerateBadge'
+    _title: 'Generate Badge'
+  requirements:
+    _permission: 'access itsiug admin'
+    registration: '\d+'
+
+itsiug_registration.admin_badges_bulk_download:
+  path: '/register/admin/badges/bulk-download'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminDownloadBadgesBulk'
+    _title: 'Download Bulk Badges PDF'
+  requirements:
+    _permission: 'access itsiug admin'
     
 itsiug_registration.reports:
   path: '/register/reports'

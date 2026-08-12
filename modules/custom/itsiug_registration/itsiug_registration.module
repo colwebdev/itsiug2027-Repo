@@ -258,6 +258,13 @@ $delegate->save();
   'field_certificate_eligibility' => 'not_eligible',
 
   'field_certificate_status' => 'not_generated',
+
+  'field_conference_status' => itsiug_map_list_field_value(
+    $data['conference_status'] ?? 'delegate',
+    itsiug_conference_status_options()
+  ) ?: 'delegate',
+
+  'field_badge_status' => 'not_generated',
 ]);
 
   $registration->save();
@@ -391,6 +398,88 @@ function itsiug_map_list_field_value($value, array $allowed_values) {
   }
 
   return '';
+}
+
+/**
+ * Conference status options used by the delegate registration flow.
+ *
+ * @return array<string, string>
+ *   Conference status options.
+ */
+function itsiug_conference_status_options() {
+
+  return [
+    'adaptit_education' => 'ADAPTIT: EDUCATION',
+    'honorary_member' => 'HONORARY MEMBER',
+    'delegate' => 'DELEGATE',
+    'exco_member' => 'EXCO MEMBER',
+    'exhibitor' => 'EXHIBITOR',
+  ];
+}
+
+/**
+ * Gets the current conference status for a delegate.
+ */
+function itsiug_get_delegate_conference_status(NodeInterface $delegate) {
+
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'conference_registration')
+    ->condition('field_delegate', $delegate->id())
+    ->sort('created', 'DESC')
+    ->range(0, 1)
+    ->execute();
+
+  if (empty($registration_ids)) {
+    return 'delegate';
+  }
+
+  $registration = Node::load((int) reset($registration_ids));
+
+  if (
+    !$registration ||
+    !$registration->hasField('field_conference_status') ||
+    $registration->get('field_conference_status')->isEmpty()
+  ) {
+    return 'delegate';
+  }
+
+  return (string) $registration->get('field_conference_status')->value;
+}
+
+/**
+ * Synchronise a delegate conference status across linked registrations.
+ */
+function itsiug_sync_delegate_conference_status(NodeInterface $delegate, $status) {
+
+  $status = itsiug_map_list_field_value($status, itsiug_conference_status_options());
+
+  if ($status === '') {
+    $status = 'delegate';
+  }
+
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'conference_registration')
+    ->condition('field_delegate', $delegate->id())
+    ->execute();
+
+  if (empty($registration_ids)) {
+    return;
+  }
+
+  foreach ($registration_ids as $registration_id) {
+    $registration = Node::load((int) $registration_id);
+
+    if (!$registration || !$registration->hasField('field_conference_status')) {
+      continue;
+    }
+
+    if (($registration->get('field_conference_status')->value ?? '') !== $status) {
+      $registration->set('field_conference_status', $status);
+      $registration->save();
+    }
+  }
 }
 
 /**
@@ -835,7 +924,20 @@ function itsiug_registration_form_node_form_alter(
     $form['title']['#access'] = FALSE;
   }
 
+  $current_status = itsiug_get_delegate_conference_status($node);
+
+  $form['conference_status'] = [
+    '#type' => 'select',
+    '#title' => t('Conference Status'),
+    '#options' => itsiug_conference_status_options(),
+    '#default_value' => $current_status,
+    '#required' => FALSE,
+    '#weight' => -990,
+  ];
+
   $form['#after_build'][] = 'itsiug_registration_delegate_form_after_build';
+
+  $form['actions']['submit']['#submit'][] = 'itsiug_registration_delegate_form_submit';
 }
 
 /**
@@ -860,7 +962,30 @@ function itsiug_registration_delegate_form_after_build(
     $form['field_title']['#weight'] = -1000;
   }
 
+  if (isset($form['conference_status'])) {
+    $form['conference_status']['#weight'] = -990;
+  }
+
   return $form;
+}
+
+/**
+ * Submit handler for the delegate edit form conference status.
+ */
+function itsiug_registration_delegate_form_submit(
+  array &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state
+) {
+
+  $node = $form_state->getFormObject()->getEntity();
+
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'delegate') {
+    return;
+  }
+
+  $status = (string) $form_state->getValue('conference_status', 'delegate');
+
+  itsiug_sync_delegate_conference_status($node, $status);
 }
 
 /**
@@ -976,6 +1101,16 @@ function itsiug_registration_form_alter(
 ) {
 
   if ($form_id === 'webform_submission_delegate_registration_add_form') {
+
+        $form['conference_status'] = [
+          '#type' => 'select',
+          '#title' => t('Conference Status'),
+          '#options' => itsiug_conference_status_options(),
+          '#default_value' => 'delegate',
+          '#required' => TRUE,
+          '#weight' => -980,
+        ];
+
     $form['#attributes']['class'][] = 'itsiug-delegate-registration';
 
     $form['#validate'][] =

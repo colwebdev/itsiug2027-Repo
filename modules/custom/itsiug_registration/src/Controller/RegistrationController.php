@@ -15,6 +15,184 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegistrationController extends ControllerBase {
 
+  /**
+   * Display ITSIUG 2027 badge management.
+   */
+  public function adminBadges() {
+
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'conference_registration')
+    ->condition('field_conference', 2)
+    ->sort('created', 'ASC')
+    ->execute();
+
+  $rows = [];
+
+  foreach ($registration_ids as $registration_id) {
+
+    $registration = Node::load($registration_id);
+
+    if (!$registration) {
+      continue;
+    }
+
+    $delegate = NULL;
+
+    if (!$registration->get('field_delegate')->isEmpty()) {
+      $delegate = $registration->get('field_delegate')->entity;
+    }
+
+    if (!$delegate) {
+      continue;
+    }
+
+    $institution = NULL;
+
+    if (!$registration->get('field_institution1')->isEmpty()) {
+      $institution = $registration->get('field_institution1')->entity;
+    }
+
+    $badge_status_value = '';
+    $badge_status = '';
+
+    if (!$registration->get('field_badge_status')->isEmpty()) {
+      $badge_status_value = $registration->get('field_badge_status')->value;
+      $allowed_values = $registration
+        ->get('field_badge_status')
+        ->first()
+        ->getFieldDefinition()
+        ->getSetting('allowed_values');
+      $badge_status = $allowed_values[$badge_status_value] ?? $badge_status_value;
+    }
+
+    $badge = $this->buildBadgeLink($registration);
+
+    $badge_action = $badge;
+
+    if (!$badge_action) {
+      $badge_action = [
+        'data' => [
+          '#type' => 'link',
+          '#title' => $this->t('Generate Badge'),
+          '#url' => Url::fromRoute(
+            'itsiug_registration.admin_badge_generate',
+            [
+              'registration' => $registration->id(),
+            ]
+          ),
+          '#attributes' => [
+            'class' => [
+              'button',
+              'button--primary',
+            ],
+          ],
+        ],
+      ];
+    }
+
+    $rows[] = [
+      'delegate' => [
+        'data' => [
+          '#type' => 'link',
+          '#title' => $delegate->label(),
+          '#url' => Url::fromRoute(
+            'entity.node.canonical',
+            [
+              'node' => $delegate->id(),
+            ]
+          ),
+        ],
+      ],
+
+      'institution' => $institution
+        ? $institution->label()
+        : '',
+
+      'qr' => $registration->get('field_qr_code')->value ?? '',
+
+      'status' => $badge_status,
+
+      'badge' => $badge_action,
+    ];
+  }
+
+return [
+
+'badge_management' => [
+  '#type' => 'container',
+
+  '#attached' => [
+    'library' => [
+      'itsiug_theme/global-styling',
+    ],
+  ],
+
+  '#attributes' => [
+    'class' => [
+      'itsiug-admin-page',
+      'itsiug-badge-management',
+    ],
+  ],
+
+    'heading' => [
+      '#markup' =>
+        '<h1>' .
+        $this->t('ITSIUG 2027 Badge Management') .
+        '</h1>',
+    ],
+
+    'intro' => [
+      '#markup' =>
+        '<p class="itsiug-admin-intro">' .
+        $this->t(
+          'Generate and download conference badges for registered delegates.'
+        ) .
+        '</p>',
+    ],
+
+    'badges' => [
+      '#type' => 'table',
+
+      '#attributes' => [
+        'class' => [
+          'itsiug-delegate-management-table',
+        ],
+      ],
+
+      '#header' => [
+        $this->t('Delegate'),
+        $this->t('Institution'),
+        $this->t('QR Code'),
+        $this->t('Status'),
+        $this->t('Badge'),
+      ],
+
+      '#rows' => $rows,
+
+      '#empty' => $this->t(
+        'No ITSIUG 2027 registrations were found.'
+      ),
+    ],
+
+    'back' => [
+      '#type' => 'link',
+      '#title' => $this->t('← Back to Administration'),
+      '#url' => Url::fromRoute(
+        'itsiug_registration.admin'
+      ),
+      '#attributes' => [
+        'class' => [
+          'button',
+        ],
+      ],
+    ],
+
+  ],
+
+];
+  }
+
 /**
  * Display the registration information modal page.
  */
@@ -762,6 +940,76 @@ public function testCertificate($registration) {
 
 }
 
+  /**
+   * Test badge generation for a registration.
+   */
+  public function testBadge($registration) {
+
+    $node = \Drupal\node\Entity\Node::load($registration);
+
+    if (!$node) {
+      return new \Symfony\Component\HttpFoundation\Response(
+        'Registration not found.',
+        404
+      );
+    }
+
+    if ($node->bundle() !== 'conference_registration') {
+      return new \Symfony\Component\HttpFoundation\Response(
+        'The supplied node is not a conference registration.',
+        400
+      );
+    }
+
+    try {
+
+      $generator = \Drupal::service(
+        'itsiug_registration.badge_generator'
+      );
+
+      $result = $generator->generate($node);
+
+      if (!$result['success']) {
+        return new \Symfony\Component\HttpFoundation\Response(
+          $result['message'],
+          400
+        );
+      }
+
+      return new \Symfony\Component\HttpFoundation\Response(
+        '<h1>Badge generated successfully</h1>' .
+        '<p>' . htmlspecialchars($result['message']) . '</p>' .
+        '<p><strong>File:</strong> ' .
+        htmlspecialchars($result['filename']) .
+        '</p>' .
+        '<p><strong>Badge number:</strong> ' .
+        htmlspecialchars($result['badge_number']) .
+        '</p>' .
+        '<p><strong>File ID:</strong> ' .
+        (int) $result['file_id'] .
+        '</p>'
+      );
+
+    }
+    catch (\Throwable $e) {
+
+      \Drupal::logger('itsiug_registration')->error(
+        'Badge generation failed for registration @nid: @message',
+        [
+          '@nid' => $registration,
+          '@message' => $e->getMessage(),
+        ]
+      );
+
+      return new \Symfony\Component\HttpFoundation\Response(
+        'Badge generation failed: ' .
+        htmlspecialchars($e->getMessage()),
+        500
+      );
+    }
+
+  }
+
 /**
  * Builds the certificate download link for a registration.
  */
@@ -806,6 +1054,55 @@ private function buildCertificateLink($registration) {
         htmlspecialchars($file_url, ENT_QUOTES, 'UTF-8') .
         '" target="_blank" rel="noopener" class="button button--small">' .
         $this->t('Download Certificate') .
+        '</a>',
+    ],
+  ];
+}
+
+/**
+ * Builds the badge download link for a registration.
+ */
+private function buildBadgeLink($registration) {
+
+  if (
+    $registration->get('field_badge_file')->isEmpty() ||
+    $registration->get('field_badge_status')->isEmpty()
+  ) {
+    return '';
+  }
+
+  $status = $registration
+    ->get('field_badge_status')
+    ->value;
+
+  if (!in_array($status, ['generated', 'issued'], TRUE)) {
+    return '';
+  }
+
+  $fid = $registration
+    ->get('field_badge_file')
+    ->target_id;
+
+  if (!$fid) {
+    return '';
+  }
+
+  $file = \Drupal\file\Entity\File::load($fid);
+
+  if (!$file) {
+    return '';
+  }
+
+  $file_url = \Drupal::service('file_url_generator')
+    ->generateAbsoluteString($file->getFileUri());
+
+  return [
+    'data' => [
+      '#markup' =>
+        '<a href="' .
+        htmlspecialchars($file_url, ENT_QUOTES, 'UTF-8') .
+        '" target="_blank" rel="noopener" class="button button--small">' .
+        $this->t('Download Badge') .
         '</a>',
     ],
   ];
@@ -2096,6 +2393,20 @@ return $response;
           ],
         ],
 
+        'badges' => [
+          '#type' => 'link',
+          '#title' => $this->t('Badge Management'),
+          '#url' => Url::fromRoute(
+            'itsiug_registration.admin_badges'
+          ),
+          '#attributes' => [
+            'class' => [
+              'button',
+              'button--primary',
+            ],
+          ],
+        ],
+
         'scanner' => [
           '#type' => 'link',
           '#title' => $this->t('Conference Scanner'),
@@ -2232,6 +2543,10 @@ return $response;
             '#markup' => $this->t('Not available'),
           ],
         ],
+
+        'conference_status' => $getLabel(
+          'field_conference_status'
+        ),
       ];
     }
 
@@ -2287,6 +2602,7 @@ return [
         $this->t('Monday'),
         $this->t('Tuesday'),
         $this->t('Wednesday'),
+        $this->t('Conference Status'),
         $this->t('Certificate'),
       ],
 
@@ -2564,7 +2880,6 @@ return [
         'itsiug_theme/global-styling',
       ],
     ],
-
     '#attributes' => [
       'class' => [
         'itsiug-admin-page',
@@ -2724,5 +3039,154 @@ return [
         'itsiug_registration.admin_certificates'
       )->toString()
     );
+  }
+
+  /**
+   * Generate a badge from the Admin area.
+   */
+  public function adminGenerateBadge($registration) {
+
+    $node = Node::load($registration);
+
+    if (!$node) {
+      $this->messenger()->addError(
+        $this->t('The registration could not be found.')
+      );
+
+      return new RedirectResponse(
+        Url::fromRoute(
+          'itsiug_registration.admin_badges'
+        )->toString()
+      );
+    }
+
+    if ($node->bundle() !== 'conference_registration') {
+      $this->messenger()->addError(
+        $this->t(
+          'The supplied node is not a conference registration.'
+        )
+      );
+
+      return new RedirectResponse(
+        Url::fromRoute(
+          'itsiug_registration.admin_badges'
+        )->toString()
+      );
+    }
+
+    try {
+
+      /** @var \Drupal\itsiug_registration\Service\BadgeGenerator $generator */
+      $generator = \Drupal::service(
+        'itsiug_registration.badge_generator'
+      );
+
+      $result = $generator->generate($node);
+
+      if (!empty($result['success'])) {
+
+        $this->messenger()->addStatus(
+          $this->t(
+            'Badge generated successfully for @delegate.',
+            [
+              '@delegate' => $node
+                ->get('field_delegate')
+                ->entity
+                ->label(),
+            ]
+          )
+        );
+
+      }
+      else {
+
+        $this->messenger()->addWarning(
+          $this->t(
+            $result['message'] ?? 'The badge could not be generated.'
+          )
+        );
+
+      }
+
+    }
+    catch (\Throwable $e) {
+
+      \Drupal::logger('itsiug_registration')->error(
+        'Badge generation failed for registration @registration: @message',
+        [
+          '@registration' => $node->id(),
+          '@message' => $e->getMessage(),
+        ]
+      );
+
+      $this->messenger()->addError(
+        $this->t(
+          'Badge generation failed. Please check the Drupal log.'
+        )
+      );
+    }
+
+    return new RedirectResponse(
+      Url::fromRoute(
+        'itsiug_registration.admin_badges'
+      )->toString()
+    );
+  }
+
+  /**
+   * Generate one multi-page PDF for all conference badges.
+   */
+  public function adminDownloadBadgesBulk() {
+
+    try {
+
+      /** @var \Drupal\itsiug_registration\Service\BadgeGenerator $generator */
+      $generator = \Drupal::service(
+        'itsiug_registration.badge_generator'
+      );
+
+      $result = $generator->generateBulk(2);
+
+      if (empty($result['success'])) {
+        $this->messenger()->addWarning(
+          $this->t(
+            $result['message'] ?? 'Bulk badge PDF could not be generated.'
+          )
+        );
+
+        return new RedirectResponse(
+          Url::fromRoute(
+            'itsiug_registration.admin_badges'
+          )->toString()
+        );
+      }
+
+      $file_url = \Drupal::service('file_url_generator')
+        ->generateAbsoluteString($result['uri']);
+
+      return new RedirectResponse($file_url);
+
+    }
+    catch (\Throwable $e) {
+
+      \Drupal::logger('itsiug_registration')->error(
+        'Bulk badge generation failed: @message',
+        [
+          '@message' => $e->getMessage(),
+        ]
+      );
+
+      $this->messenger()->addError(
+        $this->t(
+          'Bulk badge generation failed. Please check the Drupal log.'
+        )
+      );
+
+      return new RedirectResponse(
+        Url::fromRoute(
+          'itsiug_registration.admin_badges'
+        )->toString()
+      );
+    }
   }
 }

@@ -7,3 +7,9 @@ services:
       - '@file_system'
       - '@file_url_generator'
       - '@plugin.manager.mail'
+
+  itsiug_registration.badge_generator:
+    class: Drupal\itsiug_registration\Service\BadgeGenerator
+    arguments:
+      - '@file.repository'
+      - '@file_system'
