@@ -75,17 +75,19 @@
           });
         }
 
-        let mobileRegister = headerInner.querySelector(".mobile-register-btn");
-        if (!mobileRegister) {
+        const hasMobileAuthButtons =
+          headerInner.querySelectorAll(".mobile-register-btn").length > 0;
+        if (!hasMobileAuthButtons) {
           const mainUl = navBlock.querySelector("ul:not(.contextual-links)");
           if (mainUl && mainUl.children.length > 0) {
             const lastLi = mainUl.children[mainUl.children.length - 1];
-            const link = lastLi.querySelector("a");
-            if (link) {
-              mobileRegister = link.cloneNode(true);
-              mobileRegister.classList.add("mobile-register-btn");
-              headerInner.insertBefore(mobileRegister, mobileToggle);
-            }
+            const links = lastLi.querySelectorAll(":scope > a");
+
+            links.forEach((link) => {
+              const mobileAuthButton = link.cloneNode(true);
+              mobileAuthButton.classList.add("mobile-register-btn");
+              headerInner.insertBefore(mobileAuthButton, mobileToggle);
+            });
           }
         }
       }

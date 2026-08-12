@@ -1,5 +1,8 @@
 scanner:
   version: 1.x
+  css:
+    theme:
+      css/scanner.css: {}
   js:
     /libraries/html5-qrcode/html5-qrcode.min.js: {}
     js/scanner.js: {}

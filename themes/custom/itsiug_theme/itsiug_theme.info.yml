@@ -6,3 +6,8 @@ base theme: convene_theme
 
 libraries:
   - itsiug_theme/global-styling
+
+component-libraries:
+  itsiug:
+    paths:
+      - components

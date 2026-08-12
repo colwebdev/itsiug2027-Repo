@@ -16,6 +16,12 @@
 	{% endif %}
 
 	{% if description %}
-		<div class="typography__description">{{ description }}</div>
+		<div class="typography__description">
+			{% if '<' in description and '>' in description %}
+				{{ description|raw }}
+			{% else %}
+				{{ description|nl2br }}
+			{% endif %}
+		</div>
 	{% endif %}
 </div>

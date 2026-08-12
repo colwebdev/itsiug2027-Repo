@@ -35,6 +35,7 @@
       <ul>
     {% endif %}
     {% for item in items %}
+      {% set is_register_cta = item.title|lower == 'register' %}
       {%
         set classes = [
           'menu-item',
@@ -44,8 +45,15 @@
           item.below ? 'has-submenu',
         ]
       %}
-      <li{{ item.attributes.addClass(classes) }}>
+      {% set li_attributes = item.attributes.addClass(classes) %}
+      {% if is_register_cta %}
+        {% set li_attributes = li_attributes.addClass('menu-item--auth-actions').setAttribute('style', 'display:flex;align-items:center;gap:12px;') %}
+      {% endif %}
+      <li{{ li_attributes }}>
         {{ link(item.title, item.url) }}
+        {% if is_register_cta %}
+          <a href="{{ logged_in ? path('user.logout') : path('user.login') }}">{{ logged_in ? 'Logout' : 'Login' }}</a>
+        {% endif %}
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
         {% endif %}

@@ -334,6 +334,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/canvas_full_html' => array(
+            'pretty_version' => '1.0.6',
+            'version' => '1.0.6.0',
+            'reference' => '1.0.6',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../modules/contrib/canvas_full_html',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/captcha' => array(
             'pretty_version' => '2.0.10',
             'version' => '2.0.10.0',

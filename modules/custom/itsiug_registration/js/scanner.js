@@ -228,12 +228,16 @@
 
       .then(function (data) {
 
+        const presentation = getResultPresentation(data);
+
         if (data.success) {
 
           resultElement.innerHTML =
-            '<div class="itsiug-scan-success">' +
+            '<div class="' + presentation.stateClass + '">' +
 
-              '<h2>✓ Scan Successful</h2>' +
+              '<h2>' +
+                Drupal.checkPlain(presentation.heading) +
+              '</h2>' +
 
               '<p><strong>' +
                 Drupal.checkPlain(
@@ -258,7 +262,7 @@
                   ? '<p>' +
                     '<button type="button" ' +
                     'id="itsiug-scan-again" ' +
-                    'class="button button--primary">' +
+                    'class="button button--primary itsiug-scan-again-button">' +
                     'Scan Another Delegate' +
                     '</button>' +
                     '</p>'
@@ -271,9 +275,11 @@
         else {
 
           resultElement.innerHTML =
-            '<div class="itsiug-scan-error">' +
+            '<div class="' + presentation.stateClass + '">' +
 
-              '<h2>Unable to process badge</h2>' +
+              '<h2>' +
+                Drupal.checkPlain(presentation.heading) +
+              '</h2>' +
 
               '<p>' +
                 Drupal.checkPlain(
@@ -286,7 +292,7 @@
                   ? '<p>' +
                     '<button type="button" ' +
                     'id="itsiug-scan-again" ' +
-                    'class="button">' +
+                    'class="button itsiug-scan-again-button">' +
                     'Scan Another Delegate' +
                     '</button>' +
                     '</p>'
@@ -315,7 +321,7 @@
                 ? '<p>' +
                   '<button type="button" ' +
                   'id="itsiug-scan-again" ' +
-                  'class="button">' +
+                    'class="button itsiug-scan-again-button">' +
                   'Scan Another Delegate' +
                   '</button>' +
                   '</p>'
@@ -326,6 +332,65 @@
 
       });
 
+  }
+
+  function getResultPresentation(data) {
+
+    const type = (data && data.result_type) ? data.result_type : '';
+
+    if (type === 'scan_recorded') {
+      return {
+        heading: '\u2713 Scan Successful',
+        stateClass: 'itsiug-scan-success'
+      };
+    }
+
+    if (type === 'already_recorded') {
+      return {
+        heading: 'Already Recorded',
+        stateClass: 'itsiug-scan-info'
+      };
+    }
+
+    if (type === 'outside_scan_days') {
+      return {
+        heading: 'Scan Not Available Today',
+        stateClass: 'itsiug-scan-warning'
+      };
+    }
+
+    if (type === 'qr_not_recognised') {
+      return {
+        heading: 'QR Code Not Found',
+        stateClass: 'itsiug-scan-error'
+      };
+    }
+
+    if (type === 'no_qr_received') {
+      return {
+        heading: 'No QR Code Received',
+        stateClass: 'itsiug-scan-error'
+      };
+    }
+
+    if (type === 'registration_not_found' || type === 'delegate_not_found') {
+      return {
+        heading: 'Unable to Process Badge',
+        stateClass: 'itsiug-scan-error'
+      };
+    }
+
+    if (data && data.success) {
+      return {
+        heading: '\u2713 Scan Successful',
+        stateClass: 'itsiug-scan-success'
+      };
+    }
+
+    return {
+      heading: 'Unable to Process Badge',
+      stateClass: 'itsiug-scan-warning'
+    };
   }
 
 })(Drupal, drupalSettings);

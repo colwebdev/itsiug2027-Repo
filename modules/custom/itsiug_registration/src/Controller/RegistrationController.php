@@ -219,6 +219,7 @@ public function scannerProcess(Request $request) {
   if ($qr_code === '') {
     return new JsonResponse([
       'success' => FALSE,
+      'result_type' => 'no_qr_received',
       'message' => 'No QR code was received.',
     ], 400);
   }
@@ -234,6 +235,7 @@ public function scannerProcess(Request $request) {
   if (empty($registration_ids)) {
     return new JsonResponse([
       'success' => FALSE,
+      'result_type' => 'qr_not_recognised',
       'message' => 'QR code not recognised.',
     ], 404);
   }
@@ -245,6 +247,7 @@ public function scannerProcess(Request $request) {
   if (!$registration) {
     return new JsonResponse([
       'success' => FALSE,
+      'result_type' => 'registration_not_found',
       'message' => 'Conference registration could not be loaded.',
     ], 404);
   }
@@ -259,6 +262,7 @@ public function scannerProcess(Request $request) {
   if (!$delegate) {
     return new JsonResponse([
       'success' => FALSE,
+      'result_type' => 'delegate_not_found',
       'message' => 'Delegate could not be found.',
     ], 404);
   }
@@ -513,6 +517,7 @@ if ($is_staff_scanner) {
 
   return new JsonResponse([
     'success' => TRUE,
+    'result_type' => empty($changes) ? 'already_recorded' : 'scan_recorded',
     'mode' => 'staff',
     'delegate' => $delegate->label(),
     'institution' => $institution
@@ -532,6 +537,7 @@ if ($is_staff_scanner) {
 
     return new JsonResponse([
       'success' => FALSE,
+      'result_type' => 'outside_scan_days',
       'mode' => 'delegate',
       'delegate' => $delegate->label(),
       'message' => 'Delegate self-scanning is available Monday to Wednesday.',
@@ -579,6 +585,9 @@ else {
 
 return new JsonResponse([
   'success' => TRUE,
+  'result_type' => $registration->get($day_field)->value === 'present' && str_contains($message, 'already recorded')
+    ? 'already_recorded'
+    : 'scan_recorded',
   'mode' => 'delegate',
   'delegate' => $delegate->label(),
   'institution' => $institution
@@ -625,7 +634,7 @@ public function badgeScanner() {
 
     'message' => [
       '#markup' =>
-        '<p id="itsiug-badge-message">Processing your badge...</p>',
+        '<div id="itsiug-badge-message" class="itsiug-scan-status">Processing your badge...</div>',
     ],
 
     '#attached' => [
@@ -669,7 +678,7 @@ public function scanner() {
     ],
 
     'result' => [
-      '#markup' => '<div id="itsiug-scan-result"><p>Starting camera...</p></div>',
+      '#markup' => '<div id="itsiug-scan-result" class="itsiug-scan-status"><p>Starting camera...</p></div>',
     ],
 
     '#attached' => [

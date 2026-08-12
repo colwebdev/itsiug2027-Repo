@@ -29,6 +29,7 @@
         "drupal/autosave_form": "^1.10.0",
         "drupal/bpmn_io": "3.0.6",
         "drupal/canvas": "1.9.0",
+        "drupal/canvas_full_html": "^1.0",
         "drupal/captcha": "^2.0.10",
         "drupal/checklistapi": "^2.1.7",
         "drupal/clientside_validation": "^4.1",
