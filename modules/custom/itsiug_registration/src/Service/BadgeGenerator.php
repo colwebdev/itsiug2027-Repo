@@ -632,7 +632,7 @@ class BadgeGenerator {
     $pdf->MultiCell(
       54,
       4,
-      "Present this badge at the\nregistration desk for check- in,\nand scan it yourself dailyto record\nyour Attendance",
+      "Present this badge at the\nregistration desk for check- in,\nand scan it yourself daily to record\nyour Attendance",
       0,
       'L',
       FALSE,
