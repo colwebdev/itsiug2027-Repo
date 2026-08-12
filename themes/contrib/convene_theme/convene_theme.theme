@@ -56,8 +56,8 @@ function convene_theme_preprocess_menu(array &$variables): void {
 
 	$variables['logged_in'] = $logged_in;
 	$variables['auth_route'] = $logged_in
-		? 'itsiug_registration.logout'
-		: 'itsiug_registration.access';
-	$variables['auth_label'] = $logged_in ? t('Logout') : t('Login');
+		? 'user.logout'
+		: 'user.login';
+	$variables['auth_label'] = $logged_in ? t('UG Rep Logout') : t('UG Rep Login');
 	$variables['#cache']['contexts'][] = 'user.roles:authenticated';
 }

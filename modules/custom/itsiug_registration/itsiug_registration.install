@@ -434,3 +434,52 @@ function itsiug_registration_update_9004() {
 
   return 'Conference status field added.';
 }
+
+/**
+ * Grant ITSIUG admin and reports permissions to Exco Member.
+ */
+function itsiug_registration_update_9005() {
+
+  $role = \Drupal\user\Entity\Role::load('exco_member');
+
+  if (!$role) {
+    return 'Exco Member role not found; no permissions were changed.';
+  }
+
+  $changed = FALSE;
+
+  foreach (['access itsiug admin', 'access itsiug reports'] as $permission) {
+    if (!$role->hasPermission($permission)) {
+      $role->grantPermission($permission);
+      $changed = TRUE;
+    }
+  }
+
+  if ($changed) {
+    $role->save();
+    return 'Granted ITSIUG admin and reports permissions to Exco Member.';
+  }
+
+  return 'Exco Member already has ITSIUG admin and reports permissions.';
+}
+
+/**
+ * Restrict Exco Member from broad ITSIUG admin permission.
+ */
+function itsiug_registration_update_9006() {
+
+  $role = \Drupal\user\Entity\Role::load('exco_member');
+
+  if (!$role) {
+    return 'Exco Member role not found; no permissions were changed.';
+  }
+
+  if (!$role->hasPermission('access itsiug admin')) {
+    return 'Exco Member already does not have ITSIUG admin permission.';
+  }
+
+  $role->revokePermission('access itsiug admin');
+  $role->save();
+
+  return 'Removed ITSIUG admin permission from Exco Member.';
+}

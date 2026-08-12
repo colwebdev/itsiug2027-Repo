@@ -1296,7 +1296,7 @@ public function cancelDelegate($delegate) {
       ->sort('created', 'ASC')
       ->execute();
 
-    $rows = [];
+    $sortable_rows = [];
 
     foreach ($registration_nids as $registration_nid) {
 
@@ -1324,109 +1324,142 @@ public function cancelDelegate($delegate) {
         $registration->hasField('field_checkin_status') &&
         $registration->get('field_checkin_status')->value === 'checked_in';
 
-      $rows[] = [
+      $name_data = $this->getDelegateSortData($delegate);
 
-        'delegate' => [
+      $certificate_action = $this->buildCertificateLink($registration);
+
+      if (!$certificate_action) {
+        $certificate_action = [
           'data' => [
-            '#type' => 'link',
-            '#title' => $delegate->label(),
-            '#url' => \Drupal\Core\Url::fromRoute(
-              'entity.node.canonical',
-              ['node' => $delegate->id()]
-            ),
+            '#markup' => $this->t('Not Generated'),
           ],
-        ],
+        ];
+      }
 
-        'email' => $delegate->get('field_email')->value,
-
-        'registration' => $registration
-          ->get('field_registration_status')
-          ->first()
-          ->getFieldDefinition()
-          ->getSetting('allowed_values')[
-            $registration->get('field_registration_status')->value
-          ] ?? $registration->get('field_registration_status')->value,
-
-        'checkin' => $registration
-          ->get('field_checkin_status')
-          ->first()
-          ->getFieldDefinition()
-          ->getSetting('allowed_values')[
-            $registration->get('field_checkin_status')->value
-          ] ?? $registration->get('field_checkin_status')->value,
-
-        'monday' => $registration
-          ->get('field_monday_attendance')
-          ->first()
-          ->getFieldDefinition()
-          ->getSetting('allowed_values')[
-            $registration->get('field_monday_attendance')->value
-          ] ?? $registration->get('field_monday_attendance')->value,
-
-        'tuesday' => $registration
-          ->get('field_tuesday_attendance')
-          ->first()
-          ->getFieldDefinition()
-          ->getSetting('allowed_values')[
-            $registration->get('field_tuesday_attendance')->value
-          ] ?? $registration->get('field_tuesday_attendance')->value,
-
-        'wednesday' => $registration
-          ->get('field_wednesday_attendance')
-          ->first()
-          ->getFieldDefinition()
-          ->getSetting('allowed_values')[
-            $registration->get('field_wednesday_attendance')->value
-          ] ?? $registration->get('field_wednesday_attendance')->value,
-
-        'certificate' => $this->buildCertificateLink($registration),
-
-        'actions' => [
-          'data' => $delegate->access('update', $account)
-            ? [
-              '#type' => 'container',
-              '#attributes' => [
-                'class' => [
-                  'itsiug-row-actions',
-                ],
-              ],
-              'edit' => [
-                '#type' => 'link',
-                '#title' => $this->t('Edit Delegate'),
-                '#url' => Url::fromRoute(
-                  'entity.node.edit_form',
-                  ['node' => $delegate->id()]
-                ),
+      $sortable_rows[] = [
+        'sort_last_name' => $name_data['last_name'],
+        'sort_first_name' => $name_data['first_name'],
+        'registration_id' => (int) $registration->id(),
+        'row' => [
+          'delegate' => [
+            'data' => [
+              '#type' => 'link',
+              '#title' => $delegate->label(),
+              '#url' => \Drupal\Core\Url::fromRoute(
+                'entity.node.canonical',
+                ['node' => $delegate->id()]
+              ),
+            ],
+          ],
+          'registration' => $registration
+            ->get('field_registration_status')
+            ->first()
+            ->getFieldDefinition()
+            ->getSetting('allowed_values')[
+              $registration->get('field_registration_status')->value
+            ] ?? $registration->get('field_registration_status')->value,
+          'checkin' => $registration
+            ->get('field_checkin_status')
+            ->first()
+            ->getFieldDefinition()
+            ->getSetting('allowed_values')[
+              $registration->get('field_checkin_status')->value
+            ] ?? $registration->get('field_checkin_status')->value,
+          'monday' => $registration
+            ->get('field_monday_attendance')
+            ->first()
+            ->getFieldDefinition()
+            ->getSetting('allowed_values')[
+              $registration->get('field_monday_attendance')->value
+            ] ?? $registration->get('field_monday_attendance')->value,
+          'tuesday' => $registration
+            ->get('field_tuesday_attendance')
+            ->first()
+            ->getFieldDefinition()
+            ->getSetting('allowed_values')[
+              $registration->get('field_tuesday_attendance')->value
+            ] ?? $registration->get('field_tuesday_attendance')->value,
+          'wednesday' => $registration
+            ->get('field_wednesday_attendance')
+            ->first()
+            ->getFieldDefinition()
+            ->getSetting('allowed_values')[
+              $registration->get('field_wednesday_attendance')->value
+            ] ?? $registration->get('field_wednesday_attendance')->value,
+          'certificate' => $certificate_action,
+          'actions' => [
+            'data' => $delegate->access('update', $account)
+              ? [
+                '#type' => 'container',
                 '#attributes' => [
                   'class' => [
-                    'button',
-                    'button--primary',
-                    'itsiug-edit-delegate-button',
+                    'itsiug-row-actions',
                   ],
                 ],
-              ],
-              'cancel' => !$is_checked_in
-                ? [
+                'edit' => [
                   '#type' => 'link',
-                  '#title' => $this->t('Cancel Delegate'),
+                  '#title' => $this->t('Edit Delegate'),
                   '#url' => Url::fromRoute(
-                    'itsiug_registration.delegate_cancel',
-                    ['delegate' => $delegate->id()]
+                    'entity.node.edit_form',
+                    ['node' => $delegate->id()]
                   ),
                   '#attributes' => [
                     'class' => [
                       'button',
+                      'button--primary',
                       'itsiug-edit-delegate-button',
                     ],
                   ],
-                ]
-                : [],
-            ]
-            : '',
+                ],
+                'cancel' => !$is_checked_in
+                  ? [
+                    '#type' => 'link',
+                    '#title' => $this->t('Cancel Delegate'),
+                    '#url' => Url::fromRoute(
+                      'itsiug_registration.delegate_cancel',
+                      ['delegate' => $delegate->id()]
+                    ),
+                    '#attributes' => [
+                      'class' => [
+                        'button',
+                        'itsiug-edit-delegate-button',
+                      ],
+                    ],
+                  ]
+                  : [],
+              ]
+              : '',
+          ],
         ],
-
       ];
     }
+
+    usort($sortable_rows, static function (array $left, array $right): int {
+      $last_name_compare = strcasecmp(
+        (string) ($left['sort_last_name'] ?? ''),
+        (string) ($right['sort_last_name'] ?? '')
+      );
+
+      if ($last_name_compare !== 0) {
+        return $last_name_compare;
+      }
+
+      $first_name_compare = strcasecmp(
+        (string) ($left['sort_first_name'] ?? ''),
+        (string) ($right['sort_first_name'] ?? '')
+      );
+
+      if ($first_name_compare !== 0) {
+        return $first_name_compare;
+      }
+
+      return ((int) ($left['registration_id'] ?? 0)) <=> ((int) ($right['registration_id'] ?? 0));
+    });
+
+    $rows = array_map(
+      static fn (array $sortable_row): array => $sortable_row['row'],
+      $sortable_rows
+    );
 
     \Drupal::logger('itsiug_registration')->notice(
       'DASHBOARD DEBUG: institution=@institution registrations=@registrations rows=@rows',
@@ -1488,7 +1521,6 @@ public function cancelDelegate($delegate) {
 
   '#header' => [
     $this->t('Delegate'),
-    $this->t('Email'),
     $this->t('Registration'),
     $this->t('Check-in'),
     $this->t('Monday'),
@@ -2467,6 +2499,9 @@ return $response;
    */
   public function admin() {
 
+    $account = \Drupal::currentUser();
+    $access_manager = \Drupal::service('access_manager');
+
     return [
 
   'admin_page' => [
@@ -2512,6 +2547,7 @@ return $response;
           '#url' => Url::fromRoute(
             'itsiug_registration.reports'
           ),
+          '#access' => $access_manager->checkNamedRoute('itsiug_registration.reports', [], $account),
           '#attributes' => [
             'class' => [
               'button',
@@ -2526,6 +2562,7 @@ return $response;
           '#url' => Url::fromRoute(
             'itsiug_registration.admin_delegates'
           ),
+          '#access' => $access_manager->checkNamedRoute('itsiug_registration.admin_delegates', [], $account),
           '#attributes' => [
             'class' => [
               'button',
@@ -2540,6 +2577,7 @@ return $response;
           '#url' => Url::fromRoute(
             'itsiug_registration.admin_delegate_contacts'
           ),
+          '#access' => $access_manager->checkNamedRoute('itsiug_registration.admin_delegate_contacts', [], $account),
           '#attributes' => [
             'class' => [
               'button',
@@ -2554,6 +2592,7 @@ return $response;
           '#url' => Url::fromRoute(
             'itsiug_registration.admin_certificates'
           ),
+          '#access' => $access_manager->checkNamedRoute('itsiug_registration.admin_certificates', [], $account),
           '#attributes' => [
             'class' => [
               'button',
@@ -2568,6 +2607,7 @@ return $response;
           '#url' => Url::fromRoute(
             'itsiug_registration.admin_badges'
           ),
+          '#access' => $access_manager->checkNamedRoute('itsiug_registration.admin_badges', [], $account),
           '#attributes' => [
             'class' => [
               'button',
@@ -2582,6 +2622,7 @@ return $response;
           '#url' => Url::fromRoute(
             'itsiug_registration.scanner'
           ),
+          '#access' => $access_manager->checkNamedRoute('itsiug_registration.scanner', [], $account),
           '#attributes' => [
             'class' => [
               'button',
@@ -2595,6 +2636,7 @@ return $response;
           '#url' => Url::fromRoute(
             'itsiug_registration.dashboard'
           ),
+          '#access' => $account->hasPermission('access itsiug admin'),
           '#attributes' => [
             'class' => [
               'button',

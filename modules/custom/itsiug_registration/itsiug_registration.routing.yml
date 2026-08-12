@@ -61,7 +61,7 @@ itsiug_registration.scanner:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::scanner'
     _title: 'Conference Scanner'
   requirements:
-    _access: 'TRUE'
+    _permission: 'access itsiug admin'
 
 itsiug_registration.scanner_process:
   path: '/register/scanner/process'
@@ -69,7 +69,7 @@ itsiug_registration.scanner_process:
   defaults:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::scannerProcess'
   requirements:
-    _access: 'TRUE'
+    _permission: 'access itsiug admin'
     _csrf_request_header_token: 'TRUE'
 
 itsiug_registration.test_certificate:
@@ -130,7 +130,7 @@ itsiug_registration.reports:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::reports'
     _title: 'ITSIUG 2027 Reports'
   requirements:
-    _permission: 'access itsiug reports'
+    _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::reports'
 
 itsiug_registration.reports_csv:
   path: '/register/reports/csv'
@@ -146,7 +146,7 @@ itsiug_registration.admin_delegates:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminDelegates'
     _title: 'ITSIUG 2027 Delegate Management'
   requirements:
-    _permission: 'access itsiug admin'
+    _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::admin'
 
 itsiug_registration.admin_delegate_contacts:
   path: '/register/admin/delegate-contacts'
@@ -154,7 +154,7 @@ itsiug_registration.admin_delegate_contacts:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminDelegateContacts'
     _title: 'ITSIUG 2027 Delegate Contact Details'
   requirements:
-    _permission: 'access itsiug admin'
+    _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::admin'
 
 itsiug_registration.badge_scanner:
   path: '/badge/scanner'
@@ -170,7 +170,7 @@ itsiug_registration.admin:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::admin'
     _title: 'ITSIUG 2027 Administration'
   requirements:
-    _permission: 'access itsiug admin'
+    _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::admin'
 
 itsiug_registration.admin_certificates:
   path: '/register/admin/certificates'
