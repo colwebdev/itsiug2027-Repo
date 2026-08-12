@@ -573,7 +573,7 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
   color: #ffffff;
 }
 
-.itsiug-badge-management .itsiug-badge-filters {
+.itsiug-admin-page .itsiug-admin-filters {
   margin: 0 0 18px;
   padding: 14px 16px;
   border: 1px solid #dfe6eb;
@@ -581,17 +581,17 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
   background: #f7f9fb;
 }
 
-.itsiug-badge-management .itsiug-badge-filters .form-item {
+.itsiug-admin-page .itsiug-admin-filters .form-item {
   margin: 0;
 }
 
-.itsiug-badge-management .itsiug-badge-filters .form-item label {
+.itsiug-admin-page .itsiug-admin-filters .form-item label {
   margin-bottom: 8px;
   color: #1f4b6b;
   font-weight: 600;
 }
 
-.itsiug-badge-management .itsiug-badge-filters input[type="text"] {
+.itsiug-admin-page .itsiug-admin-filters input[type="text"] {
   max-width: 520px;
   min-height: 40px;
   padding: 8px 12px;
@@ -599,20 +599,20 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
   border-radius: 6px;
 }
 
-.itsiug-badge-management .itsiug-badge-filters .description {
+.itsiug-admin-page .itsiug-admin-filters .description {
   margin-top: 8px;
   color: #5b6873;
 }
 
-.itsiug-badge-management .itsiug-badge-filters .form-actions {
+.itsiug-admin-page .itsiug-admin-filters .form-actions {
   margin-top: 12px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.itsiug-badge-management .itsiug-badge-filters .form-actions .button,
-.itsiug-badge-management .itsiug-badge-filters .form-actions input[type="submit"] {
+.itsiug-admin-page .itsiug-admin-filters .form-actions .button,
+.itsiug-admin-page .itsiug-admin-filters .form-actions input[type="submit"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -627,8 +627,8 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
   cursor: pointer;
 }
 
-.itsiug-badge-management .itsiug-badge-filters .form-actions .button:hover,
-.itsiug-badge-management .itsiug-badge-filters .form-actions input[type="submit"]:hover {
+.itsiug-admin-page .itsiug-admin-filters .form-actions .button:hover,
+.itsiug-admin-page .itsiug-admin-filters .form-actions input[type="submit"]:hover {
   background: #163a53;
   color: #ffffff !important;
 }
@@ -704,6 +704,21 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
 .itsiug-reports-page .button:hover {
   background: #163a53;
   color: #ffffff;
+}
+
+.itsiug-report-two-column {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.itsiug-report-column {
+  min-width: 0;
+}
+
+.itsiug-report-column h3 {
+  margin-top: 0;
 }
 
 /* Conference summary */
@@ -926,6 +941,10 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
 
   .itsiug-reports-page h3 {
     font-size: 20px;
+  }
+
+  .itsiug-report-two-column {
+    grid-template-columns: 1fr;
   }
 
 }

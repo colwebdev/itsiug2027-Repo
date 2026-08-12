@@ -2,6 +2,7 @@
 
 namespace Drupal\itsiug_registration\Controller;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
@@ -1555,12 +1556,13 @@ public function cancelDelegate($delegate) {
    */
   public function reports() {
 
+    $search = $this->getDelegateSearchTerm();
+
     // Get all ITSIUG 2027 registrations.
     $registration_nids = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
       ->condition('type', 'conference_registration')
       ->condition('field_conference', 2)
-      ->sort('created', 'ASC')
       ->execute();
 
     $total = count($registration_nids);
@@ -1574,6 +1576,10 @@ public function cancelDelegate($delegate) {
 
     // Institution summary.
     $institutions = [];
+
+    // Delegate preference summaries.
+    $track_choices = [];
+    $dietary_requirements = [];
 
     // Detailed delegate report.
     $delegate_rows = [];
@@ -1803,6 +1809,29 @@ public function cancelDelegate($delegate) {
         $fully_attended++;
       }
 
+      if ($delegate) {
+        $track_label = $this->getDelegateReferenceLabel(
+          $delegate,
+          'field_track_preference',
+          (string) $this->t('Not specified')
+        );
+        $dietary_label = $this->getDelegateReferenceLabel(
+          $delegate,
+          'field_dietry_requirements',
+          (string) $this->t('Not specified')
+        );
+
+        if (!isset($track_choices[$track_label])) {
+          $track_choices[$track_label] = 0;
+        }
+        $track_choices[$track_label]++;
+
+        if (!isset($dietary_requirements[$dietary_label])) {
+          $dietary_requirements[$dietary_label] = 0;
+        }
+        $dietary_requirements[$dietary_label]++;
+      }
+
       /*
        * Build institution summary.
        */
@@ -1849,17 +1878,26 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
       /*
        * Build detailed delegate report.
        */
-      $delegate_rows[] = [
-        'delegate' => $delegate_name,
-        'institution' => $institution_name,
-        'email' => $delegate_email,
-        'registration' => $registration_status,
-        'checkin' => $checkin_status,
-        'monday' => $monday_status,
-        'tuesday' => $tuesday_status,
-        'wednesday' => $wednesday_status,
-        'certificate' => $certificate_status,
-      ];
+      if ($delegate && $this->matchesDelegateSearch($registration, $delegate, $institution_name, $search)) {
+        $name_data = $this->getDelegateSortData($delegate);
+
+        $delegate_rows[] = [
+          'registration_id' => (int) $registration->id(),
+          'sort_first_name' => $name_data['first_name'],
+          'sort_last_name' => $name_data['last_name'],
+          'row' => [
+            'delegate' => $delegate_name,
+            'institution' => $institution_name,
+            'email' => $delegate_email,
+            'registration' => $registration_status,
+            'checkin' => $checkin_status,
+            'monday' => $monday_status,
+            'tuesday' => $tuesday_status,
+            'wednesday' => $wednesday_status,
+            'certificate' => $certificate_status,
+          ],
+        ];
+      }
     }
 
     /*
@@ -1879,6 +1917,25 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
         $institution['certificates'],
       ];
     }
+
+    ksort($track_choices, SORT_NATURAL | SORT_FLAG_CASE);
+    ksort($dietary_requirements, SORT_NATURAL | SORT_FLAG_CASE);
+
+    $track_rows = [];
+    foreach ($track_choices as $track_label => $track_count) {
+      $track_rows[] = [$track_label, $track_count];
+    }
+
+    $dietary_rows = [];
+    foreach ($dietary_requirements as $dietary_label => $dietary_count) {
+      $dietary_rows[] = [$dietary_label, $dietary_count];
+    }
+
+    $this->sortDelegateRows($delegate_rows);
+    $delegate_rows = array_map(
+      static fn (array $delegate_row): array => $delegate_row['row'],
+      $delegate_rows
+    );
 
     return [
 
@@ -1911,16 +1968,25 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
       /*
        * CSV export button.
        */
-      'export' => [
-        '#type' => 'link',
-        '#title' => $this->t('Download Delegate Report (CSV)'),
-        '#url' => \Drupal\Core\Url::fromRoute(
-          'itsiug_registration.reports_csv'
-        ),
+      'actions' => [
+        '#type' => 'container',
         '#attributes' => [
           'class' => [
-            'button',
-            'button--primary',
+            'itsiug-admin-actions',
+          ],
+        ],
+
+        'export' => [
+          '#type' => 'link',
+          '#title' => $this->t('Download Delegate Report (CSV)'),
+          '#url' => \Drupal\Core\Url::fromRoute(
+            'itsiug_registration.reports_csv'
+          ),
+          '#attributes' => [
+            'class' => [
+              'button',
+              'button--primary',
+            ],
           ],
         ],
       ],
@@ -1989,6 +2055,77 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
         ],
       ],
 
+      'preferences' => [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'itsiug-report-two-column',
+          ],
+        ],
+
+        'tracks' => [
+          '#type' => 'container',
+          '#attributes' => [
+            'class' => [
+              'itsiug-report-column',
+            ],
+          ],
+
+          'title' => [
+            '#markup' =>
+              '<h3>' .
+              $this->t('Track Choices') .
+              '</h3>',
+          ],
+
+          'table' => [
+            '#type' => 'table',
+            '#attributes' => [
+              'class' => [
+                'itsiug-report-summary-table',
+              ],
+            ],
+            '#header' => [
+              $this->t('Track Choice'),
+              $this->t('Total'),
+            ],
+            '#rows' => $track_rows,
+            '#empty' => $this->t('No track choice data is available.'),
+          ],
+        ],
+
+        'dietary' => [
+          '#type' => 'container',
+          '#attributes' => [
+            'class' => [
+              'itsiug-report-column',
+            ],
+          ],
+
+          'title' => [
+            '#markup' =>
+              '<h3>' .
+              $this->t('Dietary Requirements') .
+              '</h3>',
+          ],
+
+          'table' => [
+            '#type' => 'table',
+            '#attributes' => [
+              'class' => [
+                'itsiug-report-summary-table',
+              ],
+            ],
+            '#header' => [
+              $this->t('Dietary Requirement'),
+              $this->t('Total'),
+            ],
+            '#rows' => $dietary_rows,
+            '#empty' => $this->t('No dietary requirement data is available.'),
+          ],
+        ],
+      ],
+
       /*
        * Institution summary.
        */
@@ -2035,6 +2172,11 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
           '</h3>',
       ],
 
+      'delegate_filters' => $this->buildDelegateFilter(
+        'itsiug_registration.reports',
+        $search
+      ),
+
 'delegates' => [
   '#type' => 'table',
 
@@ -2064,6 +2206,19 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
 
         '#sticky' => TRUE,
         ],
+
+      'back' => [
+        '#type' => 'link',
+        '#title' => $this->t('← Back to Administration'),
+        '#url' => \Drupal\Core\Url::fromRoute(
+          'itsiug_registration.admin'
+        ),
+        '#attributes' => [
+          'class' => [
+            'button',
+          ],
+        ],
+      ],
       ],
     ];
   }
@@ -2379,6 +2534,20 @@ return $response;
           ],
         ],
 
+        'delegate_contacts' => [
+          '#type' => 'link',
+          '#title' => $this->t('Delegate Contact Details'),
+          '#url' => Url::fromRoute(
+            'itsiug_registration.admin_delegate_contacts'
+          ),
+          '#attributes' => [
+            'class' => [
+              'button',
+              'button--primary',
+            ],
+          ],
+        ],
+
         'certificates' => [
           '#type' => 'link',
           '#title' => $this->t('Certificate Management'),
@@ -2443,11 +2612,12 @@ return $response;
    */
   public function adminDelegates() {
 
+    $search = $this->getDelegateSearchTerm();
+
     $registration_ids = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
       ->condition('type', 'conference_registration')
       ->condition('field_conference', 2)
-      ->sort('created', 'ASC')
       ->execute();
 
     $rows = [];
@@ -2478,27 +2648,21 @@ return $response;
         $institution = $registration->get('field_institution1')->entity;
       }
 
-      // Helper for list-field labels.
-      $getLabel = function ($field_name) use ($registration) {
-
-        if ($registration->get($field_name)->isEmpty()) {
-          return '';
-        }
-
-        $value = $registration->get($field_name)->value;
-
-        $allowed_values = $registration
-          ->get($field_name)
-          ->first()
-          ->getFieldDefinition()
-          ->getSetting('allowed_values');
-
-        return $allowed_values[$value] ?? $value;
-      };
-
       $certificate = $this->buildCertificateLink($registration);
 
+      $institution_label = $institution ? $institution->label() : '';
+
+      if (!$this->matchesDelegateSearch($registration, $delegate, $institution_label, $search)) {
+        continue;
+      }
+
+      $name_data = $this->getDelegateSortData($delegate);
+
       $rows[] = [
+        'registration_id' => (int) $registration->id(),
+        'sort_first_name' => $name_data['first_name'],
+        'sort_last_name' => $name_data['last_name'],
+        'row' => [
         'delegate' => [
           'data' => [
             '#type' => 'link',
@@ -2512,30 +2676,36 @@ return $response;
           ],
         ],
 
-        'institution' => $institution
-          ? $institution->label()
-          : '',
+        'institution' => $institution_label,
 
-        'email' => $delegate->get('field_email')->value ?? '',
-
-        'registration' => $getLabel(
+        'registration' => $this->getRegistrationFieldLabel(
+          $registration,
           'field_registration_status'
         ),
 
-        'checkin' => $getLabel(
+        'checkin' => $this->getRegistrationFieldLabel(
+          $registration,
           'field_checkin_status'
         ),
 
-        'monday' => $getLabel(
+        'monday' => $this->getRegistrationFieldLabel(
+          $registration,
           'field_monday_attendance'
         ),
 
-        'tuesday' => $getLabel(
+        'tuesday' => $this->getRegistrationFieldLabel(
+          $registration,
           'field_tuesday_attendance'
         ),
 
-        'wednesday' => $getLabel(
+        'wednesday' => $this->getRegistrationFieldLabel(
+          $registration,
           'field_wednesday_attendance'
+        ),
+
+        'conference_status' => $this->getRegistrationFieldLabel(
+          $registration,
+          'field_conference_status'
         ),
 
         'certificate' => $certificate ?: [
@@ -2543,12 +2713,15 @@ return $response;
             '#markup' => $this->t('Not available'),
           ],
         ],
-
-        'conference_status' => $getLabel(
-          'field_conference_status'
-        ),
+        ],
       ];
     }
+
+    $this->sortDelegateRows($rows);
+    $rows = array_map(
+      static fn (array $row): array => $row['row'],
+      $rows
+    );
 
 return [
 
@@ -2584,6 +2757,34 @@ return [
         '</p>',
     ],
 
+    'actions' => [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'itsiug-admin-actions',
+        ],
+      ],
+
+      'delegate_contacts' => [
+        '#type' => 'link',
+        '#title' => $this->t('Delegate Contact Details'),
+        '#url' => Url::fromRoute(
+          'itsiug_registration.admin_delegate_contacts'
+        ),
+        '#attributes' => [
+          'class' => [
+            'button',
+            'button--primary',
+          ],
+        ],
+      ],
+    ],
+
+    'filters' => $this->buildDelegateFilter(
+      'itsiug_registration.admin_delegates',
+      $search
+    ),
+
     'delegates' => [
       '#type' => 'table',
 
@@ -2596,7 +2797,6 @@ return [
       '#header' => [
         $this->t('Delegate'),
         $this->t('Institution'),
-        $this->t('Email'),
         $this->t('Registration'),
         $this->t('Check-in'),
         $this->t('Monday'),
@@ -2632,15 +2832,170 @@ return [
   }
 
   /**
+   * Display the ITSIUG 2027 delegate contact details report.
+   */
+  public function adminDelegateContacts() {
+
+    $search = $this->getDelegateSearchTerm();
+
+    $registration_ids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'conference_registration')
+      ->condition('field_conference', 2)
+      ->execute();
+
+    $rows = [];
+
+    foreach ($registration_ids as $registration_id) {
+      $registration = Node::load($registration_id);
+
+      if (!$registration) {
+        continue;
+      }
+
+      $delegate = $registration->get('field_delegate')->entity ?? NULL;
+
+      if (!$delegate) {
+        continue;
+      }
+
+      $institution = $registration->get('field_institution1')->entity ?? NULL;
+      $institution_label = $institution ? $institution->label() : '';
+
+      if (!$this->matchesDelegateSearch($registration, $delegate, $institution_label, $search)) {
+        continue;
+      }
+
+      $name_data = $this->getDelegateSortData($delegate);
+      $email = $delegate->hasField('field_email') && !$delegate->get('field_email')->isEmpty()
+        ? (string) $delegate->get('field_email')->value
+        : '';
+      $mobile = $delegate->hasField('field_mobile') && !$delegate->get('field_mobile')->isEmpty()
+        ? (string) $delegate->get('field_mobile')->value
+        : '';
+
+      $rows[] = [
+        'registration_id' => (int) $registration->id(),
+        'sort_first_name' => $name_data['first_name'],
+        'sort_last_name' => $name_data['last_name'],
+        'row' => [
+          'delegate' => [
+            'data' => [
+              '#type' => 'link',
+              '#title' => $delegate->label(),
+              '#url' => Url::fromRoute(
+                'entity.node.canonical',
+                [
+                  'node' => $delegate->id(),
+                ]
+              ),
+            ],
+          ],
+          'institution' => $institution_label,
+          'email' => $email,
+          'mobile' => $mobile,
+        ],
+      ];
+    }
+
+    $this->sortDelegateRows($rows);
+    $rows = array_map(
+      static fn (array $row): array => $row['row'],
+      $rows
+    );
+
+    return [
+
+  'delegate_contacts' => [
+    '#type' => 'container',
+
+    '#attached' => [
+      'library' => [
+        'itsiug_theme/global-styling',
+      ],
+    ],
+
+    '#attributes' => [
+      'class' => [
+        'itsiug-admin-page',
+        'itsiug-delegate-management',
+        'itsiug-delegate-contacts',
+      ],
+    ],
+
+      'heading' => [
+        '#markup' =>
+          '<h1>' .
+          $this->t('ITSIUG 2027 Delegate Contact Details') .
+          '</h1>',
+      ],
+
+      'intro' => [
+        '#markup' =>
+          '<p class="itsiug-admin-intro">' .
+          $this->t(
+            'Review delegate contact details for ITSIUG 2027 registrations.'
+          ) .
+          '</p>',
+      ],
+
+      'filters' => $this->buildDelegateFilter(
+        'itsiug_registration.admin_delegate_contacts',
+        $search
+      ),
+
+      'delegates' => [
+        '#type' => 'table',
+
+        '#attributes' => [
+          'class' => [
+            'itsiug-delegate-management-table',
+          ],
+        ],
+
+        '#header' => [
+          $this->t('Delegate'),
+          $this->t('Institution'),
+          $this->t('Email'),
+          $this->t('Mobile'),
+        ],
+
+        '#rows' => $rows,
+
+        '#empty' => $this->t(
+          'No ITSIUG 2027 delegate contact details are available.'
+        ),
+      ],
+
+      'back' => [
+        '#type' => 'link',
+        '#title' => $this->t('← Back to Administration'),
+        '#url' => Url::fromRoute(
+          'itsiug_registration.admin'
+        ),
+        '#attributes' => [
+          'class' => [
+            'button',
+          ],
+        ],
+      ],
+
+    ],
+
+];
+  }
+
+  /**
    * Display ITSIUG 2027 certificate management.
    */
   public function adminCertificates() {
+
+  $search = $this->getDelegateSearchTerm();
 
   $registration_ids = \Drupal::entityQuery('node')
     ->accessCheck(FALSE)
     ->condition('type', 'conference_registration')
     ->condition('field_conference', 2)
-    ->sort('created', 'ASC')
     ->execute();
 
   $rows = [];
@@ -2670,6 +3025,14 @@ return [
     if (!$registration->get('field_institution1')->isEmpty()) {
       $institution = $registration->get('field_institution1')->entity;
     }
+
+    $institution_label = $institution ? $institution->label() : '';
+
+    if (!$this->matchesDelegateSearch($registration, $delegate, $institution_label, $search)) {
+      continue;
+    }
+
+    $name_data = $this->getDelegateSortData($delegate);
 
     // ----------------------------------------------------------
     // Certificate eligibility.
@@ -2837,6 +3200,10 @@ return [
     // ----------------------------------------------------------
 
     $rows[] = [
+      'registration_id' => (int) $registration->id(),
+      'sort_first_name' => $name_data['first_name'],
+      'sort_last_name' => $name_data['last_name'],
+      'row' => [
 
       'delegate' => [
         'data' => [
@@ -2851,9 +3218,7 @@ return [
         ],
       ],
 
-      'institution' => $institution
-        ? $institution->label()
-        : '',
+      'institution' => $institution_label,
 
       'monday' => $monday_status,
 
@@ -2867,8 +3232,15 @@ return [
 
       'certificate' => $certificate_action,
 
+      ],
     ];
   }
+
+  $this->sortDelegateRows($rows);
+  $rows = array_map(
+    static fn (array $row): array => $row['row'],
+    $rows
+  );
 
 return [
 
@@ -2902,6 +3274,11 @@ return [
         ) .
         '</p>',
     ],
+
+    'filters' => $this->buildDelegateFilter(
+      'itsiug_registration.admin_certificates',
+      $search
+    ),
 
     'certificates' => [
       '#type' => 'table',
@@ -3188,5 +3565,181 @@ return [
         )->toString()
       );
     }
+  }
+
+  /**
+   * Get the current delegate search term from the request query.
+   */
+  private function getDelegateSearchTerm(): string {
+
+    return trim((string) \Drupal::request()->query->get('search', ''));
+  }
+
+  /**
+   * Build a reusable GET filter form for admin listing pages.
+   */
+  private function buildDelegateFilter(string $route_name, string $search): array {
+
+    $action = Url::fromRoute($route_name)->toString();
+    $clear_url = Url::fromRoute($route_name)->toString();
+    $input_id = Html::getId($route_name . '-delegate-search');
+
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'itsiug-admin-filters',
+          'itsiug-badge-filters',
+        ],
+      ],
+      'form' => [
+        '#type' => 'inline_template',
+        '#template' => '<form method="get" action="{{ action }}" class="itsiug-admin-filter-form"><div class="form-item"><label for="{{ input_id }}">{{ label }}</label><input type="text" id="{{ input_id }}" name="search" value="{{ search }}" size="40" class="itsiug-badge-filter-input" /><div class="description">{{ description }}</div></div><div class="form-actions"><input type="submit" value="{{ apply_label }}" class="button button--primary" /><a href="{{ clear_url }}" class="button">{{ clear_label }}</a></div></form>',
+        '#context' => [
+          'action' => $action,
+          'clear_url' => $clear_url,
+          'input_id' => $input_id,
+          'search' => $search,
+          'label' => $this->t('Find Delegate'),
+          'description' => $this->t('Type any part of first name, last name, QR ID, email, or institution.'),
+          'apply_label' => $this->t('Apply Filter'),
+          'clear_label' => $this->t('Clear Filter'),
+        ],
+      ],
+    ];
+  }
+
+  /**
+   * Extract delegate sort names for alphabetical ordering.
+   */
+  private function getDelegateSortData(Node $delegate): array {
+
+    $first_name = '';
+    if ($delegate->hasField('field_first_name') && !$delegate->get('field_first_name')->isEmpty()) {
+      $first_name = trim((string) $delegate->get('field_first_name')->value);
+    }
+
+    $last_name = '';
+    if ($delegate->hasField('field_last_name') && !$delegate->get('field_last_name')->isEmpty()) {
+      $last_name = trim((string) $delegate->get('field_last_name')->value);
+    }
+
+    $label = trim((string) $delegate->label());
+
+    return [
+      'first_name' => $first_name !== '' ? $first_name : $label,
+      'last_name' => $last_name !== '' ? $last_name : $label,
+      'label' => $label,
+    ];
+  }
+
+  /**
+   * Determine whether a registration matches a delegate search term.
+   */
+  private function matchesDelegateSearch(
+    Node $registration,
+    Node $delegate,
+    string $institution_name,
+    string $search
+  ): bool {
+
+    if ($search === '') {
+      return TRUE;
+    }
+
+    $name_data = $this->getDelegateSortData($delegate);
+    $email = $delegate->hasField('field_email') && !$delegate->get('field_email')->isEmpty()
+      ? trim((string) $delegate->get('field_email')->value)
+      : '';
+    $qr_code = $registration->hasField('field_qr_code') && !$registration->get('field_qr_code')->isEmpty()
+      ? trim((string) $registration->get('field_qr_code')->value)
+      : '';
+
+    $haystack = implode(' ', [
+      $name_data['label'],
+      $name_data['first_name'],
+      $name_data['last_name'],
+      $institution_name,
+      $email,
+      $qr_code,
+    ]);
+
+    return stripos($haystack, $search) !== FALSE;
+  }
+
+  /**
+   * Sort prepared rows alphabetically by last name, then first name.
+   */
+  private function sortDelegateRows(array &$rows): void {
+
+    usort($rows, static function (array $left, array $right): int {
+      $last_name_compare = strcasecmp(
+        (string) ($left['sort_last_name'] ?? ''),
+        (string) ($right['sort_last_name'] ?? '')
+      );
+
+      if ($last_name_compare !== 0) {
+        return $last_name_compare;
+      }
+
+      $first_name_compare = strcasecmp(
+        (string) ($left['sort_first_name'] ?? ''),
+        (string) ($right['sort_first_name'] ?? '')
+      );
+
+      if ($first_name_compare !== 0) {
+        return $first_name_compare;
+      }
+
+      return ((int) ($left['registration_id'] ?? 0)) <=> ((int) ($right['registration_id'] ?? 0));
+    });
+  }
+
+  /**
+   * Resolve a list-field label from a registration field.
+   */
+  private function getRegistrationFieldLabel(Node $registration, string $field_name): string {
+
+    if (!$registration->hasField($field_name) || $registration->get($field_name)->isEmpty()) {
+      return '';
+    }
+
+    $value = (string) $registration->get($field_name)->value;
+    $allowed_values = $registration
+      ->get($field_name)
+      ->first()
+      ->getFieldDefinition()
+      ->getSetting('allowed_values');
+
+    if (isset($allowed_values[$value])) {
+      return (string) $allowed_values[$value];
+    }
+
+    if ($field_name === 'field_conference_status') {
+      $status_options = itsiug_conference_status_options();
+      if (isset($status_options[$value])) {
+        return $status_options[$value];
+      }
+    }
+
+    return strtoupper(str_replace('_', ' ', $value));
+  }
+
+  /**
+   * Get a referenced delegate field label or a fallback value.
+   */
+  private function getDelegateReferenceLabel(Node $delegate, string $field_name, string $fallback): string {
+
+    if (!$delegate->hasField($field_name) || $delegate->get($field_name)->isEmpty()) {
+      return $fallback;
+    }
+
+    $entity = $delegate->get($field_name)->entity;
+
+    if ($entity) {
+      return (string) $entity->label();
+    }
+
+    return $fallback;
   }
 }

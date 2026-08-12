@@ -47,3 +47,17 @@ function convene_theme_preprocess_page__user__password(array &$variables): void 
 function convene_theme_preprocess_page__user__register(array &$variables): void {
 	_convene_theme_apply_auth_logo($variables);
 }
+
+/**
+ * Implements hook_preprocess_menu().
+ */
+function convene_theme_preprocess_menu(array &$variables): void {
+	$logged_in = \Drupal::currentUser()->isAuthenticated();
+
+	$variables['logged_in'] = $logged_in;
+	$variables['auth_route'] = $logged_in
+		? 'itsiug_registration.logout'
+		: 'itsiug_registration.access';
+	$variables['auth_label'] = $logged_in ? t('Logout') : t('Login');
+	$variables['#cache']['contexts'][] = 'user.roles:authenticated';
+}

@@ -148,6 +148,14 @@ itsiug_registration.admin_delegates:
   requirements:
     _permission: 'access itsiug admin'
 
+itsiug_registration.admin_delegate_contacts:
+  path: '/register/admin/delegate-contacts'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminDelegateContacts'
+    _title: 'ITSIUG 2027 Delegate Contact Details'
+  requirements:
+    _permission: 'access itsiug admin'
+
 itsiug_registration.badge_scanner:
   path: '/badge/scanner'
   defaults:
