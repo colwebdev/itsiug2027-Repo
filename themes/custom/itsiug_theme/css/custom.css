@@ -573,6 +573,70 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
   color: #ffffff;
 }
 
+.itsiug-badge-management .itsiug-badge-filters {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 1px solid #dfe6eb;
+  border-radius: 8px;
+  background: #f7f9fb;
+}
+
+.itsiug-badge-management .itsiug-badge-filters .form-item {
+  margin: 0;
+}
+
+.itsiug-badge-management .itsiug-badge-filters .form-item label {
+  margin-bottom: 8px;
+  color: #1f4b6b;
+  font-weight: 600;
+}
+
+.itsiug-badge-management .itsiug-badge-filters input[type="text"] {
+  max-width: 520px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #c8d5de;
+  border-radius: 6px;
+}
+
+.itsiug-badge-management .itsiug-badge-filters .description {
+  margin-top: 8px;
+  color: #5b6873;
+}
+
+.itsiug-badge-management .itsiug-badge-filters .form-actions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.itsiug-badge-management .itsiug-badge-filters .form-actions .button,
+.itsiug-badge-management .itsiug-badge-filters .form-actions input[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 18px;
+  border-radius: 5px;
+  border: 0;
+  background: #1f4b6b;
+  color: #ffffff !important;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.itsiug-badge-management .itsiug-badge-filters .form-actions .button:hover,
+.itsiug-badge-management .itsiug-badge-filters .form-actions input[type="submit"]:hover {
+  background: #163a53;
+  color: #ffffff !important;
+}
+
+.itsiug-badge-management .itsiug-delegate-management-table thead th {
+  padding: 16px 22px;
+}
+
 @media (max-width: 900px) {
   .itsiug-admin-page {
     max-width: calc(100% - 30px);

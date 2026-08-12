@@ -63,6 +63,14 @@ class BadgeGenerator {
     $delegate = $page_data['delegate'];
     $badge_number = $page_data['badge_number'];
     $badge_url = $page_data['badge_url'];
+    $badge_sequence_label = $this->getIndividualBadgeSequenceLabel(
+      $registration,
+      $badge_number
+    );
+
+    if ($badge_sequence_label !== NULL && $badge_sequence_label !== '') {
+      $page_data['badge_sequence_label'] = $badge_sequence_label;
+    }
 
     $pdf = new TCPDF(
       'P',
@@ -144,7 +152,6 @@ class BadgeGenerator {
       ->accessCheck(FALSE)
       ->condition('type', 'conference_registration')
       ->condition('field_conference', $conference_id)
-      ->sort('created', 'ASC')
       ->execute();
 
     if (empty($registration_ids)) {
@@ -172,7 +179,7 @@ class BadgeGenerator {
     $pdf->SetMargins(0, 0, 0);
     $pdf->SetAutoPageBreak(FALSE);
 
-    $count = 0;
+    $badge_pages = [];
 
     foreach ($registration_ids as $registration_id) {
       $registration = \Drupal\node\Entity\Node::load($registration_id);
@@ -196,17 +203,64 @@ class BadgeGenerator {
         continue;
       }
 
-      $pdf->AddPage();
-      $this->renderBadgePage($pdf, $page_data);
-      $count++;
+      $badge_pages[] = $page_data;
     }
 
-    if ($count === 0) {
+    if (empty($badge_pages)) {
       return [
         'success' => FALSE,
         'message' => 'No valid badges could be generated for the bulk PDF.',
       ];
     }
+
+    usort($badge_pages, static function (array $left, array $right): int {
+      $left_last_name = strtolower((string) ($left['sort_last_name'] ?? ''));
+      $right_last_name = strtolower((string) ($right['sort_last_name'] ?? ''));
+
+      if ($left_last_name !== $right_last_name) {
+        return $left_last_name <=> $right_last_name;
+      }
+
+      $left_first_name = strtolower((string) ($left['sort_first_name'] ?? ''));
+      $right_first_name = strtolower((string) ($right['sort_first_name'] ?? ''));
+
+      if ($left_first_name !== $right_first_name) {
+        return $left_first_name <=> $right_first_name;
+      }
+
+      $left_badge_number = strtolower((string) ($left['badge_number'] ?? ''));
+      $right_badge_number = strtolower((string) ($right['badge_number'] ?? ''));
+
+      if ($left_badge_number !== $right_badge_number) {
+        return $left_badge_number <=> $right_badge_number;
+      }
+
+      return ((int) ($left['registration_id'] ?? 0)) <=> ((int) ($right['registration_id'] ?? 0));
+    });
+
+    $count = count($badge_pages);
+
+    foreach ($badge_pages as $index => $page_data) {
+      $page_data['badge_sequence_label'] = sprintf('%03d', $index + 1);
+      $pdf->AddPage();
+      $this->renderBadgePage($pdf, $page_data);
+    }
+
+    $bulk_registration_ids = array_values(array_map(
+      static fn (array $page): int => (int) ($page['registration_id'] ?? 0),
+      $badge_pages
+    ));
+    $bulk_registration_ids = array_values(array_filter(
+      $bulk_registration_ids,
+      static fn (int $id): bool => $id > 0
+    ));
+
+    $state = \Drupal::state();
+    $state_base = 'itsiug_registration.badges.' . $conference_id . '.';
+    $state->set($state_base . 'bulk_finalized', TRUE);
+    $state->set($state_base . 'bulk_registration_ids', $bulk_registration_ids);
+    $state->set($state_base . 'late_map', []);
+    $state->set($state_base . 'late_last', 0);
 
     $pdf_data = $pdf->Output('', 'S');
 
@@ -238,6 +292,30 @@ class BadgeGenerator {
       'filename' => $filename,
       'uri' => $file->getFileUri(),
       'count' => $count,
+    ];
+  }
+
+  /**
+   * Reset only late badge numbering for a conference.
+   */
+  public function resetLateNumbering(int $conference_id = 2): array {
+
+    if ($conference_id <= 0) {
+      return [
+        'success' => FALSE,
+        'message' => 'Invalid conference ID.',
+      ];
+    }
+
+    $state = \Drupal::state();
+    $state_base = 'itsiug_registration.badges.' . $conference_id . '.';
+
+    $state->set($state_base . 'late_map', []);
+    $state->set($state_base . 'late_last', 0);
+
+    return [
+      'success' => TRUE,
+      'message' => 'Late badge numbering reset.',
     ];
   }
 
@@ -367,6 +445,17 @@ class BadgeGenerator {
       $job_title = trim((string) $delegate->get('field_job_title')->value);
     }
 
+    $sort_first_name = $first_name;
+    $sort_last_name = $last_name;
+
+    if ($sort_last_name === '') {
+      $sort_last_name = $delegate->label();
+    }
+
+    if ($sort_first_name === '') {
+      $sort_first_name = $delegate->label();
+    }
+
     $conference_status_value = 'delegate';
     $conference_status_label = 'DELEGATE';
 
@@ -388,12 +477,15 @@ class BadgeGenerator {
     return [
       'success' => TRUE,
       'delegate' => $delegate,
+      'registration_id' => (int) $registration->id(),
       'conference_name' => $conference_name,
       'badge_number' => $badge_number,
       'badge_url' => $badge_url,
       'logo_path' => $logo_path,
       'background_path' => $background_path,
       'first_name' => $first_name,
+      'sort_first_name' => $sort_first_name,
+      'sort_last_name' => $sort_last_name,
       'title_last_name' => $title_last_name,
       'institution_name' => $institution_name,
       'job_title' => $job_title,
@@ -408,6 +500,9 @@ class BadgeGenerator {
 
     $conference_name = (string) $page_data['conference_name'];
     $badge_number = (string) $page_data['badge_number'];
+    $badge_sequence_label = isset($page_data['badge_sequence_label'])
+      ? trim((string) $page_data['badge_sequence_label'])
+      : '';
     $logo_path = $page_data['logo_path'];
     $background_path = $page_data['background_path'];
     $first_name = (string) $page_data['first_name'];
@@ -483,9 +578,16 @@ class BadgeGenerator {
       );
     }
 
-    $pdf->SetFont('helvetica', '', 7);
-    $pdf->SetXY(68, 5);
-    $pdf->Cell(24, 5, 'QR Code ID: ' . $badge_number, 0, 0, 'R');
+    if ($badge_sequence_label !== '') {
+      $pdf->SetFont('helvetica', '', 7.5);
+      $pdf->SetXY(70, 5);
+      $pdf->Cell(22, 5, 'Badge No: ' . $badge_sequence_label, 0, 0, 'R');
+    }
+    else {
+      $pdf->SetFont('helvetica', '', 7);
+      $pdf->SetXY(68, 5);
+      $pdf->Cell(24, 5, 'QR Code ID: ' . $badge_number, 0, 0, 'R');
+    }
 
     $pdf->SetFont('helvetica', 'B', 16);
     $pdf->SetXY(8, 23);
@@ -530,7 +632,7 @@ class BadgeGenerator {
     $pdf->MultiCell(
       54,
       4,
-      "Present this badge at the\nregistration desk for Check- In\nand scan it daily yourself to record\nyour Attendance",
+      "Present this badge at the\nregistration desk for check- in,\nand scan it yourself dailyto record\nyour Attendance",
       0,
       'L',
       FALSE,
@@ -578,6 +680,91 @@ class BadgeGenerator {
 
     $pdf->SetDrawColor($navy[0], $navy[1], $navy[2]);
     $pdf->Rect($qr_x - $qr_padding, $qr_y - $qr_padding, $qr_size + ($qr_padding * 2), $qr_size + ($qr_padding * 2));
+
+    if ($badge_sequence_label !== '') {
+      $pdf->SetTextColor($grey[0], $grey[1], $grey[2]);
+      $pdf->SetFont('helvetica', '', 7);
+      $pdf->SetXY(62, 113.5);
+      $pdf->Cell(30, 4, $badge_number, 0, 0, 'R');
+    }
+  }
+
+  /**
+   * Return badge sequence label for individual badge generation.
+   */
+  private function getIndividualBadgeSequenceLabel(
+    NodeInterface $registration,
+    string $badge_number
+  ): ?string {
+
+    if ($registration->get('field_conference')->isEmpty()) {
+      return $this->buildDefaultBadgeSequenceLabel($badge_number);
+    }
+
+    $conference_id = (int) $registration->get('field_conference')->target_id;
+
+    if ($conference_id <= 0) {
+      return $this->buildDefaultBadgeSequenceLabel($badge_number);
+    }
+
+    $state = \Drupal::state();
+    $state_base = 'itsiug_registration.badges.' . $conference_id . '.';
+    $bulk_finalized = (bool) $state->get($state_base . 'bulk_finalized', FALSE);
+
+    if (!$bulk_finalized) {
+      return $this->buildDefaultBadgeSequenceLabel($badge_number);
+    }
+
+    $registration_id = (int) $registration->id();
+    $bulk_registration_ids = array_map(
+      'intval',
+      (array) $state->get($state_base . 'bulk_registration_ids', [])
+    );
+
+    $bulk_position = array_search($registration_id, $bulk_registration_ids, TRUE);
+
+    if ($bulk_position !== FALSE) {
+      return sprintf('%03d', ((int) $bulk_position) + 1);
+    }
+
+    $late_map = (array) $state->get($state_base . 'late_map', []);
+
+    if (isset($late_map[$registration_id])) {
+      $late_number = (int) $late_map[$registration_id];
+      return 'L' . str_pad((string) $late_number, 3, '0', STR_PAD_LEFT);
+    }
+
+    $late_last = (int) $state->get($state_base . 'late_last', 0);
+    $late_number = $late_last + 1;
+
+    $late_map[$registration_id] = $late_number;
+
+    $state->set($state_base . 'late_map', $late_map);
+    $state->set($state_base . 'late_last', $late_number);
+
+    return 'L' . str_pad((string) $late_number, 3, '0', STR_PAD_LEFT);
+  }
+
+  /**
+   * Build a compact fallback badge sequence label from the QR code ID.
+   */
+  private function buildDefaultBadgeSequenceLabel(string $badge_number): ?string {
+
+    if (preg_match('/(\d+)$/', $badge_number, $matches)) {
+      $numeric_suffix = (int) $matches[1];
+
+      if ($numeric_suffix > 0) {
+        return str_pad((string) $numeric_suffix, 3, '0', STR_PAD_LEFT);
+      }
+    }
+
+    $compact = preg_replace('/[^A-Za-z0-9]/', '', $badge_number);
+
+    if ($compact === '') {
+      return NULL;
+    }
+
+    return strtoupper(substr($compact, -4));
   }
 
   /**
