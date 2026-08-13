@@ -1,0 +1,23 @@
+uuid: e2437942-6613-4a08-91eb-1757d77de879
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_active_conference
+    - node.type.conference
+id: node.conference.field_active_conference
+field_name: field_active_conference
+entity_type: node
+bundle: conference
+label: 'Active Conference'
+description: 'Indicates the active Conference Year'
+required: false
+translatable: false
+default_value:
+  -
+    value: true
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,29 @@
+uuid: 80809acb-9fd5-4428-b2d0-275150944003
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_institution
+    - node.type.delegate
+    - node.type.institution
+id: node.delegate.field_institution
+field_name: field_institution
+entity_type: node
+bundle: delegate
+label: Institution
+description: 'Example: Institution'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      institution: institution
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

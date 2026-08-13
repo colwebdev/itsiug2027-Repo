@@ -1,0 +1,21 @@
+uuid: a217c385-76eb-4c15-af87-308ceea0259f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_day1_date
+    - node.type.conference
+  module:
+    - datetime
+id: node.conference.field_day1_date
+field_name: field_day1_date
+entity_type: node
+bundle: conference
+label: 'Conference Day 1 Date'
+description: 'Example: 2027-03-15'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,122 @@
+uuid: 78927a70-8057-4f65-98a6-74622056ff37
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.delegate.field_country
+    - field.field.node.delegate.field_delegate_reference
+    - field.field.node.delegate.field_dietry_requirements
+    - field.field.node.delegate.field_email
+    - field.field.node.delegate.field_first_name
+    - field.field.node.delegate.field_institution
+    - field.field.node.delegate.field_job_title
+    - field.field.node.delegate.field_last_name
+    - field.field.node.delegate.field_mobile
+    - field.field.node.delegate.field_title
+    - field.field.node.delegate.field_track_preference
+    - node.type.delegate
+  module:
+    - options
+    - user
+id: node.delegate.default
+targetEntityType: node
+bundle: delegate
+mode: default
+content:
+  field_country:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 112
+    region: content
+  field_delegate_reference:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_dietry_requirements:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  field_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_first_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_institution:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_job_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_last_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_mobile:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_title:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  field_track_preference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 113
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

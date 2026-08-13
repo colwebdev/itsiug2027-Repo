@@ -1,0 +1,23 @@
+uuid: 031bd14c-786a-4798-a582-4f8149e2e82c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tuesday_attendance
+    - node.type.conference_registration
+  module:
+    - options
+id: node.conference_registration.field_tuesday_attendance
+field_name: field_tuesday_attendance
+entity_type: node
+bundle: conference_registration
+label: 'Tuesday Attendance'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: not_present
+default_value_callback: ''
+settings: {  }
+field_type: list_string

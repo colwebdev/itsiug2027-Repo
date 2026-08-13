@@ -1,0 +1,255 @@
+uuid: c042a26c-91f2-4680-9c2c-e561b1635cf0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.conference_registration.field_badge_file
+    - field.field.node.conference_registration.field_badge_status
+    - field.field.node.conference_registration.field_certificate_eligibility
+    - field.field.node.conference_registration.field_certificate_file
+    - field.field.node.conference_registration.field_certificate_status
+    - field.field.node.conference_registration.field_checkin_datetime
+    - field.field.node.conference_registration.field_checkin_status
+    - field.field.node.conference_registration.field_conference
+    - field.field.node.conference_registration.field_conference_gift
+    - field.field.node.conference_registration.field_conference_status
+    - field.field.node.conference_registration.field_delegate
+    - field.field.node.conference_registration.field_gift_datetime
+    - field.field.node.conference_registration.field_institution1
+    - field.field.node.conference_registration.field_monday_attendance
+    - field.field.node.conference_registration.field_monday_datetime
+    - field.field.node.conference_registration.field_qr_code
+    - field.field.node.conference_registration.field_registration_status
+    - field.field.node.conference_registration.field_tuesday_attendance
+    - field.field.node.conference_registration.field_tuesday_datetime
+    - field.field.node.conference_registration.field_wednesday_attendance
+    - field.field.node.conference_registration.field_wednesday_datetime
+    - node.type.conference_registration
+  module:
+    - content_moderation
+    - datetime
+    - file
+    - path
+    - tagify
+id: node.conference_registration.default
+targetEntityType: node
+bundle: conference_registration
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_badge_file:
+    type: entity_reference_autocomplete
+    weight: 62
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_badge_status:
+    type: options_select
+    weight: 63
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_certificate_eligibility:
+    type: options_select
+    weight: 136
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_certificate_file:
+    type: file_generic
+    weight: 138
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_certificate_status:
+    type: options_select
+    weight: 137
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_checkin_datetime:
+    type: datetime_default
+    weight: 126
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_checkin_status:
+    type: options_select
+    weight: 125
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_conference:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 121
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
+    third_party_settings: {  }
+  field_conference_gift:
+    type: options_select
+    weight: 127
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_conference_status:
+    type: options_select
+    weight: 64
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_delegate:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 122
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
+    third_party_settings: {  }
+  field_gift_datetime:
+    type: datetime_default
+    weight: 128
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_institution1:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 123
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
+    third_party_settings: {  }
+  field_monday_attendance:
+    type: options_select
+    weight: 129
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_monday_datetime:
+    type: datetime_default
+    weight: 130
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_qr_code:
+    type: string_textfield
+    weight: 135
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_registration_status:
+    type: options_select
+    weight: 124
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_tuesday_attendance:
+    type: options_select
+    weight: 131
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_tuesday_datetime:
+    type: datetime_default
+    weight: 132
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_wednesday_attendance:
+    type: options_select
+    weight: 133
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_wednesday_datetime:
+    type: datetime_default
+    weight: 134
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  promote: true
+  publish_on: true
+  publish_state: true
+  sticky: true
+  unpublish_on: true
+  unpublish_state: true

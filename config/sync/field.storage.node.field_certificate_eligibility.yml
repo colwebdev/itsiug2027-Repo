@@ -1,0 +1,27 @@
+uuid: 71238813-a9d6-45c1-903f-c89bc208221a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_certificate_eligibility
+field_name: field_certificate_eligibility
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: not_eligible
+      label: 'Not Eligible'
+    -
+      value: eligible
+      label: Eligible
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

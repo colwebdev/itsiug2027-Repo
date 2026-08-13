@@ -1,0 +1,25 @@
+uuid: 44a4740c-20f9-40c8-8bcf-daedf316bc26
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_delegate_limit
+    - node.type.institution
+id: node.institution.field_delegate_limit
+field_name: field_delegate_limit
+entity_type: node
+bundle: institution
+label: 'Delegate Limit'
+description: 'Example: 25'
+required: false
+translatable: false
+default_value:
+  -
+    value: 30
+default_value_callback: ''
+settings:
+  min: 0
+  max: 30
+  prefix: ''
+  suffix: ''
+field_type: integer

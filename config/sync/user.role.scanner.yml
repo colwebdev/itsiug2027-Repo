@@ -1,0 +1,12 @@
+uuid: d37f8ef3-1e4a-4e06-992a-66756779a762
+langcode: en
+status: true
+dependencies:
+  module:
+    - itsiug_registration
+id: scanner
+label: Scanner
+weight: 5
+is_admin: false
+permissions:
+  - 'perform conference qr checkin'

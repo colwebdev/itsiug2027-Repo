@@ -1,0 +1,14 @@
+uuid: 43d0694e-4802-4f3a-b47f-4f39217a73d6
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.institution_representative
+  module:
+    - user
+id: user_add_role_action.institution_representative
+label: 'Add the Institution Representative role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: institution_representative

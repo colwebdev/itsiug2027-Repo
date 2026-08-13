@@ -1,0 +1,23 @@
+uuid: f4aacb61-0ae0-4c87-863d-6a5c4263c0e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_certificate_eligibility
+    - node.type.conference_registration
+  module:
+    - options
+id: node.conference_registration.field_certificate_eligibility
+field_name: field_certificate_eligibility
+entity_type: node
+bundle: conference_registration
+label: 'Certificate Eligibility'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: not_eligible
+default_value_callback: ''
+settings: {  }
+field_type: list_string

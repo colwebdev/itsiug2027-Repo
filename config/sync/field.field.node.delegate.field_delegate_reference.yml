@@ -1,0 +1,19 @@
+uuid: c03b1b86-ac3c-4dad-ac6f-ec4810cc95b9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_delegate_reference
+    - node.type.delegate
+id: node.delegate.field_delegate_reference
+field_name: field_delegate_reference
+entity_type: node
+bundle: delegate
+label: 'Delegate Reference'
+description: 'Delegate Unique Reference'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

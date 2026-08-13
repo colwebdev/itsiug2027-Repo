@@ -1,0 +1,183 @@
+uuid: 0eee6aa9-6682-4aee-a185-4024c4a795a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.conference.field_active_conference
+    - field.field.node.conference.field_administrator_signature
+    - field.field.node.conference.field_badge_background_image
+    - field.field.node.conference.field_chairperson_signature
+    - field.field.node.conference.field_checkin_date
+    - field.field.node.conference.field_conference_code
+    - field.field.node.conference.field_conference_logo
+    - field.field.node.conference.field_conference_status
+    - field.field.node.conference.field_day1_date
+    - field.field.node.conference.field_day2_date
+    - field.field.node.conference.field_day3_date
+    - field.field.node.conference.field_end_date
+    - field.field.node.conference.field_start_date
+    - node.type.conference
+  module:
+    - content_moderation
+    - datetime
+    - media_library
+    - path
+id: node.conference.default
+targetEntityType: node
+bundle: conference
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_active_conference:
+    type: boolean_checkbox
+    weight: 130
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_administrator_signature:
+    type: entity_reference_autocomplete
+    weight: 61
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_badge_background_image:
+    type: entity_reference_autocomplete
+    weight: 62
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_chairperson_signature:
+    type: entity_reference_autocomplete
+    weight: 60
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_checkin_date:
+    type: datetime_default
+    weight: 125
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_conference_code:
+    type: string_textfield
+    weight: 121
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_conference_logo:
+    type: media_library_widget
+    weight: 129
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_conference_status:
+    type: options_select
+    weight: 122
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_day1_date:
+    type: datetime_default
+    weight: 126
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_day2_date:
+    type: datetime_default
+    weight: 127
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_day3_date:
+    type: datetime_default
+    weight: 128
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_end_date:
+    type: datetime_default
+    weight: 124
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_start_date:
+    type: datetime_default
+    weight: 123
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  promote: true
+  publish_on: true
+  publish_state: true
+  sticky: true
+  unpublish_on: true
+  unpublish_state: true

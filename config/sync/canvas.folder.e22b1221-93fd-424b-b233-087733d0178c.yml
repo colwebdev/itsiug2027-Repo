@@ -20,6 +20,7 @@ dependencies:
     - canvas.component.sdc.convene_theme.speaker_card
     - canvas.component.sdc.convene_theme.testimonial_item
     - canvas.component.sdc.convene_theme.timeline_item
+    - canvas.component.sdc.itsiug_theme.logistics_accordion_item
 _core:
   default_config_hash: Hy1xr0jbW5UT6Z1zzwtksJ-zDRDl-IYojubP8i_3onM
 name: Molecules
@@ -43,3 +44,4 @@ items:
   - sdc.convene_theme.speaker_card
   - sdc.convene_theme.testimonial_item
   - sdc.convene_theme.timeline_item
+  - sdc.itsiug_theme.logistics_accordion_item

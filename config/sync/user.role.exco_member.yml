@@ -1,0 +1,12 @@
+uuid: 2eaaf896-e8f2-478f-afe4-560f00bd2364
+langcode: en
+status: true
+dependencies:
+  module:
+    - itsiug_registration
+id: exco_member
+label: 'Exco Member'
+weight: 6
+is_admin: false
+permissions:
+  - 'access itsiug reports'

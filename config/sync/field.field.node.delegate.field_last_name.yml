@@ -1,0 +1,19 @@
+uuid: d5d7cc0d-5da6-4872-b4f1-b2a5df7f5a58
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_last_name
+    - node.type.delegate
+id: node.delegate.field_last_name
+field_name: field_last_name
+entity_type: node
+bundle: delegate
+label: 'Last Name'
+description: 'Example: Cronje'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

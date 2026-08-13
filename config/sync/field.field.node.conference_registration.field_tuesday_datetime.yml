@@ -1,0 +1,21 @@
+uuid: 5746bd04-a079-4819-b5d6-52e5a93e2cac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tuesday_datetime
+    - node.type.conference_registration
+  module:
+    - datetime
+id: node.conference_registration.field_tuesday_datetime
+field_name: field_tuesday_datetime
+entity_type: node
+bundle: conference_registration
+label: 'Tuesday Attendance Date/Time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

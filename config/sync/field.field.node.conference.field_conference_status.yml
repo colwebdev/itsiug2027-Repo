@@ -1,0 +1,21 @@
+uuid: ad1737e2-1c76-48e6-a9d8-7ce957f40306
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_conference_status
+    - node.type.conference
+  module:
+    - options
+id: node.conference.field_conference_status
+field_name: field_conference_status
+entity_type: node
+bundle: conference
+label: 'Conference Status'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

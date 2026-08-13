@@ -1,0 +1,188 @@
+uuid: 6524edd6-04cf-4c9d-8eb6-145b8440e85b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.conference_registration.field_badge_file
+    - field.field.node.conference_registration.field_badge_status
+    - field.field.node.conference_registration.field_certificate_eligibility
+    - field.field.node.conference_registration.field_certificate_file
+    - field.field.node.conference_registration.field_certificate_status
+    - field.field.node.conference_registration.field_checkin_datetime
+    - field.field.node.conference_registration.field_checkin_status
+    - field.field.node.conference_registration.field_conference
+    - field.field.node.conference_registration.field_conference_gift
+    - field.field.node.conference_registration.field_conference_status
+    - field.field.node.conference_registration.field_delegate
+    - field.field.node.conference_registration.field_gift_datetime
+    - field.field.node.conference_registration.field_institution1
+    - field.field.node.conference_registration.field_monday_attendance
+    - field.field.node.conference_registration.field_monday_datetime
+    - field.field.node.conference_registration.field_qr_code
+    - field.field.node.conference_registration.field_registration_status
+    - field.field.node.conference_registration.field_tuesday_attendance
+    - field.field.node.conference_registration.field_tuesday_datetime
+    - field.field.node.conference_registration.field_wednesday_attendance
+    - field.field.node.conference_registration.field_wednesday_datetime
+    - node.type.conference_registration
+  module:
+    - datetime
+    - file
+    - options
+    - user
+id: node.conference_registration.default
+targetEntityType: node
+bundle: conference_registration
+mode: default
+content:
+  field_certificate_eligibility:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_certificate_file:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_certificate_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_checkin_datetime:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_checkin_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_conference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_conference_gift:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_delegate:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_gift_datetime:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_institution1:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_monday_attendance:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_monday_datetime:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_qr_code:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  field_registration_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_tuesday_attendance:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_tuesday_datetime:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 112
+    region: content
+  field_wednesday_attendance:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 113
+    region: content
+  field_wednesday_datetime:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_badge_file: true
+  field_badge_status: true
+  field_conference_status: true

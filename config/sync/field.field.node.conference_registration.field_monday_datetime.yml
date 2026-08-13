@@ -1,0 +1,21 @@
+uuid: 1a5f73c1-8cc8-4186-b816-51a673494693
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_monday_datetime
+    - node.type.conference_registration
+  module:
+    - datetime
+id: node.conference_registration.field_monday_datetime
+field_name: field_monday_datetime
+entity_type: node
+bundle: conference_registration
+label: 'Monday Attendance Date/Time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

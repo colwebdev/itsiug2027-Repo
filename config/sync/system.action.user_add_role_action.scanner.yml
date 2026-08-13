@@ -1,0 +1,14 @@
+uuid: 62a4e7fe-edb3-4528-80b9-772002e31bdb
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.scanner
+  module:
+    - user
+id: user_add_role_action.scanner
+label: 'Add the Scanner role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: scanner

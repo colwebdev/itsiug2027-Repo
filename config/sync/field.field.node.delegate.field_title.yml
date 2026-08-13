@@ -1,0 +1,21 @@
+uuid: 31d91d87-0f52-4475-8c21-1dc9c9558ff4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_title
+    - node.type.delegate
+  module:
+    - options
+id: node.delegate.field_title
+field_name: field_title
+entity_type: node
+bundle: delegate
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

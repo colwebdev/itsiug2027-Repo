@@ -23,6 +23,7 @@ dependencies:
     - canvas.component.sdc.convene_theme.section-split
     - canvas.component.sdc.convene_theme.testimonial_module
     - canvas.component.sdc.convene_theme.timeline_module
+    - canvas.component.sdc.convene_theme.logistics-accordion
 _core:
   default_config_hash: OUxVniiB7oo9lVIrEnUHnhagzCUCTiStn3f3EUZxgB4
 name: Organisms
@@ -49,3 +50,4 @@ items:
   - sdc.convene_theme.section-split
   - sdc.convene_theme.testimonial_module
   - sdc.convene_theme.timeline_module
+  - sdc.convene_theme.logistics-accordion

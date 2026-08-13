@@ -1,0 +1,21 @@
+uuid: cfa9297e-3b96-4827-9f47-13f31d0f5636
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_administrator_signature
+    - node.type.conference
+id: node.conference.field_administrator_signature
+field_name: field_administrator_signature
+entity_type: node
+bundle: conference
+label: 'Administrator Signature'
+description: 'Signature image used on certificates for the ITSIUG administrator.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings: {  }
+field_type: entity_reference

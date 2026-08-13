@@ -1,0 +1,20 @@
+uuid: c79ba554-e170-4582-8e39-f4569742f496
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - node
+id: node.field_badge_background_image
+field_name: field_badge_background_image
+entity_type: node
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

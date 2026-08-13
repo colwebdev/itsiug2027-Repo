@@ -2509,6 +2509,109 @@ return $response;
   }
 
   /**
+   * Display the ITSIUG 2027 institution report.
+   */
+  public function institutionReport() {
+
+    $institution_ids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'institution')
+      ->sort('title', 'ASC')
+      ->execute();
+
+    $rows = [];
+
+    foreach ($institution_ids as $institution_id) {
+      $institution = Node::load($institution_id);
+
+      if (!$institution) {
+        continue;
+      }
+
+      $representative = '';
+      if ($institution->hasField('field_representative_name') && !$institution->get('field_representative_name')->isEmpty()) {
+        $representative = trim((string) $institution->get('field_representative_name')->value);
+      }
+      elseif (!$institution->get('field_representative')->isEmpty()) {
+        $representative_entity = $institution->get('field_representative')->entity;
+        $representative = $representative_entity
+          ? $representative_entity->label()
+          : '';
+      }
+
+      $payment_status = '';
+      if (!$institution->get('field_payment_status')->isEmpty()) {
+        $payment_item = $institution->get('field_payment_status')->first();
+        $payment_values = $payment_item->getFieldDefinition()->getSetting('allowed_values');
+        $payment_status = $payment_values[$payment_item->value] ?? $payment_item->value;
+      }
+
+      $institution_status = '';
+      if (!$institution->get('field_institution_status')->isEmpty()) {
+        $status_item = $institution->get('field_institution_status')->first();
+        $status_values = $status_item->getFieldDefinition()->getSetting('allowed_values');
+        $institution_status = $status_values[$status_item->value] ?? $status_item->value;
+      }
+
+      $rows[] = [
+        $institution->label(),
+        $representative,
+        $institution->get('field_contact_email')->value ?? '',
+        $payment_status,
+        $institution_status,
+      ];
+    }
+
+    return [
+      'report_page' => [
+        '#type' => 'container',
+        '#attached' => [
+          'library' => [
+            'itsiug_theme/global-styling',
+          ],
+        ],
+        '#attributes' => [
+          'class' => [
+            'itsiug-admin-page',
+            'itsiug-reports-page',
+          ],
+        ],
+        'header' => [
+          '#markup' => '<h2>' . $this->t('ITSIUG 2027 Institution Report') . '</h2>',
+        ],
+        'institutions' => [
+          '#type' => 'table',
+          '#attributes' => [
+            'class' => [
+              'itsiug-delegate-management-table',
+            ],
+          ],
+          '#header' => [
+            $this->t('Institution Name'),
+            $this->t('Representative'),
+            $this->t('Contact Email'),
+            $this->t('Payment Status'),
+            $this->t('Institution Status'),
+          ],
+          '#rows' => $rows,
+          '#empty' => $this->t('No institution data is available.'),
+          '#sticky' => TRUE,
+        ],
+        'back' => [
+          '#type' => 'link',
+          '#title' => $this->t('Return to Administration'),
+          '#url' => Url::fromRoute('itsiug_registration.admin'),
+          '#attributes' => [
+            'class' => [
+              'button',
+            ],
+          ],
+        ],
+      ],
+    ];
+  }
+
+  /**
    * Display the ITSIUG 2027 administration dashboard.
    */
   public function admin() {
@@ -2562,6 +2665,21 @@ return $response;
             'itsiug_registration.reports'
           ),
           '#access' => $access_manager->checkNamedRoute('itsiug_registration.reports', [], $account),
+          '#attributes' => [
+            'class' => [
+              'button',
+              'button--primary',
+            ],
+          ],
+        ],
+
+        'institution_report' => [
+          '#type' => 'link',
+          '#title' => $this->t('Institution Report'),
+          '#url' => Url::fromRoute(
+            'itsiug_registration.institution_report'
+          ),
+          '#access' => $access_manager->checkNamedRoute('itsiug_registration.institution_report', [], $account),
           '#attributes' => [
             'class' => [
               'button',

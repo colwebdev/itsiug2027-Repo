@@ -1,0 +1,20 @@
+uuid: 491f2f3b-dcda-480c-81d5-cbf9d746633b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_track_preference
+field_name: field_track_preference
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

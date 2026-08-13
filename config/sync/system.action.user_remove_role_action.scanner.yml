@@ -1,0 +1,14 @@
+uuid: cfee78cb-5c24-4220-a906-cfcefa1c2a7f
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.scanner
+  module:
+    - user
+id: user_remove_role_action.scanner
+label: 'Remove the Scanner role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: scanner

@@ -1,0 +1,126 @@
+uuid: 5cfef6be-5bb6-40f8-b432-f775be125634
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.conference.field_active_conference
+    - field.field.node.conference.field_administrator_signature
+    - field.field.node.conference.field_badge_background_image
+    - field.field.node.conference.field_chairperson_signature
+    - field.field.node.conference.field_checkin_date
+    - field.field.node.conference.field_conference_code
+    - field.field.node.conference.field_conference_logo
+    - field.field.node.conference.field_conference_status
+    - field.field.node.conference.field_day1_date
+    - field.field.node.conference.field_day2_date
+    - field.field.node.conference.field_day3_date
+    - field.field.node.conference.field_end_date
+    - field.field.node.conference.field_start_date
+    - node.type.conference
+  module:
+    - datetime
+    - options
+    - user
+id: node.conference.default
+targetEntityType: node
+bundle: conference
+mode: default
+content:
+  field_active_conference:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_checkin_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_conference_code:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_conference_logo:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_conference_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_day1_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_day2_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_day3_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_end_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_start_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_administrator_signature: true
+  field_badge_background_image: true
+  field_chairperson_signature: true

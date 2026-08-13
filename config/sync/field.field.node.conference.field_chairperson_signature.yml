@@ -1,0 +1,21 @@
+uuid: b8b44c9b-da4e-481d-823f-2f4854788d39
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_chairperson_signature
+    - node.type.conference
+id: node.conference.field_chairperson_signature
+field_name: field_chairperson_signature
+entity_type: node
+bundle: conference
+label: 'Chairperson Signature'
+description: 'Signature image used on certificates for the chairperson.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings: {  }
+field_type: entity_reference

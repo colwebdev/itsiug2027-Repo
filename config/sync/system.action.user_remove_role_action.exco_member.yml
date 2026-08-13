@@ -1,0 +1,14 @@
+uuid: e42458cb-a63a-499a-8fda-48e387da3e58
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.exco_member
+  module:
+    - user
+id: user_remove_role_action.exco_member
+label: 'Remove the Exco Member role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: exco_member

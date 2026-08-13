@@ -1,0 +1,33 @@
+uuid: 155c2644-7b9c-42b8-98a0-eebf9c4ca97d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_registration_status
+field_name: field_registration_status
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: pending
+      label: Pending
+    -
+      value: confirmed
+      label: Confirmed
+    -
+      value: cancelled
+      label: Cancelled
+    -
+      value: waitlisted
+      label: Waitlisted
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

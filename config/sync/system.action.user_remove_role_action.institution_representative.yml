@@ -1,0 +1,14 @@
+uuid: 5dae19f9-a861-410a-a5c1-ba89e8c6d335
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.institution_representative
+  module:
+    - user
+id: user_remove_role_action.institution_representative
+label: 'Remove the Institution Representative role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: institution_representative

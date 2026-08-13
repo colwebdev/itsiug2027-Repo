@@ -1,0 +1,19 @@
+uuid: ed82945f-60b9-4503-9d01-7e6ee2584cda
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mobile
+    - node.type.delegate
+id: node.delegate.field_mobile
+field_name: field_mobile
+entity_type: node
+bundle: delegate
+label: Mobile
+description: 'Example: 0821128767'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

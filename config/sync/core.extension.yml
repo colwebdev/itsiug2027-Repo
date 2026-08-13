@@ -48,6 +48,7 @@ module:
   honeypot: 0
   image: 0
   inline_form_errors: 0
+  itsiug_registration: 0
   jquery_ui: 0
   jquery_ui_resizable: 0
   klaro: 0
@@ -121,3 +122,4 @@ theme:
   easy_email_theme: 0
   mercury: 0
   gin: 0
+  itsiug_theme: 0

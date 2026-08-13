@@ -1,0 +1,19 @@
+uuid: a5e65c68-b0c6-4edc-9018-d4db5fc78f41
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_email
+    - node.type.delegate
+id: node.delegate.field_email
+field_name: field_email
+entity_type: node
+bundle: delegate
+label: Email
+description: 'Example: tobias@eec.edu.za'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

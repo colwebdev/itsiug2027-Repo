@@ -1,0 +1,93 @@
+uuid: e65d9de4-35be-42bf-b412-8174639ed46f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.institution.field_contact_email
+    - field.field.node.institution.field_delegate_limit
+    - field.field.node.institution.field_institution_code
+    - field.field.node.institution.field_institution_status
+    - field.field.node.institution.field_payment_status
+    - field.field.node.institution.field_registration_pin
+    - field.field.node.institution.field_representative
+    - field.field.node.institution.field_representative_name
+    - node.type.institution
+  module:
+    - options
+    - user
+id: node.institution.default
+targetEntityType: node
+bundle: institution
+mode: default
+content:
+  field_contact_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_delegate_limit:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_institution_code:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_institution_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_payment_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_registration_pin:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_representative:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_representative_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

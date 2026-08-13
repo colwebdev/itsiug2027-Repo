@@ -1,0 +1,21 @@
+uuid: 1dbdce08-c4f4-4c64-b67a-9945f0394957
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_checkin_datetime
+    - node.type.conference_registration
+  module:
+    - datetime
+id: node.conference_registration.field_checkin_datetime
+field_name: field_checkin_datetime
+entity_type: node
+bundle: conference_registration
+label: 'Check-in Date/Time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

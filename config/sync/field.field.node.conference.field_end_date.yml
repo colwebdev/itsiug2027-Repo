@@ -1,0 +1,21 @@
+uuid: e8075cf1-a621-4b18-9a38-3637046d2044
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_end_date
+    - node.type.conference
+  module:
+    - datetime
+id: node.conference.field_end_date
+field_name: field_end_date
+entity_type: node
+bundle: conference
+label: 'Conference End Date'
+description: 'Example 2027-03-17'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

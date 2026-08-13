@@ -1,0 +1,23 @@
+uuid: c4f27fa8-d36d-4db3-9e36-7c7688e2e920
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_registration_status
+    - node.type.conference_registration
+  module:
+    - options
+id: node.conference_registration.field_registration_status
+field_name: field_registration_status
+entity_type: node
+bundle: conference_registration
+label: 'Registration Status'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: pending
+default_value_callback: ''
+settings: {  }
+field_type: list_string

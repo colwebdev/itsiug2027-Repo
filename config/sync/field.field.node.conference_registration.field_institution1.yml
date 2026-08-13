@@ -1,0 +1,29 @@
+uuid: 5488ced4-1c82-4df0-94ae-b8b4c2b56edc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_institution1
+    - node.type.conference_registration
+    - node.type.institution
+id: node.conference_registration.field_institution1
+field_name: field_institution1
+entity_type: node
+bundle: conference_registration
+label: Institution
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      institution: institution
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

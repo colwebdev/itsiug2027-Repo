@@ -1,0 +1,23 @@
+uuid: fcbbf9bd-8d56-49fc-ab71-8661b3c969e9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_monday_attendance
+    - node.type.conference_registration
+  module:
+    - options
+id: node.conference_registration.field_monday_attendance
+field_name: field_monday_attendance
+entity_type: node
+bundle: conference_registration
+label: 'Monday Attendance'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: not_present
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,21 @@
+uuid: 63ad92af-2295-48fe-9bc7-d075e06eb6a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_badge_background_image
+    - node.type.conference
+id: node.conference.field_badge_background_image
+field_name: field_badge_background_image
+entity_type: node
+bundle: conference
+label: 'Badge Background Image'
+description: 'Background image used on conference badges.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings: {  }
+field_type: entity_reference

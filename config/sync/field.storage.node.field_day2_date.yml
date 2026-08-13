@@ -1,0 +1,20 @@
+uuid: 2de8ee0d-0173-44e0-a8c4-8519076b5307
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+id: node.field_day2_date
+field_name: field_day2_date
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,19 @@
+uuid: 7938f943-b1e6-4412-82e7-888b9d499877
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_delegate
+field_name: field_delegate
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

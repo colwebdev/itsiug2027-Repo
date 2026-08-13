@@ -1,0 +1,19 @@
+uuid: 11e7a400-5f28-4990-bc58-d65c2b3c560a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_first_name
+    - node.type.delegate
+id: node.delegate.field_first_name
+field_name: field_first_name
+entity_type: node
+bundle: delegate
+label: 'First Name'
+description: 'Example: John'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

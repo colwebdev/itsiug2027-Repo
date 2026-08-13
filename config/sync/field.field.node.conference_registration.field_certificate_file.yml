@@ -1,0 +1,27 @@
+uuid: 2a02dd4a-5038-4154-b07c-bfdbc00b6361
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_certificate_file
+    - node.type.conference_registration
+  module:
+    - file
+id: node.conference_registration.field_certificate_file
+field_name: field_certificate_file
+entity_type: node
+bundle: conference_registration
+label: 'Certificate File'
+description: Conf
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: 'certificates/[date:custom:Y]'
+  file_extensions: pdf
+  max_filesize: ''
+  description_field: false
+field_type: file

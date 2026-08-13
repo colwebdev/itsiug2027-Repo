@@ -1,0 +1,29 @@
+uuid: b5060b8c-af4a-4bb2-ba97-a417aaa7fba4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_representative
+    - node.type.institution
+id: node.institution.field_representative
+field_name: field_representative
+entity_type: node
+bundle: institution
+label: Representative
+description: 'Example: Philip Uys'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    filter:
+      type: _none
+    include_anonymous: true
+field_type: entity_reference
