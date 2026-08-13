@@ -2208,51 +2208,6 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
         ),
       ],
 
-      /*
-       * Detailed delegate report.
-       */
-      'delegate_title' => [
-        '#markup' =>
-          '<h3>' .
-          $this->t('Delegate Detail') .
-          '</h3>',
-      ],
-
-      'delegate_filters' => $this->buildDelegateFilter(
-        'itsiug_registration.reports',
-        $search
-      ),
-
-'delegates' => [
-  '#type' => 'table',
-
-  '#attributes' => [
-    'class' => [
-      'itsiug-delegate-management-table',
-    ],
-  ],
-
-        '#header' => [
-          $this->t('Delegate'),
-          $this->t('Institution'),
-          $this->t('Email'),
-          $this->t('Registration'),
-          $this->t('Check-in'),
-          $this->t('Monday'),
-          $this->t('Tuesday'),
-          $this->t('Wednesday'),
-          $this->t('Certificate'),
-        ],
-
-        '#rows' => $delegate_rows,
-
-        '#empty' => $this->t(
-          'No delegate data is available.'
-        ),
-
-        '#sticky' => TRUE,
-        ],
-
       'back' => [
         '#type' => 'link',
         '#title' => $this->t('← Back to Administration'),
