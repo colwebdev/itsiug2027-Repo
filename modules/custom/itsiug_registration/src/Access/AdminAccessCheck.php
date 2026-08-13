@@ -25,6 +25,19 @@ class AdminAccessCheck {
   }
 
   /**
+   * Access check for reports restricted to Exco Members.
+   */
+  public function excoMember(AccountInterface $account): AccessResult {
+    if ($account->isAnonymous() || !in_array('exco_member', $account->getRoles(), TRUE)) {
+      return AccessResult::forbidden()
+        ->cachePerUser();
+    }
+
+    return AccessResult::allowed()
+      ->cachePerUser();
+  }
+
+  /**
    * Allow exco_member role or any of the specified permissions.
    */
   private function checkAccess(AccountInterface $account, array $permissions): AccessResult {

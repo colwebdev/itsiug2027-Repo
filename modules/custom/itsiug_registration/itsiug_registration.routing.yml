@@ -146,7 +146,7 @@ itsiug_registration.institution_report:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::institutionReport'
     _title: 'ITSIUG 2027 Institution Report'
   requirements:
-    _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::reports'
+    _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::excoMember'
 
 itsiug_registration.admin_delegates:
   path: '/register/admin/delegates'

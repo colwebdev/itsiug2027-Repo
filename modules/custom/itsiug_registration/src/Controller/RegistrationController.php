@@ -2532,12 +2532,6 @@ return $response;
       if ($institution->hasField('field_representative_name') && !$institution->get('field_representative_name')->isEmpty()) {
         $representative = trim((string) $institution->get('field_representative_name')->value);
       }
-      elseif (!$institution->get('field_representative')->isEmpty()) {
-        $representative_entity = $institution->get('field_representative')->entity;
-        $representative = $representative_entity
-          ? $representative_entity->label()
-          : '';
-      }
 
       $payment_status = '';
       if (!$institution->get('field_payment_status')->isEmpty()) {
@@ -2556,7 +2550,6 @@ return $response;
       $rows[] = [
         $institution->label(),
         $representative,
-        $institution->get('field_contact_email')->value ?? '',
         $payment_status,
         $institution_status,
       ];
@@ -2589,7 +2582,6 @@ return $response;
           '#header' => [
             $this->t('Institution Name'),
             $this->t('Representative'),
-            $this->t('Contact Email'),
             $this->t('Payment Status'),
             $this->t('Institution Status'),
           ],
