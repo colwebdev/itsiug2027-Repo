@@ -2468,6 +2468,20 @@ return $response;
    */
   public function institutionReport() {
 
+    $payment_filter = trim((string) \Drupal::request()->query->get('payment_filter', ''));
+    $payment_field = \Drupal::service('entity_field.manager')
+      ->getFieldDefinitions('node', 'institution')['field_payment_status'];
+    $payment_options = $payment_field->getSetting('allowed_values') ?? [];
+
+    if ($payment_filter !== '' && !isset($payment_options[$payment_filter])) {
+      foreach ($payment_options as $value => $label) {
+        if (strcasecmp((string) $label, $payment_filter) === 0) {
+          $payment_filter = (string) $value;
+          break;
+        }
+      }
+    }
+
     $institution_ids = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
       ->condition('type', 'institution')
@@ -2483,6 +2497,8 @@ return $response;
         continue;
       }
 
+      $payment_value = $institution->get('field_payment_status')->value ?? '';
+
       $representative = '';
       if ($institution->hasField('field_representative_name') && !$institution->get('field_representative_name')->isEmpty()) {
         $representative = trim((string) $institution->get('field_representative_name')->value);
@@ -2493,6 +2509,10 @@ return $response;
         $payment_item = $institution->get('field_payment_status')->first();
         $payment_values = $payment_item->getFieldDefinition()->getSetting('allowed_values');
         $payment_status = $payment_values[$payment_item->value] ?? $payment_item->value;
+      }
+
+      if ($payment_filter !== '' && $payment_value !== $payment_filter) {
+        continue;
       }
 
       $institution_status = '';
@@ -2513,6 +2533,12 @@ return $response;
     return [
       'report_page' => [
         '#type' => 'container',
+        '#cache' => [
+          'max-age' => 0,
+          'contexts' => [
+            'url.query_args:payment_filter',
+          ],
+        ],
         '#attached' => [
           'library' => [
             'itsiug_theme/global-styling',
@@ -2526,6 +2552,31 @@ return $response;
         ],
         'header' => [
           '#markup' => '<h2>' . $this->t('ITSIUG 2027 Membership Payment Report') . '</h2>',
+        ],
+        'payment_filter' => [
+          '#type' => 'container',
+          '#attributes' => [
+            'class' => [
+              'itsiug-admin-filters',
+              'itsiug-badge-filters',
+            ],
+          ],
+          'form' => [
+            '#type' => 'inline_template',
+            '#template' => '<form method="get" action="{{ action }}" class="itsiug-admin-filter-form"><div class="form-item"><label for="{{ input_id }}">{{ label }}</label><select id="{{ input_id }}" name="payment_filter"><option value="">{{ all_label }}</option>{% for value, option_label in options %}<option value="{{ value }}"{% if value == selected %} selected{% endif %}>{{ option_label }}</option>{% endfor %}</select><div class="description">{{ description }}</div></div><div class="form-actions"><input type="submit" value="{{ apply_label }}" class="button button--primary" /><a href="{{ clear_url }}" class="button">{{ clear_label }}</a></div></form>',
+            '#context' => [
+              'action' => Url::fromRoute('itsiug_registration.institution_report')->toString(),
+              'clear_url' => Url::fromRoute('itsiug_registration.institution_report')->toString(),
+              'input_id' => Html::getId('itsiug-institution-payment-status'),
+              'label' => $this->t('Payment Status'),
+              'all_label' => $this->t('All payment statuses'),
+              'options' => $payment_options,
+              'selected' => $payment_filter,
+              'description' => $this->t('Filter institutions by payment status.'),
+              'apply_label' => $this->t('Apply Filter'),
+              'clear_label' => $this->t('Clear Filter'),
+            ],
+          ],
         ],
         'institutions' => [
           '#type' => 'table',
@@ -2542,7 +2593,6 @@ return $response;
           ],
           '#rows' => $rows,
           '#empty' => $this->t('No institution data is available.'),
-          '#sticky' => TRUE,
         ],
         'back' => [
           '#type' => 'link',
