@@ -144,7 +144,7 @@ itsiug_registration.institution_report:
   path: '/register/institution-report'
   defaults:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::institutionReport'
-    _title: 'ITSIUG 2027 Institution Report'
+    _title: 'ITSIUG 2027 Membership Payment Report'
   requirements:
     _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::excoMember'
 

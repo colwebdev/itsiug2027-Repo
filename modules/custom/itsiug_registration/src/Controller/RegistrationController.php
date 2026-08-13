@@ -2464,7 +2464,7 @@ return $response;
   }
 
   /**
-   * Display the ITSIUG 2027 institution report.
+  * Display the ITSIUG 2027 membership payment report.
    */
   public function institutionReport() {
 
@@ -2525,7 +2525,7 @@ return $response;
           ],
         ],
         'header' => [
-          '#markup' => '<h2>' . $this->t('ITSIUG 2027 Institution Report') . '</h2>',
+          '#markup' => '<h2>' . $this->t('ITSIUG 2027 Membership Payment Report') . '</h2>',
         ],
         'institutions' => [
           '#type' => 'table',
@@ -2622,7 +2622,7 @@ return $response;
 
         'institution_report' => [
           '#type' => 'link',
-          '#title' => $this->t('Institution Report'),
+          '#title' => $this->t('Membership Payment Report'),
           '#url' => Url::fromRoute(
             'itsiug_registration.institution_report'
           ),
