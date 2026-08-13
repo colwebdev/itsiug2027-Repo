@@ -395,6 +395,20 @@ public function scannerProcess(Request $request) {
 
   $qr_code = trim($data['qr_code'] ?? '');
 
+  // Badge QR codes contain the public scanner URL. Accept both that URL and
+  // a plain QR ID so camera scans and direct scanner requests use the same lookup.
+  if ($qr_code !== '') {
+    $parsed_url = parse_url($qr_code);
+
+    if (!empty($parsed_url['query'])) {
+      parse_str($parsed_url['query'], $query_parameters);
+      $qr_code = trim((string) ($query_parameters['qr'] ?? $qr_code));
+    }
+
+    // Accept QR IDs from badges generated before the institution code update.
+    $qr_code = str_replace('ITSIUG2027', 'ITSIUG', $qr_code);
+  }
+
   if ($qr_code === '') {
     return new JsonResponse([
       'success' => FALSE,

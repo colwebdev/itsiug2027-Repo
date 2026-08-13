@@ -194,6 +194,21 @@
     resultElement.innerHTML =
       '<p><strong>Processing...</strong></p>';
 
+    try {
+      const parsedQrCode = new URL(
+        qrCode.trim(),
+        window.location.origin
+      );
+      const urlQrCode = parsedQrCode.searchParams.get('qr');
+
+      if (urlQrCode) {
+        qrCode = urlQrCode.trim();
+      }
+    }
+    catch (error) {
+      qrCode = qrCode.trim();
+    }
+
     fetch('/session/token')
 
       .then(function (response) {

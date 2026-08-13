@@ -680,8 +680,7 @@ class BadgeGenerator {
       $pdf->SetTextColor($grey[0], $grey[1], $grey[2]);
       $pdf->SetFont('helvetica', '', 7);
       $pdf->SetXY(62, 113.5);
-      $qr_code_prefix = preg_replace('/-\d+$/', '', $badge_number);
-      $pdf->Cell(30, 4, $qr_code_prefix, 0, 0, 'R');
+      $pdf->Cell(30, 4, $badge_number, 0, 0, 'R');
     }
   }
 
