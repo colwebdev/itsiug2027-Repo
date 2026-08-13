@@ -5,7 +5,7 @@ package: Testing
 dependencies:
   - canvas_ai:canvas_ai
 
-# Information added by Drupal.org packaging script on 2026-07-29
-version: '1.9.0'
+# Information added by Drupal.org packaging script on 2026-08-12
+version: '1.10.1'
 project: 'canvas'
-datestamp: 1785336837
+datestamp: 1786575913

@@ -95,12 +95,12 @@ class BrowserCycleGuardTest extends TestCase {
    *   The self-referencing entity mock.
    */
   private function createSelfReferencingEntity(string $entityTypeId, string $id): ContentEntityInterface {
-    $entity = $this->createMock(ContentEntityInterface::class);
+    $entity = $this->createStub(ContentEntityInterface::class);
     $entity->method('getEntityTypeId')->willReturn($entityTypeId);
     $entity->method('id')->willReturn($id);
     $entity->method('isNew')->willReturn(FALSE);
 
-    $itemList = $this->createMock(EntityReferenceFieldItemListInterface::class);
+    $itemList = $this->createStub(EntityReferenceFieldItemListInterface::class);
     // The reference points back to the very same entity -> cycle.
     $itemList->method('referencedEntities')->willReturn([$entity]);
 
@@ -255,7 +255,7 @@ class BrowserCycleGuardTest extends TestCase {
     // cycle guard never fires and only the depth cap can bound the tree.
     $entities = [];
     for ($i = 1; $i <= 10; $i++) {
-      $entity = $this->createMock(ContentEntityInterface::class);
+      $entity = $this->createStub(ContentEntityInterface::class);
       $entity->method('getEntityTypeId')->willReturn('contact');
       $entity->method('id')->willReturn((string) $i);
       $entity->method('isNew')->willReturn(FALSE);
@@ -265,7 +265,7 @@ class BrowserCycleGuardTest extends TestCase {
     }
     foreach ($entities as $i => $entity) {
       $next = $entities[$i + 1] ?? $entities[10];
-      $itemList = $this->createMock(EntityReferenceFieldItemListInterface::class);
+      $itemList = $this->createStub(EntityReferenceFieldItemListInterface::class);
       $itemList->method('referencedEntities')->willReturn([$next]);
       $entity->method('get')->willReturnCallback(
         static function (string $name) use ($itemList) {

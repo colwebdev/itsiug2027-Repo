@@ -10,6 +10,7 @@ use Drupal\ai_agents\PluginInterfaces\AiAgentContextInterface;
 use Drupal\canvas_ai\AiResponseValidator;
 use Drupal\canvas_ai\CanvasAiPageBuilderHelper;
 use Drupal\canvas_ai\CanvasAiPermissions;
+use Drupal\canvas_ai\CanvasAiTempStore;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Plugin\Context\ContextDefinition;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -32,14 +33,17 @@ use Symfony\Component\Yaml\Yaml;
   id: 'canvas_ai:place_components',
   function_name: 'place_components',
   name: 'Place Components',
-  description: 'Places a section of components onto the current page. Call this once per section/row. The input is a YAML string with an "operations" list, each describing where to place its components (target region or "parent-uuid/slot", a placement of "above", "below" or "inside", and a reference_uuid for above/below). Components are not added to the page unless this tool is called. It may return validation errors if the structure is invalid.',
+  description: 'Places a section of components onto the current page. Call this once per section/row. Each placement operation targets a region or slot and carries the components to place there. Components are not added to the page unless this tool is called. It may return validation errors if a target, placement, or component is invalid.',
   group: 'modification_tools',
   context_definitions: [
-    'component_structure_yaml' => new ContextDefinition(
-      data_type: 'string',
-      label: new TranslatableMarkup("Component structure in yml format"),
-      description: new TranslatableMarkup("The components to place, as a YAML string containing an 'operations' list."),
+    'operations' => new ContextDefinition(
+      data_type: 'list',
+      label: new TranslatableMarkup("Placement operations"),
+      description: new TranslatableMarkup("The placements to apply, one entry per target position."),
       required: TRUE,
+      constraints: [
+        'ComplexToolItems' => PlacementOperation::class,
+      ],
     ),
   ],
 )]
@@ -74,6 +78,13 @@ final class PlaceComponents extends FunctionCallBase implements ExecutableFuncti
   protected AiResponseValidator $responseValidator;
 
   /**
+   * The Canvas AI tempstore.
+   *
+   * @var \Drupal\canvas_ai\CanvasAiTempStore
+   */
+  protected CanvasAiTempStore $tempStore;
+
+  /**
    * Load from dependency injection container.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): FunctionCallInterface | static {
@@ -84,9 +95,10 @@ final class PlaceComponents extends FunctionCallBase implements ExecutableFuncti
       $container->get('ai.context_definition_normalizer'),
     );
     $instance->pageBuilderHelper = $container->get('canvas_ai.page_builder_helper');
-    $instance->loggerFactory = $container->get('logger.factory');
-    $instance->currentUser = $container->get('current_user');
+    $instance->loggerFactory = $container->get(LoggerChannelFactoryInterface::class);
+    $instance->currentUser = $container->get(AccountProxyInterface::class);
     $instance->responseValidator = $container->get('canvas_ai.response_validator');
+    $instance->tempStore = $container->get(CanvasAiTempStore::class);
     return $instance;
   }
 
@@ -99,25 +111,25 @@ final class PlaceComponents extends FunctionCallBase implements ExecutableFuncti
       throw new \Exception('The current user does not have the right permissions to run this tool.');
     }
     try {
-      $component_structure = $this->getContextValue('component_structure_yaml');
-      $component_structure_array = Yaml::parse($component_structure);
-      if (empty($component_structure_array['operations'])) {
-        throw new \Exception('The operations key is missing in the component structure.');
-      }
-
+      $operations = [];
       $all_errors = [];
-      foreach ($component_structure_array['operations'] as $index => $operation) {
-        $all_errors = array_merge($all_errors, $this->validatePlacementParams($operation, $index));
-        $this->responseValidator->validateComponentStructure($operation['components'] ?? []);
+      $current_layout = $this->tempStore->getData(CanvasAiTempStore::CURRENT_LAYOUT_KEY) ?? '';
+      foreach ($this->getContextValue('operations') as $index => $operation) {
+        $operation['components'] = Yaml::parse($operation['components'] ?? '');
+        $all_errors = array_merge($all_errors, $this->validatePlacementParams($operation, $index, $current_layout));
+        if (\is_array($operation['components'])) {
+          $this->responseValidator->validateComponentStructure($operation['components']);
+        }
+        $operations[] = $operation;
       }
 
       if (!empty($all_errors)) {
         throw new \Exception(Yaml::dump($all_errors));
       }
 
-      // Once validated, convert the YAML to the operations structure (with
+      // Once validated, convert the operations to the structure (with
       // calculated nodePaths and assigned UUIDs) consumed by the Canvas UI.
-      $placement = $this->pageBuilderHelper->generateComponentPlacementData($component_structure);
+      $placement = $this->pageBuilderHelper->generateComponentPlacementData(['operations' => $operations]);
       \assert(\array_keys($placement->operations) === ['operations']);
       $this->setStructuredOutput($placement->operations);
       // Return the backend-assigned UUIDs and the predicted layout in the tool
@@ -141,20 +153,38 @@ final class PlaceComponents extends FunctionCallBase implements ExecutableFuncti
    * Validates the placement parameters of a single operation.
    *
    * @param array $operation
-   *   The operation to validate.
+   *   The operation to validate, with its components block already parsed.
    * @param int $index
    *   The index of the operation, used for error messages.
+   * @param string $current_layout
+   *   The current layout JSON string, used to resolve the target region.
    *
    * @return array
    *   An array of validation errors, keyed by operation, or empty if valid.
    */
-  private function validatePlacementParams(array $operation, int $index): array {
+  private function validatePlacementParams(array $operation, int $index, string $current_layout): array {
     $errors = [];
     $error_key = 'Operation ' . $index;
+
+    if (!isset($operation['target']) || !\is_string($operation['target']) || $operation['target'] === '') {
+      $errors[$error_key][] = 'The target key is missing in the operation.';
+      return $errors;
+    }
 
     if (!isset($operation['placement']) || !\in_array($operation['placement'], ['above', 'below', 'inside'], TRUE)) {
       $errors[$error_key][] = 'The placement key is missing or invalid in the operation.';
       return $errors;
+    }
+
+    // A target naming a region must match a region present in the layout. A
+    // target containing a slash names a `parent_uuid/slot_name` pair instead,
+    // whose parent is resolved during nodePath calculation.
+    if (strpos($operation['target'], '/') === FALSE) {
+      $region_error = $this->pageBuilderHelper->validateRegionExists($operation['target'], $current_layout);
+      if ($region_error !== NULL) {
+        $errors[$error_key][] = $region_error;
+        return $errors;
+      }
     }
 
     $placement = $operation['placement'];
@@ -169,13 +199,16 @@ final class PlaceComponents extends FunctionCallBase implements ExecutableFuncti
       if (!empty($operation['reference_uuid'])) {
         $errors[$error_key][] = 'The reference_uuid is not required for inside placement.';
       }
-      if (isset($operation['target']) && $this->pageBuilderHelper->hasChildComponents($operation['target'])) {
+      if ($this->pageBuilderHelper->hasChildComponents($operation['target'])) {
         $errors[$error_key][] = 'The target ' . $operation['target'] . ' has "inside" placement specified, but it contains child components. Select any child component in the target and use "above" or "below" placement instead.';
       }
     }
 
-    // Operation must contain components.
-    if (empty($operation['components'])) {
+    // Operation must contain components, as a parseable YAML list.
+    if (!\is_array($operation['components'])) {
+      $errors[$error_key][] = 'The components value must be a YAML list.';
+    }
+    elseif ($operation['components'] === []) {
       $errors[$error_key][] = 'The operation must contain components.';
     }
 

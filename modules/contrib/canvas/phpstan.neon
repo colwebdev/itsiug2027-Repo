@@ -94,6 +94,8 @@ parameters:
     - { identifier: canvas.requireStaticMethods, path: modules/canvas_ai/** }
 # Canvas' custom PHPStan rules.
 rules:
+  - Canvas\PHPStan\Rules\NoUndeclaredModuleHardReferenceRule
+  - Canvas\PHPStan\Rules\NoUndeclaredModuleInheritanceRule
   - Canvas\PHPStan\Rules\DisallowDrupalFlushAllCachesRule
   - Canvas\PHPStan\Rules\DisallowHookSchemaRule
   - Canvas\PHPStan\Rules\NoDuplicateTraitUseRule
@@ -106,6 +108,7 @@ rules:
   - Canvas\PHPStan\Rules\ComponentPreSaveUpdateMethodsRule
   - Canvas\PHPStan\Rules\ComponentConfigUpdaterMustDeclarePreSaveIntentRule
   - Canvas\PHPStan\Rules\RequireTypedDataHelperForInternalCheckRule
+  - Canvas\PHPStan\Rules\NeedsDetectorMustNotMutateEntityRule
   - mglaman\PHPStanDrupal\Rules\Drupal\TodoCommentWithIssueUrlRule
 # Run `composer run phpstan-regenerate-ignores-for-non-min-core-version-features` to update this list of ignores.
 includes:

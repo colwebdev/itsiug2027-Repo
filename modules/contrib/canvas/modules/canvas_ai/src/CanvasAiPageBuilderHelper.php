@@ -166,36 +166,38 @@ class CanvasAiPageBuilderHelper {
    *   Structured array with calculated nodePaths for components.
    */
   public function customYamlToArrayMapper(string $yaml_string): array {
-    return $this->computePlacement($yaml_string, FALSE)->operations;
+    $parsed_yaml = Yaml::parse($yaml_string);
+    $parsed_yaml = \is_array($parsed_yaml) ? $parsed_yaml : [];
+    return $this->computePlacement($parsed_yaml, FALSE)->operations;
   }
 
   /**
    * Generates the placement data for a component structure request.
    *
-   * @param string $yaml_string
-   *   The YAML string to convert.
+   * @param array $operations_data
+   *   The operations structure, keyed by 'operations'.
    *
    * @return \Drupal\canvas_ai\CanvasAiPlacementResult
    *   The operations (with assigned UUIDs) for the UI, plus the component
    *   structure with those UUIDs and the predicted post-placement layout for
    *   the model to reference in follow-up placements.
    */
-  public function generateComponentPlacementData(string $yaml_string): CanvasAiPlacementResult {
-    return $this->computePlacement($yaml_string, TRUE);
+  public function generateComponentPlacementData(array $operations_data): CanvasAiPlacementResult {
+    return $this->computePlacement($operations_data, TRUE);
   }
 
   /**
    * Computes the operations, assigned UUIDs, and predicted layout for a request.
    *
-   * @param string $yaml_string
-   *   The YAML string to convert.
+   * @param array $data
+   *   The operations structure, keyed by 'operations'.
    * @param bool $include_uuid
    *   Whether to include each component's assigned UUID in the operations.
    *
    * @return \Drupal\canvas_ai\CanvasAiPlacementResult
    *   The mapped placement result.
    */
-  private function computePlacement(string $yaml_string, bool $include_uuid): CanvasAiPlacementResult {
+  private function computePlacement(array $data, bool $include_uuid): CanvasAiPlacementResult {
     $result = [
       'operations' => [
         [
@@ -204,11 +206,9 @@ class CanvasAiPageBuilderHelper {
         ],
       ],
     ];
-    $parsed_yaml = Yaml::parse($yaml_string);
-    $parsed_yaml = \is_array($parsed_yaml) ? $parsed_yaml : [];
     // Add UUIDs to all components in the page builder output, so that their
     // nodePaths can be extracted later from the expected layout.
-    $data_to_process = $this->addUuidToAllComponents($parsed_yaml);
+    $data_to_process = $this->addUuidToAllComponents($data);
 
     $current_layout = $this->canvasAiTempstore->getData(CanvasAiTempStore::CURRENT_LAYOUT_KEY) ?? '';
     $current_layout = Json::decode($current_layout);
@@ -1174,13 +1174,7 @@ class CanvasAiPageBuilderHelper {
     }
     else {
       // Target is a region name.
-      if (isset($modified_layout[$target])) {
-        // Add the component to the region.
-        $modified_layout[$target] = array_merge($component_tree, $modified_layout[$target]);
-      }
-      else {
-        throw new \Exception(\sprintf('Region "%s" not found in layout', $target));
-      }
+      $modified_layout[$target] = array_merge($component_tree, $modified_layout[$target]);
     }
 
     return $modified_layout;
@@ -1483,13 +1477,36 @@ class CanvasAiPageBuilderHelper {
 
     if (isset($layout_array['regions']) && \is_array($layout_array['regions'])) {
       foreach ($layout_array['regions'] as $region_name => $region_data) {
-        if (isset($region_data['nodePathPrefix'])) {
+        if (isset($region_data['nodePathPrefix'][0])) {
           $regions[$region_name] = $region_data['nodePathPrefix'][0];
         }
       }
     }
 
     return $regions;
+  }
+
+  /**
+   * Checks that a region exists in the current layout.
+   *
+   * @param string $region
+   *   The region name to check.
+   * @param string $current_layout
+   *   The current layout JSON string.
+   *
+   * @return string|null
+   *   An error message for the AI agent, or NULL when the region exists.
+   */
+  public function validateRegionExists(string $region, string $current_layout): ?string {
+    $layout_regions = $this->getRegionIndex($current_layout);
+    if (\array_key_exists($region, $layout_regions)) {
+      return NULL;
+    }
+    return \sprintf(
+      'Region "%s" does not exist. Available regions are: %s.',
+      $region,
+      implode(', ', \array_keys($layout_regions)),
+    );
   }
 
   /**
@@ -1545,7 +1562,7 @@ class CanvasAiPageBuilderHelper {
 
       $region_index_mapping = $this->getRegionIndex($current_layout);
 
-      $region_index = $region_index_mapping[$region] ?? 0;
+      $region_index = $region_index_mapping[$region];
       $this->processComponents($components, [$region_index, 0], $result['operations'][0]['components']);
     }
 

@@ -179,7 +179,6 @@ class HtmxRequestTest extends KernelTestBase {
       'HX-Trigger' => 'my-button',
       'HX-Trigger-Name' => 'my_name',
       'HX-Current-URL' => 'https://example.com/page',
-      'HX-Prompt' => 'the answer',
     ]);
 
     // String request values resolve to their header value.
@@ -187,7 +186,6 @@ class HtmxRequestTest extends KernelTestBase {
     $this->assertSame('my-button', (string) $this->tokenService->replaceClear('[htmx:trigger]'));
     $this->assertSame('my_name', (string) $this->tokenService->replaceClear('[htmx:trigger_name]'));
     $this->assertSame('https://example.com/page', (string) $this->tokenService->replaceClear('[htmx:current_url]'));
-    $this->assertSame('the answer', (string) $this->tokenService->replaceClear('[htmx:prompt]'));
 
     // Boolean request values resolve to "1" when TRUE. When FALSE the value is
     // "0", which Drupal's token replacement clears to an empty string (the

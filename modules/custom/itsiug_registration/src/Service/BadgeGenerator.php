@@ -545,11 +545,6 @@ class BadgeGenerator {
     $pdf->Rect(4, 4, 90, 34, 'F');
     $pdf->SetAlpha(1);
 
-    $pdf->SetFillColor($cyan[0], $cyan[1], $cyan[2]);
-    $pdf->SetAlpha(0.18);
-    $pdf->Rect(0, 0, 56, 120, 'F');
-    $pdf->SetAlpha(1);
-
     $pdf->SetDrawColor($navy[0], $navy[1], $navy[2]);
     $pdf->SetLineWidth(0.35);
     $pdf->Rect(1.5, 1.5, 95, 117);
@@ -685,7 +680,8 @@ class BadgeGenerator {
       $pdf->SetTextColor($grey[0], $grey[1], $grey[2]);
       $pdf->SetFont('helvetica', '', 7);
       $pdf->SetXY(62, 113.5);
-      $pdf->Cell(30, 4, $badge_number, 0, 0, 'R');
+      $qr_code_prefix = preg_replace('/-\d+$/', '', $badge_number);
+      $pdf->Cell(30, 4, $qr_code_prefix, 0, 0, 'R');
     }
   }
 

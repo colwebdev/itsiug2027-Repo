@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d0606585197433977d168333faafb52",
+    "content-hash": "fd3352d2e719ea66c8610769fcc4d93b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2042,17 +2042,17 @@
         },
         {
             "name": "drupal/canvas",
-            "version": "1.9.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/canvas.git",
-                "reference": "1.9.0"
+                "reference": "1.10.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/canvas-1.9.0.zip",
-                "reference": "1.9.0",
-                "shasum": "9429e1003c54c61b06b223df40c707cdfe0fb7d4"
+                "url": "https://ftp.drupal.org/files/projects/canvas-1.10.1.zip",
+                "reference": "1.10.1",
+                "shasum": "388140b9d0c9628ff4f1322202aca632ec5801a6"
             },
             "require": {
                 "drupal/core": "^11.3",
@@ -2068,9 +2068,6 @@
                 "drupal/consumers": "*",
                 "drupal/custom_elements": "^3.4",
                 "drupal/jsonapi_menu_items": "^1.2.8",
-                "drupal/lupus_ce_renderer": "*",
-                "drupal/lupus_decoupled": "^1.5",
-                "drupal/lupus_decoupled_ce_api": "*",
                 "drupal/metatag": "^2.1",
                 "drupal/pathauto": "^1.13",
                 "drupal/search_api": "^1",
@@ -2088,8 +2085,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.9.0",
-                    "datestamp": "1785336826",
+                    "version": "1.10.1",
+                    "datestamp": "1786575902",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3808,17 +3805,17 @@
         },
         {
             "name": "drupal/eca",
-            "version": "3.1.4",
+            "version": "3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/eca.git",
-                "reference": "3.1.4"
+                "reference": "3.1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/eca-3.1.4.zip",
-                "reference": "3.1.4",
-                "shasum": "a63ee9d4a7d943698a5640f14499d9f0986630eb"
+                "url": "https://ftp.drupal.org/files/projects/eca-3.1.5.zip",
+                "reference": "3.1.5",
+                "shasum": "56e2969e66e925160570e11d09548341f631fad6"
             },
             "require": {
                 "dragonmantank/cron-expression": "^3.1",
@@ -3831,13 +3828,14 @@
                 "drupal/eca_endpoint": "*",
                 "drupal/eca_misc": "*",
                 "drupal/eca_render": "*",
-                "drupal/modeler_api": "*"
+                "drupal/modeler_api": "*",
+                "drupal/project_browser": "^2.1"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.1.4",
-                    "datestamp": "1783530591",
+                    "version": "3.1.5",
+                    "datestamp": "1786381321",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"

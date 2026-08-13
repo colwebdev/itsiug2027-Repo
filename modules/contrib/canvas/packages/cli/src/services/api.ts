@@ -566,7 +566,6 @@ export class ApiService {
    * Create a new content template.
    */
   async createContentTemplate(template: {
-    label: string;
     entityType: string;
     bundle: string;
     viewMode: string;
@@ -1231,7 +1230,6 @@ export class ApiService {
     if (this.siteUrl.includes('ddev.site')) {
       message += 'Troubleshooting tips:\n';
       message += '  • Check if DDEV is running: ddev status\n';
-      message += '  • Try HTTP instead of HTTPS\n';
       message += '  • Verify site is accessible in browser\n';
     } else {
       message += 'Check your site URL and internet connection.';
