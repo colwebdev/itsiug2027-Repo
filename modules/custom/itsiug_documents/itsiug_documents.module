@@ -41,8 +41,16 @@ function itsiug_documents_preprocess_views_view_table(array &$variables): void {
 
   foreach ($variables['rows'] as $row_index => $row) {
     foreach ($row['columns'] as $key => $column) {
-      if (!empty($labels[$key]) && isset($column['attributes'])) {
+      if (empty($column['attributes'])) {
+        continue;
+      }
+      if (!empty($labels[$key])) {
         $variables['rows'][$row_index]['columns'][$key]['attributes']->setAttribute('data-label', $labels[$key]);
+      }
+      // Views leaves whitespace in empty cells, so :empty cannot be used.
+      $value = (string) $variables['view']->style_plugin->getField($row_index, $key);
+      if (trim(strip_tags($value)) === '') {
+        $variables['rows'][$row_index]['columns'][$key]['attributes']->addClass('itsiug-cell-empty');
       }
     }
   }

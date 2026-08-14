@@ -57,6 +57,10 @@
   font-weight: 600;
 }
 
+.itsiug-programme .view-content {
+  overflow-x: auto;
+}
+
 .itsiug-programme table {
   width: 100%;
   margin: 0 0 26px;
@@ -178,8 +182,8 @@
   border-top: 4px solid #b56a00;
 }
 
-/* Stack table rows into labelled cards on narrow screens. */
-@media (max-width: 47.99em) {
+/* The seven-column table needs a wide viewport, so tablets get cards too. */
+@media (max-width: 61.99em) {
   .itsiug-programme thead {
     position: absolute;
     width: 1px;
@@ -204,7 +208,8 @@
     border: 0;
   }
 
-  .itsiug-programme td:empty {
+  .itsiug-programme td:empty,
+  .itsiug-programme td.itsiug-cell-empty {
     display: none;
   }
 

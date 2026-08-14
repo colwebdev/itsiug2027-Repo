@@ -49,6 +49,10 @@
   font-weight: 600;
 }
 
+.itsiug-documents .view-content {
+  overflow-x: auto;
+}
+
 .itsiug-documents table {
   width: 100%;
   margin: 0 0 26px;
@@ -167,7 +171,8 @@
     border: 0;
   }
 
-  .itsiug-documents td:empty {
+  .itsiug-documents td:empty,
+  .itsiug-documents td.itsiug-cell-empty {
     display: none;
   }
 
