@@ -1,0 +1,19 @@
+uuid: ff796af8-366b-4443-bbe8-633a402885ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_description
+    - node.type.document
+id: node.document.field_description
+field_name: field_description
+entity_type: node
+bundle: document
+label: Description
+description: 'Shown beside the download link on the documents page.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

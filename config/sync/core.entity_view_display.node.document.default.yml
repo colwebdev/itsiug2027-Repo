@@ -1,0 +1,43 @@
+uuid: d27e3f9a-632b-46e7-95cb-9111ccc17a17
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.document.field_category
+    - field.field.node.document.field_description
+    - field.field.node.document.field_document_file
+    - node.type.document
+  module:
+    - file
+    - text
+    - user
+id: node.document.default
+targetEntityType: node
+bundle: document
+mode: default
+content:
+  field_category:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_document_file:
+    type: file_default
+    label: inline
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  links: true

@@ -1,0 +1,27 @@
+uuid: 4e34dabb-9035-40b3-8793-c7a068546f07
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_document_file
+    - node.type.document
+  module:
+    - file
+id: node.document.field_document_file
+field_name: field_document_file
+entity_type: node
+bundle: document
+label: Document
+description: 'PDF, Word, Excel, PowerPoint or ZIP. Opens in a new tab for delegates.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: 'documents/[date:custom:Y-m]'
+  file_extensions: 'pdf doc docx xls xlsx ppt pptx zip'
+  max_filesize: ''
+  description_field: false
+field_type: file

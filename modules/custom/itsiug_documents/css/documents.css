@@ -1,0 +1,185 @@
+/**
+ * @file
+ * Conference document library styles, matching the ITSIUG report pages.
+ */
+
+.itsiug-documents .view-header {
+  margin-bottom: 24px;
+}
+
+.itsiug-documents .views-exposed-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: flex-end;
+  margin-bottom: 30px;
+  padding: 20px 22px;
+  background: #f7f9fb;
+  border: 1px solid #e2e8ee;
+  border-radius: 10px;
+}
+
+.itsiug-documents .views-exposed-form .form-item {
+  margin: 0;
+}
+
+.itsiug-documents .views-exposed-form label {
+  display: block;
+  margin-bottom: 6px;
+  color: #1f4b6b;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.itsiug-documents .views-exposed-form select,
+.itsiug-documents .views-exposed-form input[type="text"] {
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #dfe6eb;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 15px;
+}
+
+/* Category grouping heading. */
+.itsiug-documents h3 {
+  margin: 38px 0 16px;
+  color: #1f4b6b;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.itsiug-documents table {
+  width: 100%;
+  margin: 0 0 26px;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+/* Category grouping heading, rendered as the table caption. */
+.itsiug-documents caption {
+  padding: 10px 15px;
+  background: #eef3f7;
+  border: 1px solid #e2e8ee;
+  border-bottom: 0;
+  color: #1f4b6b;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.itsiug-documents thead th {
+  padding: 12px 15px;
+  background: #1f4b6b;
+  border: 1px solid #e2e8ee;
+  color: #ffffff;
+  font-weight: 600;
+  text-align: left;
+}
+
+.itsiug-documents td {
+  padding: 12px 15px;
+  border: 1px solid #e2e8ee;
+  vertical-align: top;
+}
+
+.itsiug-documents tbody tr:nth-child(even) {
+  background: #f7f9fb;
+}
+
+.itsiug-documents .view-empty {
+  padding: 18px 20px;
+  background: #f7f9fb;
+  border: 1px solid #e2e8ee;
+  border-radius: 10px;
+  color: #5b6873;
+}
+
+.itsiug-document-download {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 5px;
+  background: #1f4b6b;
+  color: #ffffff !important;
+  font-weight: 600;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.itsiug-document-download:hover {
+  background: #163a53;
+}
+
+.itsiug-document-meta {
+  display: block;
+  margin-top: 6px;
+  color: #5b6873;
+  font-size: 13px;
+}
+
+/* Document node pages. */
+.itsiug-document-page .itsiug-field {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eef2f5;
+}
+
+.itsiug-document-page .itsiug-field:last-child {
+  border-bottom: 0;
+}
+
+.itsiug-document-page .itsiug-field__label {
+  color: #1f4b6b;
+  font-weight: 600;
+}
+
+.itsiug-document-page .itsiug-field__label::after {
+  content: ':';
+}
+
+/* Stack table rows into labelled cards on narrow screens. */
+@media (max-width: 47.99em) {
+  .itsiug-documents thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+  }
+
+  .itsiug-documents tbody tr {
+    display: block;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border: 1px solid #e2e8ee;
+    border-radius: 10px;
+  }
+
+  .itsiug-documents td {
+    display: flex;
+    gap: 12px;
+    padding: 6px 0;
+    border: 0;
+  }
+
+  .itsiug-documents td:empty {
+    display: none;
+  }
+
+  .itsiug-documents td::before {
+    content: attr(data-label);
+    flex: 0 0 7.5rem;
+    color: #5b6873;
+    font-weight: 600;
+  }
+
+  .itsiug-documents .views-exposed-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

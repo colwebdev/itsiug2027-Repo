@@ -1,0 +1,9 @@
+uuid: 716f4ba1-5e3b-4f3b-8f8a-ef0613e4db18
+langcode: en
+status: true
+dependencies: {  }
+name: 'Document category'
+vid: document_category
+description: 'Groups documents on the /documents page.'
+weight: 0
+new_revision: false

@@ -1,0 +1,298 @@
+uuid: a108092e-44fd-44e1-b42f-264c336a4da6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category
+    - field.storage.node.field_description
+    - field.storage.node.field_document_file
+    - node.type.document
+    - taxonomy.vocabulary.document_category
+  module:
+    - file
+    - node
+    - taxonomy
+    - text
+    - user
+_core:
+  default_config_hash: FHeN3Pm-i8DM6hUlTO3PW6y63UuZmO1wxERcHOw1UII
+id: documents
+label: Documents
+module: views
+description: 'Conference documents delegates can download.'
+tag: ''
+base_table: node_field_data
+base_field: nid
+display:
+  default:
+    id: default
+    display_title: Default
+    display_plugin: default
+    position: 0
+    display_options:
+      title: Documents
+      fields:
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: title
+          plugin_id: field
+          label: Title
+          exclude: false
+          type: string
+          settings:
+            link_to_entity: false
+        field_description:
+          id: field_description
+          table: node__field_description
+          field: field_description
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_description
+          plugin_id: field
+          label: Description
+          exclude: false
+          type: text_default
+          settings: {  }
+        field_category:
+          id: field_category
+          table: node__field_category
+          field: field_category
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_category
+          plugin_id: field
+          label: ''
+          exclude: true
+          type: entity_reference_label
+          settings:
+            link: false
+        field_document_file:
+          id: field_document_file
+          table: node__field_document_file
+          field: field_document_file
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_document_file
+          plugin_id: field
+          label: ''
+          exclude: true
+          type: file_url_plain
+          settings: {  }
+        nothing:
+          id: nothing
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          plugin_id: custom
+          label: Download
+          exclude: false
+          alter:
+            alter_text: true
+            text: '<a class="itsiug-document-download" href="{{ field_document_file }}" target="_blank" rel="noopener noreferrer">Open / Download</a>'
+      pager:
+        type: none
+        options:
+          offset: 0
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Filter
+          reset_button: true
+          reset_button_label: 'Show all documents'
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: false
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+        options: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
+          empty: true
+          content: 'No documents match your search.'
+      sorts:
+        field_category_target_id:
+          id: field_category_target_id
+          table: node__field_category
+          field: field_category_target_id
+          relationship: none
+          plugin_id: standard
+          order: ASC
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          entity_type: node
+          entity_field: title
+          plugin_id: standard
+          order: ASC
+      arguments: {  }
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            document: document
+          group: 1
+        field_category_target_id:
+          id: field_category_target_id
+          table: node__field_category
+          field: field_category_target_id
+          relationship: none
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_category_target_id_op
+            label: Category
+            operator: field_category_target_id_op
+            identifier: category
+            remember: false
+            multiple: false
+            reduce: false
+          reduce_duplicates: false
+          vid: document_category
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          entity_type: node
+          entity_field: title
+          plugin_id: string
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: title_op
+            label: 'Search title'
+            operator: title_op
+            identifier: search
+            remember: false
+            multiple: false
+      style:
+        type: table
+        options:
+          grouping:
+            -
+              field: field_category
+              rendered: true
+              rendered_strip: false
+          row_class: ''
+          default_row_class: true
+          columns:
+            title: title
+            field_description: field_description
+            nothing: nothing
+          default: '-1'
+          info:
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_description:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            nothing:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          summary: ''
+          empty_table: true
+          caption: ''
+          description: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+      query:
+        type: views_query
+        options:
+          distinct: true
+      relationships: {  }
+      css_class: 'itsiug-reports-page itsiug-documents'
+      use_ajax: true
+      header: {  }
+      footer: {  }
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_category'
+        - 'config:field.storage.node.field_description'
+        - 'config:field.storage.node.field_document_file'
+  page_documents:
+    id: page_documents
+    display_title: Documents
+    display_plugin: page
+    position: 1
+    display_options:
+      display_description: 'Downloadable conference documents.'
+      display_extenders: {  }
+      path: documents
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_category'
+        - 'config:field.storage.node.field_description'
+        - 'config:field.storage.node.field_document_file'

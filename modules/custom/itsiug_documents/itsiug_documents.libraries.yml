@@ -1,0 +1,7 @@
+documents:
+  version: 1.x
+  css:
+    theme:
+      css/documents.css: {}
+  dependencies:
+    - itsiug_theme/global-styling

@@ -1,0 +1,10 @@
+name: 'ITSIUG Documents'
+type: module
+description: 'Conference document library for delegates.'
+package: ITSIUG
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - drupal:node
+  - drupal:taxonomy
+  - drupal:views
+  - drupal:file

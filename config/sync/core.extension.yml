@@ -50,6 +50,7 @@ module:
   honeypot: 0
   image: 0
   inline_form_errors: 0
+  itsiug_documents: 0
   itsiug_programme: 0
   itsiug_registration: 0
   jquery_ui: 0

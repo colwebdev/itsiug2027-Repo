@@ -1,0 +1,11 @@
+uuid: 748fba3d-1cac-4b66-aea5-5642de4ad6db
+langcode: en
+status: true
+dependencies: {  }
+name: Document
+type: document
+description: 'A file delegates can download from the conference document library.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false
