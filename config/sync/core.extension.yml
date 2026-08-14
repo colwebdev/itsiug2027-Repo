@@ -5,6 +5,7 @@ module:
   automated_cron: 0
   automatic_updates: 0
   autosave_form: 0
+  better_exposed_filters: 0
   big_pipe: 0
   block: 0
   block_content: 0
@@ -21,6 +22,7 @@ module:
   cva: 0
   dashboard: 0
   datetime: 0
+  datetime_range: 0
   dblog: 0
   drupal_cms_helper: 0
   drupical: 0
@@ -48,6 +50,7 @@ module:
   honeypot: 0
   image: 0
   inline_form_errors: 0
+  itsiug_programme: 0
   itsiug_registration: 0
   jquery_ui: 0
   jquery_ui_resizable: 0

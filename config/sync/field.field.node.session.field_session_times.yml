@@ -1,0 +1,21 @@
+uuid: aba6662e-228c-4320-abef-60db10539a96
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_session_times
+    - node.type.session
+  module:
+    - datetime_range
+id: node.session.field_session_times
+field_name: field_session_times
+entity_type: node
+bundle: session
+label: 'Time slot'
+description: 'Start and end date/time of the session.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: daterange

@@ -1,0 +1,138 @@
+uuid: bf8cf6f6-5d54-499e-b64d-a6305f496dd0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.session.field_category
+    - field.field.node.session.field_chairs
+    - field.field.node.session.field_co_chairs
+    - field.field.node.session.field_day
+    - field.field.node.session.field_description
+    - field.field.node.session.field_facilitators
+    - field.field.node.session.field_presentation
+    - field.field.node.session.field_presenters
+    - field.field.node.session.field_room
+    - field.field.node.session.field_scribes
+    - field.field.node.session.field_session_number
+    - field.field.node.session.field_session_times
+    - field.field.node.session.field_track
+    - node.type.session
+  module:
+    - datetime_range
+    - text
+    - user
+id: node.session.default
+targetEntityType: node
+bundle: session
+mode: default
+content:
+  field_category:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_chairs:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_co_chairs:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_day:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_facilitators:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_presentation:
+    type: entity_reference_entity_view
+    label: inline
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_presenters:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_room:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_scribes:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_session_number:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_session_times:
+    type: daterange_custom
+    label: inline
+    settings:
+      timezone_override: ''
+      date_format: 'H:i'
+      from_to: both
+      separator: –
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_track:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden:
+  links: true

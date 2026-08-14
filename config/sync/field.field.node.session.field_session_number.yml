@@ -1,0 +1,23 @@
+uuid: 0a669586-cdf9-495d-9927-bf7a7092cd56
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_session_number
+    - node.type.session
+id: node.session.field_session_number
+field_name: field_session_number
+entity_type: node
+bundle: session
+label: 'Session number'
+description: 'Numeric only, e.g. 1 for "Session 01". Leave empty for breaks and functions.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,10 @@
+name: 'ITSIUG Programme'
+type: module
+description: 'Conference programme: session filtering plus "What''s on now" and "Up next".'
+package: ITSIUG
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - drupal:node
+  - drupal:taxonomy
+  - drupal:views
+  - drupal:datetime_range

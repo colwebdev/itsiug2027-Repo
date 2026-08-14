@@ -1,0 +1,26 @@
+uuid: e4b219f3-d3aa-4b2a-96b4-dcba8e376278
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.programme
+  module:
+    - views
+active_version: 25f1d9503afc5386
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'views_block:programme-block_now'
+        label: 'Conference programme: On now'
+        label_display: '0'
+        provider: views
+        views_label: ''
+        items_per_page: null
+    fallback_metadata:
+      slot_definitions: null
+label: 'Conference programme: On now'
+id: block.views_block.programme-block_now
+provider: views
+source: block
+source_local_id: 'views_block:programme-block_now'

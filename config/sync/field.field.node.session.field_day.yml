@@ -1,0 +1,28 @@
+uuid: a88c9fb2-10f4-47de-ab98-506bf856333a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_day
+    - node.type.session
+    - taxonomy.vocabulary.conference_day
+id: node.session.field_day
+field_name: field_day
+entity_type: node
+bundle: session
+label: Day
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      conference_day: conference_day
+    sort:
+      field: weight
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

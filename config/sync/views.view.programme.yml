@@ -1,0 +1,977 @@
+uuid: d9322f98-36b2-4171-bed9-9521e48ea051
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category
+    - field.storage.node.field_chairs
+    - field.storage.node.field_co_chairs
+    - field.storage.node.field_day
+    - field.storage.node.field_facilitators
+    - field.storage.node.field_presentation
+    - field.storage.node.field_presenters
+    - field.storage.node.field_room
+    - field.storage.node.field_scribes
+    - field.storage.node.field_session_number
+    - field.storage.node.field_session_times
+    - field.storage.node.field_track
+    - node.type.session
+  module:
+    - datetime_range
+    - itsiug_programme
+    - node
+    - taxonomy
+    - user
+id: programme
+label: 'Conference programme'
+module: views
+description: 'The conference programme, filterable by day, track, category, room and session number.'
+tag: ''
+base_table: node_field_data
+base_field: nid
+display:
+  default:
+    id: default
+    display_title: Default
+    display_plugin: default
+    position: 0
+    display_options:
+      title: Programme
+      fields:
+        field_session_times:
+          id: field_session_times
+          table: node__field_session_times
+          field: field_session_times
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: field_session_times
+          plugin_id: field
+          label: Time
+          exclude: false
+          click_sort_column: value
+          type: daterange_custom
+          settings:
+            timezone_override: ''
+            date_format: 'H:i'
+            from_to: both
+            separator: –
+          group_column: value
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+        field_session_number:
+          id: field_session_number
+          table: node__field_session_number
+          field: field_session_number
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_session_number
+          plugin_id: field
+          label: Session
+          exclude: false
+          alter:
+            alter_text: true
+            text: 'Session {{ field_session_number }}'
+          hide_empty: true
+          empty_zero: false
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: false
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: title
+          plugin_id: field
+          label: Topic
+          exclude: false
+          type: string
+          settings:
+            link_to_entity: true
+        field_category:
+          id: field_category
+          table: node__field_category
+          field: field_category
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_category
+          plugin_id: field
+          label: Category
+          exclude: false
+          type: entity_reference_label
+          settings:
+            link: false
+        field_room:
+          id: field_room
+          table: node__field_room
+          field: field_room
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_room
+          plugin_id: field
+          label: Room
+          exclude: false
+          type: entity_reference_label
+          settings:
+            link: false
+        field_track:
+          id: field_track
+          table: node__field_track
+          field: field_track
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_track
+          plugin_id: field
+          label: ''
+          exclude: true
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          separator: ', '
+        field_day:
+          id: field_day
+          table: node__field_day
+          field: field_day
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_day
+          plugin_id: field
+          label: ''
+          exclude: true
+          type: entity_reference_label
+          settings:
+            link: false
+        field_chairs:
+          id: field_chairs
+          table: node__field_chairs
+          field: field_chairs
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_chairs
+          plugin_id: field
+          label: Chair
+          exclude: true
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          separator: ', '
+        field_co_chairs:
+          id: field_co_chairs
+          table: node__field_co_chairs
+          field: field_co_chairs
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_co_chairs
+          plugin_id: field
+          label: Co-chair
+          exclude: true
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          separator: ', '
+        field_presenters:
+          id: field_presenters
+          table: node__field_presenters
+          field: field_presenters
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_presenters
+          plugin_id: field
+          label: Presenter
+          exclude: true
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          separator: ', '
+        field_facilitators:
+          id: field_facilitators
+          table: node__field_facilitators
+          field: field_facilitators
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_facilitators
+          plugin_id: field
+          label: Facilitator
+          exclude: true
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          separator: ', '
+        field_scribes:
+          id: field_scribes
+          table: node__field_scribes
+          field: field_scribes
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_scribes
+          plugin_id: field
+          label: Scribe
+          exclude: true
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          separator: ', '
+        nothing:
+          id: nothing
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          plugin_id: custom
+          label: Speaker(s)
+          exclude: false
+          alter:
+            alter_text: true
+            text: |
+              {% if field_chairs %}<span class="programme-role">Chair:</span> {{ field_chairs }}<br />{% endif %}{% if field_co_chairs %}<span class="programme-role">Co-chair:</span> {{ field_co_chairs }}<br />{% endif %}{% if field_presenters %}<span class="programme-role">Presenter:</span> {{ field_presenters }}<br />{% endif %}{% if field_facilitators %}<span class="programme-role">Facilitator:</span> {{ field_facilitators }}<br />{% endif %}{% if field_scribes %}<span class="programme-role">Scribe:</span> {{ field_scribes }}{% endif %}
+        field_presentation:
+          id: field_presentation
+          table: node__field_presentation
+          field: field_presentation
+          relationship: none
+          group_type: group
+          entity_type: node
+          entity_field: field_presentation
+          plugin_id: field
+          label: Presentation
+          exclude: false
+          type: entity_reference_entity_view
+          settings:
+            view_mode: default
+            link: false
+          group_column: ''
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+      pager:
+        type: none
+        options:
+          offset: 0
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Filter
+          reset_button: true
+          reset_button_label: 'Show all sessions'
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: false
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+        options: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
+          empty: true
+          content: 'No sessions match the filters you selected.'
+      sorts:
+        field_day_target_id:
+          id: field_day_target_id
+          table: node__field_day
+          field: field_day_target_id
+          relationship: none
+          plugin_id: standard
+          order: ASC
+        field_track_target_id:
+          id: field_track_target_id
+          table: node__field_track
+          field: field_track_target_id
+          relationship: none
+          plugin_id: standard
+          order: ASC
+        field_session_times_value:
+          id: field_session_times_value
+          table: node__field_session_times
+          field: field_session_times_value
+          relationship: none
+          entity_type: node
+          entity_field: field_session_times
+          plugin_id: datetime
+          order: ASC
+          granularity: second
+      arguments: {  }
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            session: session
+          group: 1
+        field_day_target_id:
+          id: field_day_target_id
+          table: node__field_day
+          field: field_day_target_id
+          relationship: none
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_day_target_id_op
+            label: Day
+            operator: field_day_target_id_op
+            identifier: day
+            remember: false
+            multiple: false
+            reduce: false
+          reduce_duplicates: false
+          vid: conference_day
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_track_target_id:
+          id: field_track_target_id
+          table: node__field_track
+          field: field_track_target_id
+          relationship: none
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_track_target_id_op
+            label: Track
+            operator: field_track_target_id_op
+            identifier: track
+            remember: false
+            multiple: false
+            reduce: false
+          reduce_duplicates: false
+          vid: session_track
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_category_target_id:
+          id: field_category_target_id
+          table: node__field_category
+          field: field_category_target_id
+          relationship: none
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_category_target_id_op
+            label: Category
+            operator: field_category_target_id_op
+            identifier: category
+            remember: false
+            multiple: false
+            reduce: false
+          reduce_duplicates: false
+          vid: session_category
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_room_target_id:
+          id: field_room_target_id
+          table: node__field_room
+          field: field_room_target_id
+          relationship: none
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_room_target_id_op
+            label: Room
+            operator: field_room_target_id_op
+            identifier: room
+            remember: false
+            multiple: false
+            reduce: false
+          reduce_duplicates: false
+          vid: session_room
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_session_number_value:
+          id: field_session_number_value
+          table: node__field_session_number
+          field: field_session_number_value
+          relationship: none
+          entity_type: node
+          entity_field: field_session_number
+          plugin_id: numeric
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_session_number_value_op
+            label: 'Session number'
+            operator: field_session_number_value_op
+            identifier: number
+            remember: false
+            multiple: false
+      style:
+        type: table
+        options:
+          grouping:
+            -
+              field: field_day
+              rendered: true
+              rendered_strip: false
+            -
+              field: field_track
+              rendered: true
+              rendered_strip: false
+          row_class: ''
+          default_row_class: true
+          columns:
+            field_session_times: field_session_times
+            field_session_number: field_session_number
+            title: title
+            field_category: field_category
+            field_room: field_room
+            nothing: nothing
+            field_presentation: field_presentation
+          default: '-1'
+          info:
+            field_session_times:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_session_number:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_category:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_room:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            nothing:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_presentation:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          summary: ''
+          empty_table: true
+          caption: ''
+          description: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+      query:
+        type: views_query
+        options:
+          distinct: true
+      relationships: {  }
+      css_class: 'itsiug-reports-page itsiug-programme'
+      use_ajax: true
+      header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
+          empty: true
+          content: '<p class="programme-quick-links"><a class="button" href="/programme/now">What''s on now?</a> <a class="button" href="/programme">Full programme</a></p>'
+      footer: {  }
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  page_programme:
+    id: page_programme
+    display_title: Programme
+    display_plugin: page
+    position: 1
+    display_options:
+      display_description: 'Full filterable programme.'
+      display_extenders: {  }
+      path: programme
+      menu:
+        type: normal
+        title: Programme
+        description: 'The full conference programme.'
+        weight: 10
+        expanded: false
+        menu_name: main
+        parent: ''
+        context: '0'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  page_now:
+    id: page_now
+    display_title: 'On now'
+    display_plugin: page
+    position: 4
+    display_options:
+      title: 'On now'
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
+          empty: true
+          content: 'Nothing is running right now.'
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            session: session
+          group: 1
+        itsiug_session_current:
+          id: itsiug_session_current
+          table: node_field_data
+          field: itsiug_session_current
+          relationship: none
+          plugin_id: itsiug_session_current
+          operator: '='
+          value: now
+          group: 1
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      defaults:
+        empty: false
+        title: false
+        filters: false
+        filter_groups: false
+      display_description: 'What is running at this moment.'
+      display_extenders: {  }
+      path: programme/now
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  attachment_next:
+    id: attachment_next
+    display_title: 'Up next (attachment)'
+    display_plugin: attachment
+    position: 5
+    display_options:
+      title: 'Up next'
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
+          empty: true
+          content: 'Nothing further is scheduled.'
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            session: session
+          group: 1
+        itsiug_session_current:
+          id: itsiug_session_current
+          table: node_field_data
+          field: itsiug_session_current
+          relationship: none
+          plugin_id: itsiug_session_current
+          operator: '='
+          value: next
+          group: 1
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      defaults:
+        empty: false
+        title: false
+        filters: false
+        filter_groups: false
+      display_extenders: {  }
+      displays:
+        page_now: page_now
+        default: ''
+      attachment_position: after
+      inherit_arguments: false
+      inherit_exposed_filters: false
+      inherit_pager: false
+      render_pager: false
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  block_now:
+    id: block_now
+    display_title: 'On now'
+    display_plugin: block
+    position: 2
+    display_options:
+      title: 'On now'
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
+          empty: true
+          content: 'Nothing is running right now.'
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            session: session
+          group: 1
+        itsiug_session_current:
+          id: itsiug_session_current
+          table: node_field_data
+          field: itsiug_session_current
+          relationship: none
+          plugin_id: itsiug_session_current
+          operator: '='
+          value: now
+          group: 1
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            field_session_times: field_session_times
+            title: title
+            field_room: field_room
+            nothing: nothing
+          default: '-1'
+          info:
+            field_session_times:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_room:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            nothing:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      defaults:
+        empty: false
+        title: false
+        style: false
+        filters: false
+        filter_groups: false
+      display_description: 'Sessions running at this moment.'
+      display_extenders: {  }
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  block_next:
+    id: block_next
+    display_title: 'Up next'
+    display_plugin: block
+    position: 3
+    display_options:
+      title: 'Up next'
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
+          empty: true
+          content: 'Nothing further is scheduled.'
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            session: session
+          group: 1
+        itsiug_session_current:
+          id: itsiug_session_current
+          table: node_field_data
+          field: itsiug_session_current
+          relationship: none
+          plugin_id: itsiug_session_current
+          operator: '='
+          value: next
+          group: 1
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            field_session_times: field_session_times
+            title: title
+            field_room: field_room
+            nothing: nothing
+          default: '-1'
+          info:
+            field_session_times:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_room:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            nothing:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      defaults:
+        empty: false
+        title: false
+        style: false
+        filters: false
+        filter_groups: false
+      display_description: 'The next sessions due to start.'
+      display_extenders: {  }
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }

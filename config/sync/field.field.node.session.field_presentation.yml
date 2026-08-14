@@ -1,0 +1,25 @@
+uuid: 7827f1c4-3a7b-4501-b20d-7429913aa207
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_presentation
+    - media.type.document
+    - node.type.session
+id: node.session.field_presentation
+field_name: field_presentation
+entity_type: node
+bundle: session
+label: Presentation
+description: 'PDF or PowerPoint files delegates can download.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      document: document
+    auto_create: false
+field_type: entity_reference

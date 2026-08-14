@@ -1,0 +1,9 @@
+uuid: 45eba811-e501-443e-8b78-a3311a160124
+langcode: en
+status: true
+dependencies: {  }
+name: 'Session category'
+vid: session_category
+description: 'The kind of session, e.g. Plenary, Lunch, Panel Discussion.'
+weight: 0
+new_revision: false

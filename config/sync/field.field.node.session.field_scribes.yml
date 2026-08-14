@@ -1,0 +1,28 @@
+uuid: c0980510-fac1-4604-945c-3719992eedd1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_scribes
+    - node.type.session
+    - node.type.speaker
+id: node.session.field_scribes
+field_name: field_scribes
+entity_type: node
+bundle: session
+label: Scribe(s)
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      speaker: speaker
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

@@ -1,0 +1,21 @@
+uuid: 992b2ae8-cdcd-4ff5-b4db-7653839c205c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_date
+    - taxonomy.vocabulary.conference_day
+  module:
+    - datetime
+id: taxonomy_term.conference_day.field_date
+field_name: field_date
+entity_type: taxonomy_term
+bundle: conference_day
+label: Date
+description: 'The calendar date of this conference day.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

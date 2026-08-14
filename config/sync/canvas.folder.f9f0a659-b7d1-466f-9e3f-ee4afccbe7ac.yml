@@ -1,0 +1,13 @@
+uuid: f9f0a659-b7d1-466f-9e3f-ee4afccbe7ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.views_block.programme-block_next
+    - canvas.component.block.views_block.programme-block_now
+name: 'Lists (Views)'
+configEntityTypeId: component
+weight: 0
+items:
+  - block.views_block.programme-block_next
+  - block.views_block.programme-block_now

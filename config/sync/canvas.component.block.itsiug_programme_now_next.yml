@@ -1,0 +1,22 @@
+uuid: 7421eb6a-8870-4b83-9705-c7144a6d46c4
+langcode: en
+status: true
+dependencies:
+  module:
+    - itsiug_programme
+active_version: 28ee60fef835ae33
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: itsiug_programme_now_next
+        label: 'Programme: on now and up next'
+        label_display: '0'
+        provider: itsiug_programme
+    fallback_metadata:
+      slot_definitions: null
+label: 'Programme: on now and up next'
+id: block.itsiug_programme_now_next
+provider: itsiug_programme
+source: block
+source_local_id: itsiug_programme_now_next

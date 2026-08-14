@@ -1,0 +1,7 @@
+programme:
+  version: 1.x
+  css:
+    theme:
+      css/programme.css: {}
+  dependencies:
+    - itsiug_theme/global-styling

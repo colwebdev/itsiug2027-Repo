@@ -1,0 +1,10 @@
+services:
+  itsiug_programme.time:
+    class: Drupal\itsiug_programme\ProgrammeTime
+    arguments:
+      - '@datetime.time'
+      - '@request_stack'
+      - '@current_user'
+      - '@config.factory'
+  itsiug_programme.lazy_builders:
+    class: Drupal\itsiug_programme\ProgrammeLazyBuilders

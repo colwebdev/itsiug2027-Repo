@@ -1,0 +1,9 @@
+uuid: cd98275b-c3b3-492f-92b5-ab4b5b8c4200
+langcode: en
+status: true
+dependencies: {  }
+name: 'Conference day'
+vid: conference_day
+description: 'One term per day of the conference. Each term carries the calendar date.'
+weight: 0
+new_revision: false

@@ -1,0 +1,9 @@
+uuid: 609f4d4c-8c06-4cc1-bff9-931f3a194058
+langcode: en
+status: true
+dependencies: {  }
+name: Room
+vid: session_room
+description: 'Venue rooms and spaces.'
+weight: 0
+new_revision: false

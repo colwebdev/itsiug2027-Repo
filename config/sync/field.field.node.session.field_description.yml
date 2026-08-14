@@ -1,0 +1,19 @@
+uuid: b6c55fea-cd1f-4053-b336-2e7d6fbe1d22
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_description
+    - node.type.session
+id: node.session.field_description
+field_name: field_description
+entity_type: node
+bundle: session
+label: Description
+description: 'Abstract or further detail shown on the session page.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

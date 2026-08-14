@@ -1,0 +1,28 @@
+uuid: 4f51ee64-fa7b-4563-9711-f83686ff1480
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category
+    - node.type.session
+    - taxonomy.vocabulary.session_category
+id: node.session.field_category
+field_name: field_category
+entity_type: node
+bundle: session
+label: Category
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      session_category: session_category
+    sort:
+      field: weight
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

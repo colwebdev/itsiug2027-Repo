@@ -1,0 +1,11 @@
+uuid: 50e60e1a-7d56-48b1-a6c8-1b3ef48d278d
+langcode: en
+status: true
+dependencies: {  }
+name: Speaker
+type: speaker
+description: 'A person presenting, chairing or facilitating a conference session.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

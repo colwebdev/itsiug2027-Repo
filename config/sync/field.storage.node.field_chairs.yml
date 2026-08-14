@@ -1,0 +1,19 @@
+uuid: c3556732-6e54-48ae-af1a-5f9719d82c1c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_chairs
+field_name: field_chairs
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,28 @@
+uuid: 38143d05-e80e-4cb6-8282-970033b1ba33
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_co_chairs
+    - node.type.session
+    - node.type.speaker
+id: node.session.field_co_chairs
+field_name: field_co_chairs
+entity_type: node
+bundle: session
+label: Co-chair(s)
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      speaker: speaker
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

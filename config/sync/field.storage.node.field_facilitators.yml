@@ -1,0 +1,19 @@
+uuid: e46bb76b-56f3-4944-a188-865e5552ee28
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_facilitators
+field_name: field_facilitators
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,4 @@
+override programme time:
+  title: 'Preview the programme at another time'
+  description: 'Allows appending ?programme_time=2027-09-14T10:30 to programme pages to test "On now" and "Up next".'
+  restrict access: TRUE

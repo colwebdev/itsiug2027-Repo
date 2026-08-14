@@ -1,0 +1,11 @@
+uuid: 227f39c0-2d1a-4a4c-8128-4f9edf0ab47f
+langcode: en
+status: true
+dependencies: {  }
+name: Session
+type: session
+description: 'A single item on the conference programme.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

@@ -1,0 +1,11 @@
+uuid: 4eb1fbb9-20d6-42c3-9706-12ae1497ee27
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.itsiug_programme_now_next
+name: ITSIUG
+configEntityTypeId: component
+weight: 0
+items:
+  - block.itsiug_programme_now_next

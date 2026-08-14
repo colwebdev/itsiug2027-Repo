@@ -1,0 +1,26 @@
+uuid: cd7a6d16-62fa-42cb-9cee-e5cbec08630c
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.programme
+  module:
+    - views
+active_version: 5dde6d2cd0b28c49
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'views_block:programme-block_next'
+        label: 'Conference programme: Up next'
+        label_display: '0'
+        provider: views
+        views_label: ''
+        items_per_page: null
+    fallback_metadata:
+      slot_definitions: null
+label: 'Conference programme: Up next'
+id: block.views_block.programme-block_next
+provider: views
+source: block
+source_local_id: 'views_block:programme-block_next'
