@@ -110,35 +110,6 @@
   font-weight: 600;
 }
 
-/* Session and speaker pages. */
-.itsiug-session-page .itsiug-field {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 14px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #eef2f5;
-}
-
-.itsiug-session-page .itsiug-field:last-child {
-  border-bottom: 0;
-}
-
-.itsiug-session-page .itsiug-field__label {
-  color: #1f4b6b;
-  font-weight: 600;
-}
-
-.itsiug-session-page .itsiug-field__label::after {
-  content: ':';
-}
-
-.itsiug-session-page .itsiug-field a {
-  color: #1f4b6b;
-  font-weight: 600;
-}
-
 .itsiug-programme .view-empty {
   padding: 18px 20px;
   background: #f7f9fb;

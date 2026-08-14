@@ -7,6 +7,13 @@
 
 declare(strict_types=1);
 
+use Drupal\node\NodeInterface;
+
+/**
+ * Content types rendered with the shared ITSIUG page styling.
+ */
+const ITSIUG_SITE_STYLED_BUNDLES = ['session', 'speaker', 'document', 'conference'];
+
 /**
  * Implements hook_preprocess_HOOK() for page.
  *
@@ -18,4 +25,37 @@ function itsiug_site_preprocess_page(array &$variables): void {
   if (empty($variables['is_front'])) {
     unset($variables['page']['footer']);
   }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node.
+ */
+function itsiug_site_preprocess_node(array &$variables): void {
+  if (($variables['view_mode'] ?? '') !== 'full') {
+    return;
+  }
+  $node = $variables['node'] ?? NULL;
+  if (!$node instanceof NodeInterface || !in_array($node->bundle(), ITSIUG_SITE_STYLED_BUNDLES, TRUE)) {
+    return;
+  }
+
+  $variables['content']['#attached']['library'][] = 'itsiug_site/entity_page';
+  $variables['content']['#prefix'] = ($variables['content']['#prefix'] ?? '')
+    . '<div class="itsiug-reports-page itsiug-entity-page">';
+  $variables['content']['#suffix'] = '</div>' . ($variables['content']['#suffix'] ?? '');
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for field.
+ *
+ * The active theme has no base theme, so field markup carries no classes of its
+ * own to hook styling onto.
+ */
+function itsiug_site_preprocess_field(array &$variables): void {
+  $element = $variables['element'] ?? [];
+  if (($element['#entity_type'] ?? '') !== 'node' || !in_array($element['#bundle'] ?? '', ITSIUG_SITE_STYLED_BUNDLES, TRUE)) {
+    return;
+  }
+  $variables['attributes']['class'][] = 'itsiug-field';
+  $variables['title_attributes']['class'][] = 'itsiug-field__label';
 }

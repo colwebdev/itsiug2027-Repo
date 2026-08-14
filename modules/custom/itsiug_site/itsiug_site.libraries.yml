@@ -1,0 +1,7 @@
+entity_page:
+  version: 1.1.0
+  css:
+    theme:
+      css/entity-page.css: {}
+  dependencies:
+    - itsiug_theme/global-styling

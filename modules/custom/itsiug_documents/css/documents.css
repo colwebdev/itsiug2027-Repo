@@ -121,30 +121,6 @@
   font-size: 13px;
 }
 
-/* Document node pages. */
-.itsiug-document-page .itsiug-field {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 14px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #eef2f5;
-}
-
-.itsiug-document-page .itsiug-field:last-child {
-  border-bottom: 0;
-}
-
-.itsiug-document-page .itsiug-field__label {
-  color: #1f4b6b;
-  font-weight: 600;
-}
-
-.itsiug-document-page .itsiug-field__label::after {
-  content: ':';
-}
-
 /* Stack table rows into labelled cards on narrow screens. */
 @media (max-width: 47.99em) {
   .itsiug-documents thead {

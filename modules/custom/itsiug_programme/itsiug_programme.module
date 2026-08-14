@@ -7,46 +7,6 @@
 
 declare(strict_types=1);
 
-use Drupal\node\NodeInterface;
-
-/**
- * The content types rendered with programme styling.
- */
-const ITSIUG_PROGRAMME_BUNDLES = ['session', 'speaker'];
-
-/**
- * Implements hook_preprocess_HOOK() for node.
- */
-function itsiug_programme_preprocess_node(array &$variables): void {
-  if (($variables['view_mode'] ?? '') !== 'full') {
-    return;
-  }
-  $node = $variables['node'] ?? NULL;
-  if (!$node instanceof NodeInterface || !in_array($node->bundle(), ITSIUG_PROGRAMME_BUNDLES, TRUE)) {
-    return;
-  }
-
-  $variables['content']['#attached']['library'][] = 'itsiug_programme/programme';
-  $variables['content']['#prefix'] = ($variables['content']['#prefix'] ?? '')
-    . '<div class="itsiug-reports-page itsiug-session-page">';
-  $variables['content']['#suffix'] = '</div>' . ($variables['content']['#suffix'] ?? '');
-}
-
-/**
- * Implements hook_preprocess_HOOK() for field.
- *
- * The active theme has no base theme, so field markup carries no classes of its
- * own to hook styling onto.
- */
-function itsiug_programme_preprocess_field(array &$variables): void {
-  $element = $variables['element'] ?? [];
-  if (($element['#entity_type'] ?? '') !== 'node' || !in_array($element['#bundle'] ?? '', ITSIUG_PROGRAMME_BUNDLES, TRUE)) {
-    return;
-  }
-  $variables['attributes']['class'][] = 'itsiug-field';
-  $variables['title_attributes']['class'][] = 'itsiug-field__label';
-}
-
 /**
  * Implements hook_preprocess_HOOK() for views_view.
  */
