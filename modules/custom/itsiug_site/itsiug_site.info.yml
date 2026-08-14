@@ -1,0 +1,5 @@
+name: 'ITSIUG Site'
+type: module
+description: 'Site-wide layout tweaks for the ITSIUG conference site.'
+package: ITSIUG
+core_version_requirement: ^10.3 || ^11

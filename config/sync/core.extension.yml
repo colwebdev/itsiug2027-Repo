@@ -53,6 +53,7 @@ module:
   itsiug_documents: 0
   itsiug_programme: 0
   itsiug_registration: 0
+  itsiug_site: 0
   jquery_ui: 0
   jquery_ui_resizable: 0
   klaro: 0

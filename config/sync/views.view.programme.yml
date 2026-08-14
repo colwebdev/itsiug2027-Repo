@@ -16,7 +16,13 @@ dependencies:
     - field.storage.node.field_session_times
     - field.storage.node.field_track
     - node.type.session
+    - system.menu.main
+    - taxonomy.vocabulary.conference_day
+    - taxonomy.vocabulary.session_category
+    - taxonomy.vocabulary.session_room
+    - taxonomy.vocabulary.session_track
   module:
+    - datetime
     - datetime_range
     - itsiug_programme
     - node
@@ -583,104 +589,21 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
-  page_programme:
-    id: page_programme
-    display_title: Programme
-    display_plugin: page
-    position: 1
-    display_options:
-      display_description: 'Full filterable programme.'
-      display_extenders: {  }
-      path: programme
-      menu:
-        type: normal
-        title: Programme
-        description: 'The full conference programme.'
-        weight: 10
-        expanded: false
-        menu_name: main
-        parent: ''
-        context: '0'
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
-  page_now:
-    id: page_now
-    display_title: 'On now'
-    display_plugin: page
-    position: 4
-    display_options:
-      title: 'On now'
-      empty:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          plugin_id: text_custom
-          empty: true
-          content: 'Nothing is running right now.'
-      filters:
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          value:
-            session: session
-          group: 1
-        itsiug_session_current:
-          id: itsiug_session_current
-          table: node_field_data
-          field: itsiug_session_current
-          relationship: none
-          plugin_id: itsiug_session_current
-          operator: '='
-          value: now
-          group: 1
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-      defaults:
-        empty: false
-        title: false
-        filters: false
-        filter_groups: false
-      display_description: 'What is running at this moment.'
-      display_extenders: {  }
-      path: programme/now
-    cache_metadata:
-      max-age: 0
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.node.field_category'
+        - 'config:field.storage.node.field_chairs'
+        - 'config:field.storage.node.field_co_chairs'
+        - 'config:field.storage.node.field_day'
+        - 'config:field.storage.node.field_facilitators'
+        - 'config:field.storage.node.field_presentation'
+        - 'config:field.storage.node.field_presenters'
+        - 'config:field.storage.node.field_room'
+        - 'config:field.storage.node.field_scribes'
+        - 'config:field.storage.node.field_session_number'
+        - 'config:field.storage.node.field_session_times'
+        - 'config:field.storage.node.field_track'
   attachment_next:
     id: attachment_next
     display_title: 'Up next (attachment)'
@@ -748,122 +671,21 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
-        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
-  block_now:
-    id: block_now
-    display_title: 'On now'
-    display_plugin: block
-    position: 2
-    display_options:
-      title: 'On now'
-      empty:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          plugin_id: text_custom
-          empty: true
-          content: 'Nothing is running right now.'
-      filters:
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          value:
-            session: session
-          group: 1
-        itsiug_session_current:
-          id: itsiug_session_current
-          table: node_field_data
-          field: itsiug_session_current
-          relationship: none
-          plugin_id: itsiug_session_current
-          operator: '='
-          value: now
-          group: 1
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          columns:
-            field_session_times: field_session_times
-            title: title
-            field_room: field_room
-            nothing: nothing
-          default: '-1'
-          info:
-            field_session_times:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            title:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_room:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            nothing:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          summary: ''
-          empty_table: false
-          caption: ''
-          description: ''
-      defaults:
-        empty: false
-        title: false
-        style: false
-        filters: false
-        filter_groups: false
-      display_description: 'Sessions running at this moment.'
-      display_extenders: {  }
-    cache_metadata:
-      max-age: 0
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.node.field_category'
+        - 'config:field.storage.node.field_chairs'
+        - 'config:field.storage.node.field_co_chairs'
+        - 'config:field.storage.node.field_day'
+        - 'config:field.storage.node.field_facilitators'
+        - 'config:field.storage.node.field_presentation'
+        - 'config:field.storage.node.field_presenters'
+        - 'config:field.storage.node.field_room'
+        - 'config:field.storage.node.field_scribes'
+        - 'config:field.storage.node.field_session_number'
+        - 'config:field.storage.node.field_session_times'
+        - 'config:field.storage.node.field_track'
   block_next:
     id: block_next
     display_title: 'Up next'
@@ -957,6 +779,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       defaults:
         empty: false
         title: false
@@ -970,8 +793,255 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
-        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.node.field_category'
+        - 'config:field.storage.node.field_chairs'
+        - 'config:field.storage.node.field_co_chairs'
+        - 'config:field.storage.node.field_day'
+        - 'config:field.storage.node.field_facilitators'
+        - 'config:field.storage.node.field_presentation'
+        - 'config:field.storage.node.field_presenters'
+        - 'config:field.storage.node.field_room'
+        - 'config:field.storage.node.field_scribes'
+        - 'config:field.storage.node.field_session_number'
+        - 'config:field.storage.node.field_session_times'
+        - 'config:field.storage.node.field_track'
+  block_now:
+    id: block_now
+    display_title: 'On now'
+    display_plugin: block
+    position: 2
+    display_options:
+      title: 'On now'
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
+          empty: true
+          content: 'Nothing is running right now.'
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            session: session
+          group: 1
+        itsiug_session_current:
+          id: itsiug_session_current
+          table: node_field_data
+          field: itsiug_session_current
+          relationship: none
+          plugin_id: itsiug_session_current
+          operator: '='
+          value: now
+          group: 1
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            field_session_times: field_session_times
+            title: title
+            field_room: field_room
+            nothing: nothing
+          default: '-1'
+          info:
+            field_session_times:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_room:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            nothing:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+          class: ''
+      defaults:
+        empty: false
+        title: false
+        style: false
+        filters: false
+        filter_groups: false
+      display_description: 'Sessions running at this moment.'
+      display_extenders: {  }
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_category'
+        - 'config:field.storage.node.field_chairs'
+        - 'config:field.storage.node.field_co_chairs'
+        - 'config:field.storage.node.field_day'
+        - 'config:field.storage.node.field_facilitators'
+        - 'config:field.storage.node.field_presentation'
+        - 'config:field.storage.node.field_presenters'
+        - 'config:field.storage.node.field_room'
+        - 'config:field.storage.node.field_scribes'
+        - 'config:field.storage.node.field_session_number'
+        - 'config:field.storage.node.field_session_times'
+        - 'config:field.storage.node.field_track'
+  page_now:
+    id: page_now
+    display_title: 'On now'
+    display_plugin: page
+    position: 4
+    display_options:
+      title: 'On now'
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
+          empty: true
+          content: 'Nothing is running right now.'
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            session: session
+          group: 1
+        itsiug_session_current:
+          id: itsiug_session_current
+          table: node_field_data
+          field: itsiug_session_current
+          relationship: none
+          plugin_id: itsiug_session_current
+          operator: '='
+          value: now
+          group: 1
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      defaults:
+        empty: false
+        title: false
+        filters: false
+        filter_groups: false
+      display_description: 'What is running at this moment.'
+      display_extenders: {  }
+      path: programme/now
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_category'
+        - 'config:field.storage.node.field_chairs'
+        - 'config:field.storage.node.field_co_chairs'
+        - 'config:field.storage.node.field_day'
+        - 'config:field.storage.node.field_facilitators'
+        - 'config:field.storage.node.field_presentation'
+        - 'config:field.storage.node.field_presenters'
+        - 'config:field.storage.node.field_room'
+        - 'config:field.storage.node.field_scribes'
+        - 'config:field.storage.node.field_session_number'
+        - 'config:field.storage.node.field_session_times'
+        - 'config:field.storage.node.field_track'
+  page_programme:
+    id: page_programme
+    display_title: Programme
+    display_plugin: page
+    position: 1
+    display_options:
+      display_description: 'Full filterable programme.'
+      display_extenders: {  }
+      path: programme
+      menu:
+        type: normal
+        title: Programme
+        description: 'The full conference programme.'
+        weight: -47
+        expanded: false
+        menu_name: main
+        parent: ''
+        context: '0'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_category'
+        - 'config:field.storage.node.field_chairs'
+        - 'config:field.storage.node.field_co_chairs'
+        - 'config:field.storage.node.field_day'
+        - 'config:field.storage.node.field_facilitators'
+        - 'config:field.storage.node.field_presentation'
+        - 'config:field.storage.node.field_presenters'
+        - 'config:field.storage.node.field_room'
+        - 'config:field.storage.node.field_scribes'
+        - 'config:field.storage.node.field_session_number'
+        - 'config:field.storage.node.field_session_times'
+        - 'config:field.storage.node.field_track'

@@ -10,5 +10,5 @@ features:
   favicon: true
   node_user_picture: true
 logo:
-  path: sites/default/files/weblogo.svg
+  path: 'public://ITSIUGLogo.svg'
   use_default: false

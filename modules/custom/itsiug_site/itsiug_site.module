@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Site-wide layout tweaks.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_preprocess_HOOK() for page.
+ *
+ * The footer is only wanted on the landing page.
+ */
+function itsiug_site_preprocess_page(array &$variables): void {
+  $variables['#cache']['contexts'][] = 'url.path.is_front';
+
+  if (empty($variables['is_front'])) {
+    unset($variables['page']['footer']);
+  }
+}
