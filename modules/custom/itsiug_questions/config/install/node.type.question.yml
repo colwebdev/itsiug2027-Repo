@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+name: Question
+type: question
+description: 'A question submitted by a delegate during a conference session.'
+help: null
+new_revision: false
+preview_mode: 1
+display_submitted: false

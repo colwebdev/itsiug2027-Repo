@@ -1,0 +1,68 @@
+itsiug_questions.ask:
+  path: '/ask'
+  defaults:
+    _form: '\Drupal\itsiug_questions\Form\AskQuestionForm'
+    _title: 'Ask a question'
+  requirements:
+    _access: 'TRUE'
+
+itsiug_questions.submitted:
+  path: '/ask/submitted'
+  defaults:
+    _controller: '\Drupal\itsiug_questions\Controller\QuestionController::submitted'
+    _title: 'Question submitted'
+  requirements:
+    _access: 'TRUE'
+
+itsiug_questions.lookup:
+  path: '/ask/lookup'
+  methods: [POST]
+  defaults:
+    _controller: '\Drupal\itsiug_questions\Controller\QuestionController::lookup'
+  requirements:
+    _access: 'TRUE'
+    _csrf_request_header_token: 'TRUE'
+
+itsiug_questions.board:
+  path: '/ask/session/{session_number}/live'
+  defaults:
+    _controller: '\Drupal\itsiug_questions\Controller\QuestionController::board'
+    _title: 'Session questions'
+  requirements:
+    _access: 'TRUE'
+    session_number: '\d+'
+
+itsiug_questions.board_data:
+  path: '/ask/session/{session_number}/live/data'
+  methods: [GET]
+  defaults:
+    _controller: '\Drupal\itsiug_questions\Controller\QuestionController::boardData'
+  requirements:
+    _access: 'TRUE'
+    session_number: '\d+'
+
+itsiug_questions.admin:
+  path: '/ask/admin'
+  defaults:
+    _controller: '\Drupal\itsiug_questions\Controller\QuestionAdminController::index'
+    _title: 'Session questions'
+  requirements:
+    _permission: 'administer itsiug questions'
+
+itsiug_questions.admin_session:
+  path: '/ask/admin/session/{session_number}'
+  defaults:
+    _form: '\Drupal\itsiug_questions\Form\QuestionModerationForm'
+    _title: 'Review questions'
+  requirements:
+    _permission: 'administer itsiug questions'
+    session_number: '\d+'
+
+itsiug_questions.admin_csv:
+  path: '/ask/admin/session/{session_number}/csv'
+  defaults:
+    _controller: '\Drupal\itsiug_questions\Controller\QuestionAdminController::csv'
+    _title: 'Export questions'
+  requirements:
+    _permission: 'administer itsiug questions'
+    session_number: '\d+'

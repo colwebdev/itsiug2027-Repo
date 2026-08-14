@@ -1,0 +1,60 @@
+.itsiug-ask-page {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.itsiug-ask-session {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.itsiug-ask-scan {
+  margin-bottom: 1.5rem;
+}
+
+.itsiug-ask-scan-button {
+  width: 100%;
+  font-size: 1.05rem;
+  padding: 0.85rem 1rem;
+}
+
+.itsiug-ask-qr-reader {
+  display: none;
+  margin-top: 1rem;
+}
+
+.itsiug-ask-qr-reader.is-active {
+  display: block;
+}
+
+.itsiug-ask-identity {
+  margin-top: 0.75rem;
+  min-height: 1.5rem;
+  font-size: 1rem;
+}
+
+.itsiug-ask-identity--found {
+  font-weight: 700;
+  color: #1f6b3b;
+}
+
+.itsiug-ask-identity--error {
+  color: #a3261a;
+}
+
+.itsiug-ask-page textarea {
+  width: 100%;
+}
+
+.itsiug-ask-confirmation-detail {
+  font-size: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.itsiug-ask-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}

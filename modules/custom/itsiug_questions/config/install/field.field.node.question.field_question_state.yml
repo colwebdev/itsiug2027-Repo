@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_question_state
+    - node.type.question
+  module:
+    - options
+id: node.question.field_question_state
+field_name: field_question_state
+entity_type: node
+bundle: question
+label: State
+description: 'Moderation state used by the presenter board.'
+required: false
+translatable: false
+default_value:
+  -
+    value: new
+default_value_callback: ''
+settings: {  }
+field_type: list_string

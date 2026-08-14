@@ -1,0 +1,5 @@
+itsiug_questions.admin:
+  title: 'Session questions'
+  description: 'Review, moderate and export questions submitted by delegates.'
+  route_name: itsiug_questions.admin
+  parent: system.admin_content

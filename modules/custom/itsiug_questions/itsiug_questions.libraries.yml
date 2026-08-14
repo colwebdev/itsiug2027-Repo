@@ -1,0 +1,24 @@
+ask:
+  version: 1.x
+  css:
+    theme:
+      css/questions.css: {}
+  js:
+    /libraries/html5-qrcode/html5-qrcode.min.js: {}
+    js/ask.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+
+board:
+  version: 1.x
+  css:
+    theme:
+      css/board.css: {}
+  js:
+    js/board.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once

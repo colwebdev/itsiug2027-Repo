@@ -1,0 +1,4 @@
+administer itsiug questions:
+  title: 'Administer ITSIUG session questions'
+  description: 'Review, moderate and export questions submitted by delegates.'
+  restrict access: TRUE

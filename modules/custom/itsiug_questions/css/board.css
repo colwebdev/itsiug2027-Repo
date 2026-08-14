@@ -1,0 +1,60 @@
+.itsiug-board {
+  padding: 1.5rem 2rem;
+}
+
+.itsiug-board-heading {
+  font-size: 2.4rem;
+  margin: 0 0 0.5rem;
+}
+
+.itsiug-board-description {
+  font-size: 1.5rem;
+  font-style: italic;
+  margin: 0 0 1.5rem;
+}
+
+.itsiug-board-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+}
+
+.itsiug-board-table th,
+.itsiug-board-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid #d5d5d5;
+}
+
+.itsiug-board-table th {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.itsiug-board-number {
+  width: 6rem;
+  white-space: nowrap;
+}
+
+.itsiug-board-name,
+.itsiug-board-institution {
+  width: 18rem;
+}
+
+.itsiug-board-question {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.itsiug-board-row--new {
+  background: #fff6d6;
+}
+
+.itsiug-board-empty,
+.itsiug-board-status {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  color: #555;
+}

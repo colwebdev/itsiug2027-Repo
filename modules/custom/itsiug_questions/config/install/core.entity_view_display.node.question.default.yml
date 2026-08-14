@@ -1,0 +1,59 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.question.field_question_delegate
+    - field.field.node.question.field_question_number
+    - field.field.node.question.field_question_session
+    - field.field.node.question.field_question_state
+    - field.field.node.question.field_question_text
+    - node.type.question
+  module:
+    - options
+id: node.question.default
+targetEntityType: node
+bundle: question
+mode: default
+content:
+  field_question_delegate:
+    type: entity_reference_label
+    label: inline
+    weight: 1
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_question_number:
+    type: number_integer
+    label: inline
+    weight: 3
+    region: content
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+  field_question_session:
+    type: entity_reference_label
+    label: inline
+    weight: 0
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_question_state:
+    type: list_default
+    label: inline
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_question_text:
+    type: basic_string
+    label: hidden
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  links: true
+  search_api_excerpt: true

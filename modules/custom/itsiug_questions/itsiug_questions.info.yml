@@ -1,0 +1,8 @@
+name: ITSIUG Questions
+type: module
+description: 'Delegate question capture and live presenter board for conference sessions.'
+package: ITSIUG
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:options

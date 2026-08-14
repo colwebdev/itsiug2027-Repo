@@ -1,0 +1,6 @@
+services:
+  itsiug_questions.manager:
+    class: Drupal\itsiug_questions\Service\QuestionManager
+    arguments:
+      - '@entity_type.manager'
+      - '@lock'

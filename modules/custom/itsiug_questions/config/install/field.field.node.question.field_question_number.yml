@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_question_number
+    - node.type.question
+id: node.question.field_question_number
+field_name: field_question_number
+entity_type: node
+bundle: question
+label: 'Question number'
+description: 'Sequence within the session. Allocated automatically on submission.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
