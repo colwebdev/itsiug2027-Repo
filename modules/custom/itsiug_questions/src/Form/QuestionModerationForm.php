@@ -44,8 +44,18 @@ class QuestionModerationForm extends FormBase {
 
     $form_state->set('session_number', $session_number);
 
+    $form['#attached']['library'][] = 'itsiug_theme/global-styling';
+    $form['#prefix'] = '<div class="itsiug-admin-page itsiug-questions-admin">';
+    $form['#suffix'] = '</div>';
+
     $form['heading'] = [
       '#markup' => '<h1>' . $this->questionManager->getSessionHeading($session) . '</h1>',
+    ];
+
+    $form['intro'] = [
+      '#markup' => '<p class="itsiug-admin-intro">'
+        . $this->t('Set a question to Hidden to remove it from the presenter board.')
+        . '</p>',
     ];
 
     $form['board_link'] = [
@@ -57,8 +67,9 @@ class QuestionModerationForm extends FormBase {
 
     $form['questions'] = [
       '#type' => 'table',
+      '#attributes' => ['class' => ['itsiug-delegate-management-table']],
       '#header' => [
-        $this->t('Number'),
+        $this->t('No.'),
         $this->t('Display name'),
         $this->t('Institution'),
         $this->t('Question'),
@@ -113,6 +124,12 @@ class QuestionModerationForm extends FormBase {
         '#type' => 'submit',
         '#value' => $this->t('Save changes'),
         '#button_type' => 'primary',
+      ],
+      'back' => [
+        '#type' => 'link',
+        '#title' => $this->t('← Back to Session Questions'),
+        '#url' => Url::fromRoute('itsiug_questions.admin'),
+        '#attributes' => ['class' => ['button']],
       ],
     ];
 

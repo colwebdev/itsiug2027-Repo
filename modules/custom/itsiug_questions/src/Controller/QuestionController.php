@@ -47,8 +47,8 @@ class QuestionController extends ControllerBase {
     if (!$data) {
       return [
         '#type' => 'container',
-        '#attributes' => ['class' => ['itsiug-ask-page']],
-        '#attached' => ['library' => ['itsiug_questions/ask']],
+        '#attributes' => ['class' => ['itsiug-admin-page', 'itsiug-ask-page']],
+        '#attached' => ['library' => ['itsiug_questions/ask', 'itsiug_theme/global-styling']],
         'message' => [
           '#markup' => '<h1>' . $this->t('Nothing to show') . '</h1><p>'
             . $this->t('Your question was not found in this browser session.') . '</p>',
@@ -59,8 +59,8 @@ class QuestionController extends ControllerBase {
 
     return [
       '#type' => 'container',
-      '#attributes' => ['class' => ['itsiug-ask-page', 'itsiug-ask-confirmation']],
-      '#attached' => ['library' => ['itsiug_questions/ask']],
+      '#attributes' => ['class' => ['itsiug-admin-page', 'itsiug-ask-page', 'itsiug-ask-confirmation']],
+      '#attached' => ['library' => ['itsiug_questions/ask', 'itsiug_theme/global-styling']],
       '#cache' => ['max-age' => 0],
       'heading' => [
         '#markup' => '<h1>' . $this->t('Thank you') . '</h1>',
@@ -171,7 +171,7 @@ class QuestionController extends ControllerBase {
       '#type' => 'container',
       '#attributes' => ['class' => ['itsiug-board']],
       '#attached' => [
-        'library' => ['itsiug_questions/board'],
+        'library' => ['itsiug_questions/board', 'itsiug_theme/global-styling'],
         'drupalSettings' => [
           'itsiugQuestions' => [
             'dataUrl' => Url::fromRoute(

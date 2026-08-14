@@ -49,8 +49,9 @@ class AskQuestionForm extends FormBase {
     }
 
     $form['#attached']['library'][] = 'itsiug_questions/ask';
+    $form['#attached']['library'][] = 'itsiug_theme/global-styling';
 
-    $form['#prefix'] = '<div class="itsiug-ask-page">';
+    $form['#prefix'] = '<div class="itsiug-admin-page itsiug-ask-page">';
     $form['#suffix'] = '</div>';
 
     $form['heading'] = [

@@ -1,46 +1,85 @@
+/* Presenter board, scaled for a projector or large screen. */
+
 .itsiug-board {
-  padding: 1.5rem 2rem;
+  width: 100%;
+  max-width: 1700px;
+  margin: 30px auto;
+  padding: 32px 36px 36px;
+  background: #ffffff;
+  border: 1px solid #e2e8ee;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+  box-sizing: border-box;
 }
 
 .itsiug-board-heading {
-  font-size: 2.4rem;
-  margin: 0 0 0.5rem;
+  margin: 0 0 8px;
+  color: #1f4b6b;
+  font-size: 38px;
+  font-weight: 600;
 }
 
 .itsiug-board-description {
-  font-size: 1.5rem;
+  margin: 0 0 28px;
+  color: #5b6873;
+  font-size: 22px;
   font-style: italic;
-  margin: 0 0 1.5rem;
 }
 
 .itsiug-board-table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 1.4rem;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border: 1px solid #dfe6eb;
+  border-radius: 10px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
 }
 
-.itsiug-board-table th,
-.itsiug-board-table td {
+.itsiug-board-table thead th {
+  padding: 16px 16px;
+  background: #1f4b6b;
+  color: #ffffff;
+  border: 0;
+  font-size: 16px;
+  font-weight: 600;
   text-align: left;
-  vertical-align: top;
-  padding: 0.6rem 0.9rem;
-  border-bottom: 1px solid #d5d5d5;
-}
-
-.itsiug-board-table th {
-  font-size: 1.1rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-}
-
-.itsiug-board-number {
-  width: 4rem;
   white-space: nowrap;
 }
 
-.itsiug-board-name,
-.itsiug-board-institution {
+.itsiug-board-table tbody td {
+  padding: 16px;
+  color: #333333;
+  border-top: 1px solid #e7edf1;
+  font-size: 22px;
+  vertical-align: top;
+}
+
+.itsiug-board-table tbody tr:nth-child(even) {
+  background: #f7f9fb;
+}
+
+.itsiug-board-table tbody td.itsiug-board-number {
+  width: 4rem;
+  color: #1f4b6b;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.itsiug-board-table tbody td.itsiug-board-name {
   width: 18rem;
+  font-weight: 600;
+}
+
+.itsiug-board-table tbody td.itsiug-board-institution {
+  width: 9rem;
+  color: #5b6873;
+  font-size: 19px;
+  white-space: nowrap;
 }
 
 .itsiug-board-question {
@@ -48,13 +87,35 @@
   overflow-wrap: anywhere;
 }
 
-.itsiug-board-row--new {
-  background: #fff6d6;
+/* Highlights a question for a few seconds after it arrives. */
+.itsiug-board-row--new,
+.itsiug-board-table tbody tr.itsiug-board-row--new:nth-child(even) {
+  background: #fdf3d4;
+  box-shadow: inset 4px 0 0 #1f4b6b;
 }
 
 .itsiug-board-empty,
 .itsiug-board-status {
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  color: #555;
+  margin-top: 20px;
+  color: #5b6873;
+  font-size: 18px;
+}
+
+@media (max-width: 900px) {
+  .itsiug-board {
+    margin: 12px auto;
+    padding: 20px 16px 24px;
+  }
+
+  .itsiug-board-heading {
+    font-size: 26px;
+  }
+
+  .itsiug-board-description {
+    font-size: 17px;
+  }
+
+  .itsiug-board-table tbody td {
+    font-size: 17px;
+  }
 }

@@ -278,6 +278,30 @@ class QuestionManager {
   }
 
   /**
+   * Build the short institution code for a delegate, e.g. "ITSIUG".
+   *
+   * Falls back to the full institution name when no code is set.
+   */
+  public function getDelegateInstitutionCode(NodeInterface $delegate): string {
+    if (!$delegate->hasField('field_institution') || $delegate->get('field_institution')->isEmpty()) {
+      return '';
+    }
+
+    $institution = $delegate->get('field_institution')->entity;
+
+    if (!$institution instanceof NodeInterface) {
+      return '';
+    }
+
+    if ($institution->hasField('field_institution_code')
+      && !$institution->get('field_institution_code')->isEmpty()) {
+      return trim((string) $institution->get('field_institution_code')->value);
+    }
+
+    return (string) $institution->label();
+  }
+
+  /**
    * Build the session heading, e.g. "Session 24 – HR/Payroll System".
    */
   public function getSessionHeading(NodeInterface $session): string {    $parts = [];
@@ -337,7 +361,7 @@ class QuestionManager {
           ? $this->getDelegateDisplayName($delegate)
           : '',
         'institution' => $delegate instanceof NodeInterface
-          ? $this->getDelegateInstitutionName($delegate)
+          ? $this->getDelegateInstitutionCode($delegate)
           : '',
         'question' => (string) $question->get('field_question_text')->value,
         'state' => $question->get('field_question_state')->isEmpty()

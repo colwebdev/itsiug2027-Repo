@@ -1,28 +1,67 @@
-.itsiug-ask-page {
-  max-width: 42rem;
-  margin: 0 auto;
-  padding: 1rem;
+/* Delegate-facing question form and confirmation. */
+
+.itsiug-ask-page.itsiug-admin-page {
+  max-width: 640px;
+  margin: 30px auto;
+  padding: 30px 28px 32px;
+}
+
+.itsiug-ask-page h1 {
+  margin: 0 0 10px;
+  color: #1f4b6b;
+  font-size: 26px;
+  font-weight: 600;
 }
 
 .itsiug-ask-session {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin: 0 0 1rem;
+  margin: 0 0 24px;
+  padding: 12px 14px;
+  background: #f7f9fb;
+  border-left: 4px solid #1f4b6b;
+  border-radius: 4px;
+  color: #1f4b6b;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .itsiug-ask-scan {
-  margin-bottom: 1.5rem;
+  margin-bottom: 26px;
 }
 
 .itsiug-ask-scan-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  font-size: 1.05rem;
-  padding: 0.85rem 1rem;
+  min-height: 52px;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 6px;
+  background-color: #1f4b6b;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.itsiug-ask-scan-button:hover {
+  background-color: #163a53;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.itsiug-ask-scan-button:disabled {
+  background-color: #8fa3b4;
+  cursor: default;
+  box-shadow: none;
 }
 
 .itsiug-ask-qr-reader {
   display: none;
-  margin-top: 1rem;
+  margin-top: 16px;
+  border: 1px solid #dfe6eb;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .itsiug-ask-qr-reader.is-active {
@@ -30,31 +69,120 @@
 }
 
 .itsiug-ask-identity {
-  margin-top: 0.75rem;
-  min-height: 1.5rem;
-  font-size: 1rem;
+  margin-top: 12px;
+  min-height: 24px;
+  color: #5b6873;
+  font-size: 15px;
 }
 
 .itsiug-ask-identity--found {
-  font-weight: 700;
-  color: #1f6b3b;
+  padding: 10px 12px;
+  background: #eef5f8;
+  border-radius: 6px;
+  color: #1f4b6b;
+  font-weight: 600;
 }
 
 .itsiug-ask-identity--error {
+  padding: 10px 12px;
+  background: #fdf1ef;
+  border-radius: 6px;
   color: #a3261a;
+  font-weight: 600;
 }
 
+.itsiug-ask-page label {
+  color: #1f4b6b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.itsiug-ask-page input[type="text"],
 .itsiug-ask-page textarea {
   width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #c9d7e1;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.itsiug-ask-page input[type="text"]:focus,
+.itsiug-ask-page textarea:focus {
+  outline: none;
+  border-color: #1f4b6b;
+  box-shadow: 0 0 0 3px rgba(31, 75, 107, 0.15);
+}
+
+.itsiug-ask-page .description {
+  color: #5b6873;
+  font-size: 13px;
+}
+
+.itsiug-ask-page .form-actions input[type="submit"] {
+  min-height: 52px;
+  padding: 12px 32px;
+  border: 0;
+  border-radius: 6px;
+  background-color: #1f4b6b;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.itsiug-ask-page .form-actions input[type="submit"]:hover {
+  background-color: #163a53;
 }
 
 .itsiug-ask-confirmation-detail {
-  font-size: 1.15rem;
-  margin-bottom: 1.5rem;
+  margin: 0 0 28px;
+  padding: 16px 18px;
+  background: #eef5f8;
+  border-radius: 8px;
+  color: #1f4b6b;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .itsiug-ask-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 12px;
+}
+
+.itsiug-ask-actions a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1px solid #c9d7e1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1f4b6b !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+.itsiug-ask-actions a.button--primary {
+  border-color: #1f4b6b;
+  background-color: #1f4b6b;
+  color: #ffffff !important;
+}
+
+.itsiug-ask-actions a.button--primary:hover {
+  background-color: #163a53;
+}
+
+@media (max-width: 600px) {
+  .itsiug-ask-page.itsiug-admin-page {
+    margin: 12px auto;
+    padding: 20px 16px 24px;
+  }
+
+  .itsiug-ask-actions a.button {
+    width: 100%;
+  }
 }

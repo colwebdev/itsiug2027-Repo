@@ -62,13 +62,20 @@ class QuestionAdminController extends ControllerBase {
 
     return [
       '#type' => 'container',
-      '#attributes' => ['class' => ['itsiug-admin-page']],
+      '#attributes' => ['class' => ['itsiug-admin-page', 'itsiug-questions-admin']],
+      '#attached' => ['library' => ['itsiug_theme/global-styling']],
       '#cache' => ['max-age' => 0],
       'heading' => [
         '#markup' => '<h1>' . $this->t('Session questions') . '</h1>',
       ],
+      'intro' => [
+        '#markup' => '<p class="itsiug-admin-intro">'
+          . $this->t('Review the questions delegates submitted during each session.')
+          . '</p>',
+      ],
       'table' => [
         '#type' => 'table',
+        '#attributes' => ['class' => ['itsiug-delegate-management-table']],
         '#header' => [
           $this->t('Session'),
           $this->t('Questions'),
