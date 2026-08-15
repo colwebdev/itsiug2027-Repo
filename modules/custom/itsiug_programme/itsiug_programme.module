@@ -36,20 +36,76 @@ function itsiug_programme_preprocess_views_view_table(array &$variables): void {
     }
     $labels[$key] = trim(strip_tags((string) $content));
   }
+  $variables['header'] = [];
+
+  $time_slots = [];
+  $slot_rooms = [];
+  foreach ($variables['rows'] as $row_index => $row) {
+    $time = itsiug_programme_render_view_field($variables['view'], $row_index, 'field_session_times', $renderer);
+    $room = itsiug_programme_render_view_field($variables['view'], $row_index, 'field_room', $renderer);
+    $room_key = trim(strip_tags($room));
+    $time_key = trim(strip_tags($time));
+    if ($time_key !== '' && !isset($time_slots[$time_key])) {
+      $time_slots[$time_key] = count($time_slots) + 1;
+    }
+    if ($time_key !== '' && $room_key !== '' && !isset($slot_rooms[$time_key][$room_key])) {
+      $slot_rooms[$time_key][$room_key] = count($slot_rooms[$time_key] ?? []) + 1;
+    }
+  }
 
   foreach ($variables['rows'] as $row_index => $row) {
+    $time = itsiug_programme_render_view_field($variables['view'], $row_index, 'field_session_times', $renderer);
+    $room = itsiug_programme_render_view_field($variables['view'], $row_index, 'field_room', $renderer);
+    $time_key = trim(strip_tags($time));
+    $room_key = trim(strip_tags($room));
+    $row_attributes = $variables['rows'][$row_index]['attributes'] ?? NULL;
+    if ($row_attributes && isset($time_slots[$time_key], $slot_rooms[$time_key][$room_key])) {
+      $variables['rows'][$row_index]['attributes']['class'][] = 'itsiug-programme-card-row';
+      $variables['rows'][$row_index]['attributes']['style'] = sprintf('--programme-row: %d; --programme-column: %d;', $time_slots[$time_key], $slot_rooms[$time_key][$room_key]);
+    }
+
+    $card = '<div class="programme-card__time">' . $time . '</div>';
+    $card .= '<div class="programme-card__room">' . $room . '</div>';
+    $card .= '<div class="programme-card__session">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'field_session_number', $renderer) . '</div>';
+    $card .= '<h4 class="programme-card__title">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'title', $renderer) . '</h4>';
+    $card .= '<div class="programme-card__category">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'field_category', $renderer) . '</div>';
+    $card .= '<div class="programme-card__speakers">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'nothing', $renderer) . '</div>';
+    $card .= '<div class="programme-card__presentation">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'field_presentation', $renderer) . '</div>';
+
+    if (isset($variables['rows'][$row_index]['columns']['nothing'])) {
+      $variables['rows'][$row_index]['columns']['nothing']['content'] = [
+        ['separator' => '', 'field_output' => ['#markup' => $card]],
+      ];
+      $variables['rows'][$row_index]['columns']['nothing']['attributes']['class'][] = 'programme-card-cell';
+    }
+
     foreach ($row['columns'] as $key => $column) {
       if (empty($column['attributes'])) {
         continue;
       }
       if (!empty($labels[$key])) {
-        $variables['rows'][$row_index]['columns'][$key]['attributes']->setAttribute('data-label', $labels[$key]);
+        $variables['rows'][$row_index]['columns'][$key]['attributes']['data-label'] = $labels[$key];
       }
       // Views leaves whitespace in empty cells, so :empty cannot be used.
       $value = (string) $variables['view']->style_plugin->getField($row_index, $key);
       if (trim(strip_tags($value)) === '') {
-        $variables['rows'][$row_index]['columns'][$key]['attributes']->addClass('itsiug-cell-empty');
+        $variables['rows'][$row_index]['columns'][$key]['attributes']['class'][] = 'itsiug-cell-empty';
       }
     }
   }
+
+  $variables['attributes']['class'][] = 'programme-card-grid';
+  $slot_counts = array_values(array_map('count', $slot_rooms));
+  $variables['attributes']['style'] = '--programme-columns: ' . max(1, ...$slot_counts) . ';';
+}
+
+/**
+ * Renders a Views field for reuse inside the programme card.
+ */
+function itsiug_programme_render_view_field($view, int $row_index, string $field, object $renderer): string {
+  $value = $view->style_plugin->getField($row_index, $field);
+  if (is_array($value)) {
+    $value = $renderer->renderInIsolation($value);
+  }
+  return (string) $value;
 }
