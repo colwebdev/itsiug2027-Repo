@@ -217,8 +217,13 @@
 
       .then(function (token) {
 
+        const processEndpoint =
+          window.location.pathname === '/badge/scanner'
+            ? '/badge/scanner/process'
+            : '/register/scanner/process';
+
         return fetch(
-          '/register/scanner/process',
+          processEndpoint,
           {
             method: 'POST',
 

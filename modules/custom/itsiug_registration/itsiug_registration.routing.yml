@@ -72,6 +72,15 @@ itsiug_registration.scanner_process:
     _permission: 'access itsiug admin'
     _csrf_request_header_token: 'TRUE'
 
+itsiug_registration.badge_scanner_process:
+  path: '/badge/scanner/process'
+  methods: [POST]
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::scannerProcess'
+  requirements:
+    _access: 'TRUE'
+    _csrf_request_header_token: 'TRUE'
+
 itsiug_registration.test_certificate:
   path: '/register/test-certificate/{registration}'
   defaults:

@@ -69,12 +69,13 @@ function itsiug_programme_preprocess_views_view_table(array &$variables): void {
     $card .= '<div class="programme-card__session">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'field_session_number', $renderer) . '</div>';
     $card .= '<h4 class="programme-card__title">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'title', $renderer) . '</h4>';
     $card .= '<div class="programme-card__category">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'field_category', $renderer) . '</div>';
+    $card .= itsiug_programme_synopsis_markup($variables['view'], $row_index);
     $card .= '<div class="programme-card__speakers">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'nothing', $renderer) . '</div>';
-    $card .= '<div class="programme-card__presentation">' . itsiug_programme_render_view_field($variables['view'], $row_index, 'field_presentation', $renderer) . '</div>';
+    $card .= itsiug_programme_presentation_markup($variables['view'], $row_index);
 
     if (isset($variables['rows'][$row_index]['columns']['nothing'])) {
       $variables['rows'][$row_index]['columns']['nothing']['content'] = [
-        ['separator' => '', 'field_output' => ['#markup' => $card]],
+        ['separator' => '', 'field_output' => ['#markup' => \Drupal\Core\Render\Markup::create($card)]],
       ];
       $variables['rows'][$row_index]['columns']['nothing']['attributes']['class'][] = 'programme-card-cell';
     }
@@ -97,6 +98,68 @@ function itsiug_programme_preprocess_views_view_table(array &$variables): void {
   $variables['attributes']['class'][] = 'programme-card-grid';
   $slot_counts = array_values(array_map('count', $slot_rooms));
   $variables['attributes']['style'] = '--programme-columns: ' . max(1, ...$slot_counts) . ';';
+}
+
+/**
+ * Builds the "Download Presentation" pill link for a card.
+ */
+function itsiug_programme_presentation_markup($view, int $row_index): string {
+  $node = $view->result[$row_index]->_entity ?? NULL;
+  if (!$node instanceof \Drupal\node\NodeInterface || !$node->hasField('field_presentation')) {
+    return '';
+  }
+
+  $links = [];
+  foreach ($node->get('field_presentation')->referencedEntities() as $document) {
+    if (!$document->access('view')) {
+      continue;
+    }
+    foreach ($document->getFields() as $field) {
+      if ($field->getFieldDefinition()->getType() !== 'file') {
+        continue;
+      }
+      foreach ($field as $item) {
+        $file = $item->entity;
+        if (!$file) {
+          continue;
+        }
+        $url = $file->createFileUrl();
+        $size = \Drupal\Core\StringTranslation\ByteSizeMarkup::create((int) $file->getSize());
+        $links[] = '<a class="programme-download-button" href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" download>'
+          . t('Download Presentation') . '</a>'
+          . '<span class="programme-download-size">' . htmlspecialchars((string) $size, ENT_QUOTES, 'UTF-8') . '</span>';
+      }
+    }
+  }
+
+  if (!$links) {
+    return '';
+  }
+
+  return '<div class="programme-card__presentation">' . implode('', $links) . '</div>';
+}
+
+/**
+ * Builds the "Synopsis" button and its hidden modal content for a card.
+ */
+function itsiug_programme_synopsis_markup($view, int $row_index): string {
+  $node = $view->result[$row_index]->_entity ?? NULL;
+  if (!$node instanceof \Drupal\node\NodeInterface || !$node->hasField('field_description')) {
+    return '';
+  }
+  $synopsis = trim((string) $node->get('field_description')->value);
+  if ($synopsis === '') {
+    return '';
+  }
+
+  $title = $node->label();
+  return '<div class="programme-card__synopsis">'
+    . '<button type="button" class="programme-synopsis-button" data-programme-synopsis-open>' . t('Synopsis') . '</button>'
+    . '<div class="programme-synopsis-source" hidden>'
+    . '<span class="programme-synopsis-source__title">' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</span>'
+    . '<span class="programme-synopsis-source__body">' . nl2br(htmlspecialchars($synopsis, ENT_QUOTES, 'UTF-8')) . '</span>'
+    . '</div>'
+    . '</div>';
 }
 
 /**

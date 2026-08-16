@@ -161,6 +161,89 @@
   margin-bottom: 12px;
 }
 
+.programme-card__synopsis {
+  margin: -6px 0 12px;
+}
+
+.programme-synopsis-button {
+  padding: 3px 10px;
+  border: 1px solid #1f4b6b;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1f4b6b;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.programme-synopsis-button:hover,
+.programme-synopsis-button:focus {
+  background: #1f4b6b;
+  color: #ffffff;
+}
+
+.programme-synopsis-modal[hidden] {
+  display: none;
+}
+
+.programme-synopsis-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.programme-synopsis-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 34, 48, 0.6);
+}
+
+.programme-synopsis-modal__dialog {
+  position: relative;
+  width: min(640px, 100%);
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 24px 28px;
+  border-top: 4px solid #f2c500;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 40px rgba(15, 34, 48, 0.3);
+}
+
+.programme-synopsis-modal__close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  border: 0;
+  background: none;
+  color: #5b6873;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.programme-synopsis-modal__title {
+  margin: 0 30px 12px 0;
+  color: #1f4b6b;
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+.programme-synopsis-modal__body {
+  color: #33414d;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+body.programme-synopsis-open {
+  overflow: hidden;
+}
+
 .programme-card__speakers {
   padding-top: 10px;
   border-top: 1px solid #e2e8ee;
@@ -170,6 +253,30 @@
 
 .programme-card__presentation {
   margin-top: 12px;
+}
+
+.programme-download-button {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid #b56a00;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #b56a00;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.itsiug-programme .programme-download-button:hover,
+.itsiug-programme .programme-download-button:focus {
+  background: #b56a00;
+  color: #ffffff;
+}
+
+.programme-download-size {
+  margin-left: 6px;
+  color: #5b6873;
+  font-size: 11px;
 }
 
 /* Track grouping heading, rendered as the table caption. */
