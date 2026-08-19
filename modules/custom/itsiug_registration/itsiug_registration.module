@@ -269,6 +269,50 @@ $delegate->save();
 
   $registration->save();
 
+  $delegate_email = trim((string) ($data['email'] ?? ''));
+  $captured_details = [];
+  $elements = $webform_submission->getWebform()
+    ->getElementsDecodedAndFlattened();
+
+  foreach ($data as $key => $value) {
+    if (
+      empty($elements[$key]['#title']) ||
+      $value === NULL ||
+      $value === '' ||
+      $value === []
+    ) {
+      continue;
+    }
+
+    $captured_details[] = [
+      'label' => (string) $elements[$key]['#title'],
+      'value' => itsiug_registration_format_email_value($value),
+    ];
+  }
+
+  if (filter_var($delegate_email, FILTER_VALIDATE_EMAIL)) {
+    $mail_result = \Drupal::service('plugin.manager.mail')->mail(
+      'itsiug_registration',
+      'registration_confirmation',
+      $delegate_email,
+      $registration->language()->getId(),
+      [
+        'first_name' => trim((string) ($data['first_name'] ?? '')),
+        'captured_details' => $captured_details,
+      ]
+    );
+
+    if (empty($mail_result['result'])) {
+      \Drupal::logger('itsiug_registration')->error(
+        'Registration was created for @delegate, but the confirmation email could not be sent to @email.',
+        [
+          '@delegate' => $delegate->label(),
+          '@email' => $delegate_email,
+        ]
+      );
+    }
+  }
+
   // ------------------------------------------------------------
   // Log successful registration.
   // ------------------------------------------------------------
@@ -282,6 +326,28 @@ $delegate->save();
       '@reference' => $delegate_reference,
     ]
   );
+}
+
+/**
+ * Converts a Webform submission value to display text for an email.
+ */
+function itsiug_registration_format_email_value($value): string {
+
+  if (!is_array($value)) {
+    return trim((string) $value);
+  }
+
+  $values = [];
+
+  foreach ($value as $item) {
+    $formatted_item = itsiug_registration_format_email_value($item);
+
+    if ($formatted_item !== '') {
+      $values[] = $formatted_item;
+    }
+  }
+
+  return implode(', ', $values);
 }
 
 
@@ -724,6 +790,58 @@ function itsiug_registration_mail(
   &$message,
   $params
 ) {
+
+  if ($key === 'registration_confirmation') {
+    $first_name = $params['first_name'] ?? '';
+    $captured_details = $params['captured_details'] ?? [];
+    $details_rows = '';
+
+    foreach ($captured_details as $detail) {
+      $details_rows .= '
+        <tr>
+          <th style="padding:6px 12px 6px 0; text-align:left; vertical-align:top;">
+            ' . htmlspecialchars($detail['label'], ENT_QUOTES, 'UTF-8') . '
+          </th>
+          <td style="padding:6px 0; vertical-align:top;">
+            ' . htmlspecialchars($detail['value'], ENT_QUOTES, 'UTF-8') . '
+          </td>
+        </tr>
+      ';
+    }
+
+    $message['subject'] =
+      'ITSIUG 2027 Conference Registration Received';
+
+    $message['headers']['Content-Type'] =
+      'text/html; charset=UTF-8';
+
+    $message['body'][] = '
+      <p>Dear ' . htmlspecialchars($first_name, ENT_QUOTES, 'UTF-8') . ',</p>
+
+      <p>
+        Thank you for registering for the 2027 ITSIUG Conference.
+      </p>
+
+      <p>
+        Your registration remains pending until payment of the delegate fee
+        has been confirmed. After 60 days, your registration will be moved to
+        the waiting list to make place for other registrations.
+      </p>
+
+      <p>
+        Best regards,<br>
+        ITSIUG Executive Committee
+      </p>
+
+      <p><strong>DETAILS CAPTURED</strong></p>
+
+      <table role="presentation" style="border-collapse:collapse;">
+        ' . $details_rows . '
+      </table>
+    ';
+
+    return;
+  }
 
   if ($key !== 'certificate') {
     return;

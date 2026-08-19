@@ -808,59 +808,6 @@ $registration->save();
 // Email certificate download link.
 // ------------------------------------------------------------
 
-$delegate_email = '';
-
-if ($delegate->hasField('field_email') &&
-    !$delegate->get('field_email')->isEmpty()) {
-  $delegate_email = trim(
-    $delegate->get('field_email')->value
-  );
-}
-
-if ($delegate_email && filter_var($delegate_email, FILTER_VALIDATE_EMAIL)) {
-
-  $download_url = $this->fileUrlGenerator
-    ->generate($file->getFileUri())
-    ->setAbsolute()
-    ->toString();
-
-  $mail_result = $this->mailManager->mail(
-    'itsiug_registration',
-    'certificate',
-    $delegate_email,
-    $registration->language()->getId(),
-    [
-      'delegate' => $delegate->label(),
-      'conference' => $conference_name,
-      'certificate_number' => $certificate_number,
-      'download_url' => $download_url,
-    ]
-  );
-
-  if (empty($mail_result['result'])) {
-    \Drupal::logger('itsiug_registration')->error(
-      'Certificate email could not be sent to @email for registration @registration.',
-      [
-        '@email' => $delegate_email,
-        '@registration' => $registration->id(),
-      ]
-    );
-  }
-  else {
-    \Drupal::logger('itsiug_registration')->notice(
-      'Certificate email sent to @email for registration @registration.',
-      [
-        '@email' => $delegate_email,
-        '@registration' => $registration->id(),
-      ]
-    );
-  }
-}
-
-// ------------------------------------------------------------
-// Email certificate download link.
-// ------------------------------------------------------------
-
 $email_sent = FALSE;
 $email = '';
 
