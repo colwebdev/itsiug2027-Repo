@@ -7,9 +7,11 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\webform\Entity\Webform;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Controller for the ITSIUG registration workflow.
@@ -3550,6 +3552,27 @@ return [
                 ->entity
                 ->label(),
             ]
+          )
+        );
+
+        $badge_path = \Drupal::service('file_system')->realpath(
+          $result['uri']
+        );
+
+        if ($badge_path && is_file($badge_path)) {
+          $response = new BinaryFileResponse($badge_path);
+          $response->headers->set('Content-Type', 'application/pdf');
+          $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $result['filename']
+          );
+
+          return $response;
+        }
+
+        $this->messenger()->addWarning(
+          $this->t(
+            'Badge was generated but could not be prepared for download.'
           )
         );
 
