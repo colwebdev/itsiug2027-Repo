@@ -8,7 +8,7 @@ dependencies:
   - ai_agents:ai_agents
   - drupal:options
 
-# Information added by Drupal.org packaging script on 2026-08-05
-version: '1.3.3'
+# Information added by Drupal.org packaging script on 2026-08-13
+version: '1.3.4'
 project: 'ai_agents'
-datestamp: 1785932645
+datestamp: 1786606301

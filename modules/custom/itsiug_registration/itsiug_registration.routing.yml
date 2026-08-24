@@ -81,24 +81,6 @@ itsiug_registration.badge_scanner_process:
     _access: 'TRUE'
     _csrf_request_header_token: 'TRUE'
 
-itsiug_registration.test_certificate:
-  path: '/register/test-certificate/{registration}'
-  defaults:
-    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::testCertificate'
-    _title: 'Test Certificate'
-  requirements:
-    _access: 'TRUE'
-    registration: '\d+'
-
-itsiug_registration.test_badge:
-  path: '/register/test-badge/{registration}'
-  defaults:
-    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::testBadge'
-    _title: 'Test Badge'
-  requirements:
-    _access: 'TRUE'
-    registration: '\d+'
-
 itsiug_registration.admin_certificate_generate:
   path: '/register/admin/certificates/{registration}/generate'
   defaults:
@@ -156,6 +138,14 @@ itsiug_registration.institution_report:
     _title: 'ITSIUG 2027 Membership Payment Report'
   requirements:
     _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::excoMember'
+
+itsiug_registration.codepin_report:
+  path: '/register/codepin'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::codepinReport'
+    _title: 'ITSIUG 2027 Code and PIN Report'
+  requirements:
+    _permission: 'access itsiug admin'
 
 itsiug_registration.admin_delegates:
   path: '/register/admin/delegates'

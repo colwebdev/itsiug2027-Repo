@@ -21,9 +21,6 @@
       const badgeQrCode =
         settings.qrCode || '';
 
-      const testDate =
-        settings.testDate || '';
-
       /*
        * ------------------------------------------------------------
        * BADGE SELF-SCAN
@@ -34,7 +31,6 @@
 
         processQrCode(
           badgeQrCode,
-          testDate,
           badgeMessageElement || resultElement,
           false
         );
@@ -101,9 +97,6 @@
 
             processQrCode(
               decodedText,
-              new URLSearchParams(
-                window.location.search
-              ).get('test_date'),
               resultElement,
               true
             );
@@ -182,7 +175,6 @@
 
   function processQrCode(
     qrCode,
-    testDate,
     resultElement,
     showScanAgain
   ) {
@@ -234,8 +226,7 @@
             },
 
             body: JSON.stringify({
-              qr_code: qrCode,
-              test_date: testDate || null
+              qr_code: qrCode
             })
           }
         );

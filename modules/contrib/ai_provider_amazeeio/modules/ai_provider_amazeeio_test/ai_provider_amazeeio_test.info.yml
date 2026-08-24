@@ -6,7 +6,7 @@ hidden: true
 dependencies:
   - ai_provider_amazeeio:ai_provider_amazeeio
 
-# Information added by Drupal.org packaging script on 2026-08-05
-version: '1.4.0'
+# Information added by Drupal.org packaging script on 2026-08-19
+version: '1.4.2'
 project: 'ai_provider_amazeeio'
-datestamp: 1785969384
+datestamp: 1787164533

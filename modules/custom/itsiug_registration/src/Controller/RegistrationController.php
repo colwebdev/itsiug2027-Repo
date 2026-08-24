@@ -493,27 +493,7 @@ $timezone = new \DateTimeZone('Africa/Johannesburg');
 
 $now = new \DateTime('now', $timezone);
 
-/*
- * ------------------------------------------------------------
- * DEVELOPMENT TEST DATE
- * ------------------------------------------------------------
- *
- * The scanner JavaScript sends test_date in the JSON POST
- * while we are testing the March 2027 conference locally.
- *
- * Remove this test-date override before production deployment.
- */
-$test_date = $data['test_date'] ?? NULL;
-
-if (
-  is_string($test_date) &&
-  preg_match('/^\d{4}-\d{2}-\d{2}$/', $test_date)
-) {
-  $today = $test_date;
-}
-else {
-  $today = $now->format('Y-m-d');
-}
+$today = $now->format('Y-m-d');
 
 $day_field = NULL;
 $day_label = NULL;
@@ -798,9 +778,6 @@ return new JsonResponse([
  *
  * The QR code is supplied as:
  * /badge/scanner?qr=UP-2027-0002
- *
- * During development a test date may also be supplied:
- * /badge/scanner?qr=UP-2027-0002&test_date=2027-03-15
  */
 public function badgeScanner() {
 
@@ -808,10 +785,6 @@ public function badgeScanner() {
 
   $qr_code = trim(
     (string) $request->query->get('qr', '')
-  );
-
-  $test_date = trim(
-    (string) $request->query->get('test_date', '')
   );
 
   return [
@@ -839,7 +812,6 @@ public function badgeScanner() {
       'drupalSettings' => [
         'itsiugRegistration' => [
           'qrCode' => $qr_code,
-          'testDate' => $test_date,
         ],
       ],
     ],
@@ -883,149 +855,6 @@ public function scanner() {
     ],
   ];
 }
-
-/**
- * Test certificate generation for a registration.
- *
- * Temporary development route. Remove after certificate generation
- * has been integrated into the production workflow.
- */
-public function testCertificate($registration) {
-
-  $node = \Drupal\node\Entity\Node::load($registration);
-
-  if (!$node) {
-    return new \Symfony\Component\HttpFoundation\Response(
-      'Registration not found.',
-      404
-    );
-  }
-
-  if ($node->bundle() !== 'conference_registration') {
-    return new \Symfony\Component\HttpFoundation\Response(
-      'The supplied node is not a conference registration.',
-      400
-    );
-  }
-
-  try {
-
-    $generator = \Drupal::service(
-      'itsiug_registration.certificate_generator'
-    );
-
-    $result = $generator->generate($node);
-
-    if (!$result['success']) {
-      return new \Symfony\Component\HttpFoundation\Response(
-        $result['message'],
-        400
-      );
-    }
-
-    return new \Symfony\Component\HttpFoundation\Response(
-      '<h1>Certificate generated successfully</h1>' .
-      '<p>' . htmlspecialchars($result['message']) . '</p>' .
-      '<p><strong>File:</strong> ' .
-      htmlspecialchars($result['filename']) .
-      '</p>' .
-      '<p><strong>Certificate number:</strong> ' .
-      htmlspecialchars($result['certificate_number']) .
-      '</p>' .
-      '<p><strong>File ID:</strong> ' .
-      (int) $result['file_id'] .
-      '</p>'
-    );
-
-  }
-  catch (\Throwable $e) {
-
-    \Drupal::logger('itsiug_registration')->error(
-      'Certificate generation failed for registration @nid: @message',
-      [
-        '@nid' => $registration,
-        '@message' => $e->getMessage(),
-      ]
-    );
-
-    return new \Symfony\Component\HttpFoundation\Response(
-      'Certificate generation failed: ' .
-      htmlspecialchars($e->getMessage()),
-      500
-    );
-  }
-
-}
-
-  /**
-   * Test badge generation for a registration.
-   */
-  public function testBadge($registration) {
-
-    $node = \Drupal\node\Entity\Node::load($registration);
-
-    if (!$node) {
-      return new \Symfony\Component\HttpFoundation\Response(
-        'Registration not found.',
-        404
-      );
-    }
-
-    if ($node->bundle() !== 'conference_registration') {
-      return new \Symfony\Component\HttpFoundation\Response(
-        'The supplied node is not a conference registration.',
-        400
-      );
-    }
-
-    try {
-
-      $generator = \Drupal::service(
-        'itsiug_registration.badge_generator'
-      );
-
-      $result = $generator->generate($node);
-
-      if (!$result['success']) {
-        return new \Symfony\Component\HttpFoundation\Response(
-          $result['message'],
-          400
-        );
-      }
-
-      return new \Symfony\Component\HttpFoundation\Response(
-        '<h1>Badge generated successfully</h1>' .
-        '<p>' . htmlspecialchars($result['message']) . '</p>' .
-        '<p><strong>File:</strong> ' .
-        htmlspecialchars($result['filename']) .
-        '</p>' .
-        '<p><strong>Badge number:</strong> ' .
-        htmlspecialchars($result['badge_number']) .
-        '</p>' .
-        '<p><strong>File ID:</strong> ' .
-        (int) $result['file_id'] .
-        '</p>'
-      );
-
-    }
-    catch (\Throwable $e) {
-
-      \Drupal::logger('itsiug_registration')->error(
-        'Badge generation failed for registration @nid: @message',
-        [
-          '@nid' => $registration,
-          '@message' => $e->getMessage(),
-        ]
-      );
-
-      return new \Symfony\Component\HttpFoundation\Response(
-        'Badge generation failed: ' .
-        htmlspecialchars($e->getMessage()),
-        500
-      );
-    }
-
-  }
 
 /**
  * Builds the certificate download link for a registration.
@@ -2611,6 +2440,81 @@ return $response;
   }
 
   /**
+   * Display the ITSIUG 2027 institution code and registration PIN report.
+   */
+  public function codepinReport() {
+    $institution_ids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'institution')
+      ->sort('title', 'ASC')
+      ->execute();
+
+    $rows = [];
+
+    foreach ($institution_ids as $institution_id) {
+      $institution = Node::load($institution_id);
+
+      if (!$institution) {
+        continue;
+      }
+
+      $rows[] = [
+        $institution->label(),
+        $institution->get('field_institution_code')->value ?? '',
+        $institution->get('field_registration_pin')->value ?? '',
+      ];
+    }
+
+    return [
+      'report_page' => [
+        '#type' => 'container',
+        '#cache' => [
+          'max-age' => 0,
+        ],
+        '#attached' => [
+          'library' => [
+            'itsiug_theme/global-styling',
+          ],
+        ],
+        '#attributes' => [
+          'class' => [
+            'itsiug-admin-page',
+            'itsiug-reports-page',
+          ],
+        ],
+        'header' => [
+          '#markup' => '<h2>' . $this->t('ITSIUG 2027 Code and PIN Report') . '</h2>',
+        ],
+        'institutions' => [
+          '#type' => 'table',
+          '#attributes' => [
+            'class' => [
+              'itsiug-delegate-management-table',
+            ],
+          ],
+          '#header' => [
+            $this->t('Institution Name'),
+            $this->t('Institution Code'),
+            $this->t('Registration PIN'),
+          ],
+          '#rows' => $rows,
+          '#empty' => $this->t('No institution data is available.'),
+        ],
+        'back' => [
+          '#type' => 'link',
+          '#title' => $this->t('Return to Administration'),
+          '#url' => Url::fromRoute('itsiug_registration.admin'),
+          '#attributes' => [
+            'class' => [
+              'button',
+            ],
+          ],
+        ],
+      ],
+    ];
+  }
+
+  /**
    * Display the ITSIUG 2027 administration dashboard.
    */
   public function admin() {
@@ -2679,6 +2583,21 @@ return $response;
             'itsiug_registration.institution_report'
           ),
           '#access' => $access_manager->checkNamedRoute('itsiug_registration.institution_report', [], $account),
+          '#attributes' => [
+            'class' => [
+              'button',
+              'button--primary',
+            ],
+          ],
+        ],
+
+        'codepin_report' => [
+          '#type' => 'link',
+          '#title' => $this->t('Code and PIN Report'),
+          '#url' => Url::fromRoute(
+            'itsiug_registration.codepin_report'
+          ),
+          '#access' => $account->hasPermission('access itsiug admin'),
           '#attributes' => [
             'class' => [
               'button',
