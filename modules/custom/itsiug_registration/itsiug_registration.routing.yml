@@ -30,11 +30,27 @@ itsiug_registration.delegate:
   requirements:
     _access: 'TRUE'
 
+itsiug_registration.exhibitor:
+  path: '/register/exhibitor'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::exhibitorForm'
+    _title: 'Exhibitor Registration'
+  requirements:
+    _access: 'TRUE'
+
 itsiug_registration.delegate_confirmation:
   path: '/register/delegate/confirmation'
   defaults:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::delegateConfirmation'
     _title: 'Delegate Registration'
+  requirements:
+    _access: 'TRUE'
+
+itsiug_registration.exhibitor_confirmation:
+  path: '/register/exhibitor/confirmation'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::exhibitorConfirmation'
+    _title: 'Exhibitor Registration'
   requirements:
     _access: 'TRUE'
 

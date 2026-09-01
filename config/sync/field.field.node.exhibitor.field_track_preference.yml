@@ -1,0 +1,29 @@
+uuid: 31587A46-A798-4E14-B188-559DE9939992
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_track_preference
+    - node.type.exhibitor
+    - taxonomy.vocabulary.conference_tracks
+id: node.exhibitor.field_track_preference
+field_name: field_track_preference
+entity_type: node
+bundle: exhibitor
+label: 'Track Preference'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      conference_tracks: conference_tracks
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

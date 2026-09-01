@@ -4,7 +4,6 @@ namespace Drupal\itsiug_registration\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 
 /**
@@ -65,6 +64,7 @@ class InstitutionAccessForm extends FormBase {
 
     $institution_code = trim($form_state->getValue('institution_code'));
     $registration_pin = trim($form_state->getValue('registration_pin'));
+    $flow = strtolower(trim((string) \Drupal::request()->query->get('flow', 'delegate')));
 
     // Find the institution using the institution code.
     $nids = \Drupal::entityQuery('node')
@@ -112,12 +112,13 @@ class InstitutionAccessForm extends FormBase {
     $session->set('itsiug_registration', [
       'institution_nid' => $institution->id(),
       'authenticated_at' => \Drupal::time()->getRequestTime(),
+      'registration_flow' => $flow === 'exhibitor' ? 'exhibitor' : 'delegate',
     ]);
 
-    // Redirect to the Delegate Registration Webform.
-    $url = Url::fromRoute('entity.webform.canonical', [
-      'webform' => 'delegate_registration',
-    ]);
+    if ($flow === 'exhibitor') {
+      $form_state->setRedirect('itsiug_registration.exhibitor');
+      return;
+    }
 
     $form_state->setRedirect('itsiug_registration.delegate');
   }

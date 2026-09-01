@@ -1,0 +1,29 @@
+uuid: 53B0F063-E7AD-49F9-AC59-F6D21E555259
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_dietry_requirements
+    - node.type.exhibitor
+    - taxonomy.vocabulary.dietry_requirements
+id: node.exhibitor.field_dietry_requirements
+field_name: field_dietry_requirements
+entity_type: node
+bundle: exhibitor
+label: 'Dietary Requirements'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      dietry_requirements: dietry_requirements
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,23 @@
+uuid: 047A0795-D7B1-4199-B75B-5C1D941D1078
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_membership_status
+    - node.type.exhibitor
+  module:
+    - options
+id: node.exhibitor.field_membership_status
+field_name: field_membership_status
+entity_type: node
+bundle: exhibitor
+label: 'Membership Status'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: unpaid
+default_value_callback: ''
+settings: {  }
+field_type: list_string

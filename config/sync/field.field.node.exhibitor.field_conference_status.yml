@@ -1,0 +1,23 @@
+uuid: F979ACFB-5A7D-40CF-862D-FD1CD89DBFD1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_conference_status
+    - node.type.exhibitor
+  module:
+    - options
+id: node.exhibitor.field_conference_status
+field_name: field_conference_status
+entity_type: node
+bundle: exhibitor
+label: 'Conference Status'
+description: 'Conference status for this registration.'
+required: false
+translatable: false
+default_value:
+  -
+    value: exhibitor
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,5 @@
+.itsiug-exhibitor-registration fieldset[data-drupal-selector="edit-individual-group"],
+.itsiug-exhibitor-registration [data-drupal-selector="edit-individual-group"],
+.itsiug-exhibitor-registration [data-drupal-selector="edit-what-is-the-name-of-the-group"] {
+  display: none !important;
+}

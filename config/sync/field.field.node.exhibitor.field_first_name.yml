@@ -1,0 +1,19 @@
+uuid: AB1DEE41-00D4-473A-8C7F-CA5F7B6EEE04
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_first_name
+    - node.type.exhibitor
+id: node.exhibitor.field_first_name
+field_name: field_first_name
+entity_type: node
+bundle: exhibitor
+label: 'First Name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

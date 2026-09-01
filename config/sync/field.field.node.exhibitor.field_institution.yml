@@ -1,0 +1,29 @@
+uuid: BE31D385-A8AD-4F56-879F-3D45649E0816
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_institution
+    - node.type.exhibitor
+    - node.type.institution
+id: node.exhibitor.field_institution
+field_name: field_institution
+entity_type: node
+bundle: exhibitor
+label: Institution
+description: 'Example: ITS Integrator User Group'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      institution: institution
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

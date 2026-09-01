@@ -1,0 +1,19 @@
+uuid: DC9E9F06-398D-4C57-BB06-2976151B0EA5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_department_division
+    - node.type.exhibitor
+id: node.exhibitor.field_department_division
+field_name: field_department_division
+entity_type: node
+bundle: exhibitor
+label: 'Department/Division'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

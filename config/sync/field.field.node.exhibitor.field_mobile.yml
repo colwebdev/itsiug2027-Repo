@@ -1,0 +1,19 @@
+uuid: 6313B190-88F9-45C8-84DD-657E9837493A
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mobile
+    - node.type.exhibitor
+id: node.exhibitor.field_mobile
+field_name: field_mobile
+entity_type: node
+bundle: exhibitor
+label: Mobile
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

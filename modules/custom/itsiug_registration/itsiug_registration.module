@@ -14,8 +14,10 @@ function itsiug_registration_webform_submission_insert(
   WebformSubmissionInterface $webform_submission
 ) {
 
-  // Only process the Delegate Registration Webform.
-  if ($webform_submission->getWebform()->id() !== 'delegate_registration') {
+  $webform_id = $webform_submission->getWebform()->id();
+
+  // Only process the shared Delegate Registration Webform.
+  if ($webform_id !== 'delegate_registration') {
     return;
   }
 
@@ -28,7 +30,7 @@ function itsiug_registration_webform_submission_insert(
 
   if (empty($registration_context['institution_nid'])) {
     \Drupal::logger('itsiug_registration')->error(
-      'Delegate registration submitted without an institution session.'
+      'Registration submitted without an institution session.'
     );
     return;
   }
@@ -52,6 +54,9 @@ function itsiug_registration_webform_submission_insert(
   // ------------------------------------------------------------
 
   $data = $webform_submission->getData();
+  $registration_flow = strtolower((string) ($registration_context['registration_flow'] ?? 'delegate'));
+
+  if ($registration_flow !== 'exhibitor') {
 
   // ------------------------------------------------------------
   // Convert Webform values to taxonomy term IDs.
@@ -326,6 +331,321 @@ $delegate->save();
       '@reference' => $delegate_reference,
     ]
   );
+
+    return;
+  }
+
+  // ------------------------------------------------------------
+  // Convert Webform values to taxonomy term IDs.
+  // ------------------------------------------------------------
+
+  $country_tid = itsiug_find_taxonomy_term(
+    $data['country'] ?? NULL,
+    'countries'
+  );
+
+  $track_tid = itsiug_find_taxonomy_term(
+    $data['track_preference'] ?? NULL,
+    'conference_tracks'
+  );
+
+  $dietary_tid = itsiug_find_taxonomy_term(
+    $data['dietary_requirements'] ?? NULL,
+    'dietry_requirements'
+  );
+
+  // ------------------------------------------------------------
+  // Create Delegate.
+  // ------------------------------------------------------------
+
+  $delegate_title_value = itsiug_map_list_field_value(
+    $data['title'] ?? NULL,
+    [
+      'prof' => 'Prof',
+      'dr' => 'Dr',
+      'mr' => 'Mr',
+      'mrs' => 'Mrs',
+      'miss' => 'Miss',
+      'ms' => 'Ms',
+    ]
+  );
+
+  $delegate = Node::create([
+    'type' => 'delegate',
+
+    'title' => trim(
+      ($data['first_name'] ?? '') . ' ' .
+      ($data['last_name'] ?? '')
+    ),
+
+    'status' => 1,
+
+    'field_title' => $delegate_title_value,
+    'field_first_name' => $data['first_name'] ?? '',
+    'field_last_name' => $data['last_name'] ?? '',
+    'field_email' => $data['email'] ?? '',
+    'field_mobile' => $data['mobile'] ?? '',
+    'field_job_title' => trim((string) ($data['job_title'] ?? '')),
+
+    'field_institution' => [
+      'target_id' => $institution->id(),
+    ],
+
+    'field_country' => $country_tid
+      ? ['target_id' => $country_tid]
+      : [],
+
+    'field_track_preference' => $track_tid
+      ? ['target_id' => $track_tid]
+      : [],
+
+    'field_dietry_requirements' => $dietary_tid
+      ? ['target_id' => $dietary_tid]
+      : [],
+  ]);
+
+  // ------------------------------------------------------------
+  // Generate Delegate Reference.
+  // Example: UP-2027-0001
+  // ------------------------------------------------------------
+
+  $institution_code = trim(
+    $institution->get('field_institution_code')->value
+  );
+
+  if (empty($institution_code)) {
+    \Drupal::logger('itsiug_registration')->error(
+      'Institution @institution has no institution code.',
+      [
+        '@institution' => $institution->label(),
+      ]
+    );
+
+    return;
+  }
+
+  // Find existing delegates for this institution.
+  $existing_delegate_nids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'delegate')
+    ->condition('field_institution', $institution->id())
+    ->execute();
+
+  $next_number = 1;
+
+  foreach ($existing_delegate_nids as $existing_nid) {
+
+    $existing_delegate = Node::load($existing_nid);
+
+    if (!$existing_delegate) {
+      continue;
+    }
+
+    if (!$existing_delegate->hasField('field_delegate_reference')) {
+      continue;
+    }
+
+    $existing_reference = trim(
+      $existing_delegate->get('field_delegate_reference')->value
+    );
+
+    if (preg_match(
+      '/^' . preg_quote($institution_code, '/') . '-2027-(\d{4})$/',
+      $existing_reference,
+      $matches
+    )) {
+      $existing_number = (int) $matches[1];
+
+      if ($existing_number >= $next_number) {
+        $next_number = $existing_number + 1;
+      }
+    }
+  }
+
+  $delegate_reference = sprintf(
+    '%s-2027-%04d',
+    $institution_code,
+    $next_number
+  );
+
+  $delegate->set('field_delegate_reference', $delegate_reference);
+  $delegate->save();
+
+  // ------------------------------------------------------------
+  // Load ITSIUG 2027 Conference.
+  // ------------------------------------------------------------
+
+  $conference = Node::load(2);
+
+  if (!$conference || $conference->bundle() !== 'conference') {
+    \Drupal::logger('itsiug_registration')->error(
+      'ITSIUG 2027 conference node 2 could not be loaded.'
+    );
+    return;
+  }
+
+  // ------------------------------------------------------------
+  // Create Conference Registration.
+  // ------------------------------------------------------------
+
+  $registration = Node::create([
+    'type' => 'conference_registration',
+
+    'title' => $delegate->label(),
+
+    'status' => 1,
+
+    'field_conference' => [
+      'target_id' => $conference->id(),
+    ],
+
+    'field_delegate' => [
+      'target_id' => $delegate->id(),
+    ],
+
+    'field_institution1' => [
+      'target_id' => $institution->id(),
+    ],
+
+    'field_qr_code' => $delegate_reference,
+
+    'field_registration_status' => 'pending',
+
+    'field_checkin_status' => 'not_checked_in',
+
+    'field_conference_gift' => 'not_received',
+
+    'field_monday_attendance' => 'not_present',
+
+    'field_tuesday_attendance' => 'not_present',
+
+    'field_wednesday_attendance' => 'not_present',
+
+    'field_certificate_eligibility' => 'not_eligible',
+
+    'field_certificate_status' => 'not_generated',
+
+    'field_conference_status' => itsiug_map_list_field_value(
+      $data['conference_status'] ?? 'delegate',
+      itsiug_conference_status_options()
+    ) ?: 'delegate',
+
+    'field_badge_status' => 'not_generated',
+  ]);
+
+  $registration->save();
+
+  // ------------------------------------------------------------
+  // Create Exhibitor.
+  // ------------------------------------------------------------
+
+  $title_value = itsiug_map_list_field_value(
+    $data['title'] ?? NULL,
+    [
+      'prof' => 'Prof',
+      'dr' => 'Dr',
+      'mr' => 'Mr',
+      'mrs' => 'Mrs',
+      'miss' => 'Miss',
+      'ms' => 'Ms',
+    ]
+  );
+
+  $exhibitor = Node::create([
+    'type' => 'exhibitor',
+
+    'title' => trim(
+      ($data['first_name'] ?? '') . ' ' .
+      ($data['last_name'] ?? '')
+    ),
+
+    'status' => 1,
+
+    'field_institution' => [
+      'target_id' => $institution->id(),
+    ],
+
+    'field_conference_status' => 'exhibitor',
+    'field_membership_status' => 'unpaid',
+    'field_title' => $title_value,
+    'field_first_name' => $data['first_name'] ?? '',
+    'field_last_name' => $data['last_name'] ?? '',
+    'field_email' => $data['email'] ?? '',
+    'field_country' => $country_tid
+      ? ['target_id' => $country_tid]
+      : [],
+    'field_mobile' => $data['mobile'] ?? '',
+    'field_department_division' => trim((string) ($data['department_division'] ?? '')),
+    'field_job_title' => trim((string) ($data['job_title'] ?? '')),
+    'field_track_preference' => $track_tid
+      ? ['target_id' => $track_tid]
+      : [],
+    'field_dietry_requirements' => $dietary_tid
+      ? ['target_id' => $dietary_tid]
+      : [],
+    'field_invoice_preference' => itsiug_map_list_field_value(
+      $data['invoice_preference'] ?? NULL,
+      [
+        'quotation' => 'quotation',
+        'invoice' => 'invoice',
+      ]
+    ) ?: 'quotation',
+  ]);
+
+  $exhibitor->save();
+
+  $exhibitor_email = trim((string) ($data['email'] ?? ''));
+  $captured_details = [];
+  $elements = $webform_submission->getWebform()
+    ->getElementsDecodedAndFlattened();
+
+  foreach ($data as $key => $value) {
+    if (
+      empty($elements[$key]['#title']) ||
+      $value === NULL ||
+      $value === '' ||
+      $value === []
+    ) {
+      continue;
+    }
+
+    $captured_details[] = [
+      'label' => (string) $elements[$key]['#title'],
+      'value' => itsiug_registration_format_email_value($value),
+    ];
+  }
+
+  if (filter_var($exhibitor_email, FILTER_VALIDATE_EMAIL)) {
+    $mail_result = \Drupal::service('plugin.manager.mail')->mail(
+      'itsiug_registration',
+      'registration_confirmation',
+      $exhibitor_email,
+      $exhibitor->language()->getId(),
+      [
+        'first_name' => trim((string) ($data['first_name'] ?? '')),
+        'captured_details' => $captured_details,
+        'registration_type' => 'exhibitor',
+      ]
+    );
+
+    if (empty($mail_result['result'])) {
+      \Drupal::logger('itsiug_registration')->error(
+        'Exhibitor registration was created for @exhibitor, but the confirmation email could not be sent to @email.',
+        [
+          '@exhibitor' => $exhibitor->label(),
+          '@email' => $exhibitor_email,
+        ]
+      );
+    }
+  }
+
+  \Drupal::logger('itsiug_registration')->notice(
+    'Exhibitor @exhibitor registered through @institution.',
+    [
+      '@exhibitor' => $exhibitor->label(),
+      '@institution' => $institution->label(),
+    ]
+  );
 }
 
 /**
@@ -558,8 +878,8 @@ function itsiug_sync_delegate_conference_status(NodeInterface $delegate, $status
  */
 function itsiug_registration_node_presave(\Drupal\node\NodeInterface $node) {
 
-  // Keep Delegate title in sync with first and last name edits.
-  if ($node->bundle() === 'delegate') {
+  // Keep registration titles in sync with first and last name edits.
+  if ($node->bundle() === 'delegate' || $node->bundle() === 'exhibitor') {
 
     $first_name = '';
     $last_name = '';
@@ -792,6 +1112,7 @@ function itsiug_registration_mail(
 ) {
 
   if ($key === 'registration_confirmation') {
+    $registration_type = $params['registration_type'] ?? 'delegate';
     $first_name = $params['first_name'] ?? '';
     $captured_details = $params['captured_details'] ?? [];
     $details_rows = '';
@@ -809,8 +1130,9 @@ function itsiug_registration_mail(
       ';
     }
 
-    $message['subject'] =
-      'ITSIUG 2027 Conference Registration Received';
+    $message['subject'] = $registration_type === 'exhibitor'
+      ? 'ITSIUG 2027 Exhibitor Registration Received'
+      : 'ITSIUG 2027 Conference Registration Received';
 
     $message['headers']['Content-Type'] =
       'text/html; charset=UTF-8';
@@ -819,14 +1141,10 @@ function itsiug_registration_mail(
       <p>Dear ' . htmlspecialchars($first_name, ENT_QUOTES, 'UTF-8') . ',</p>
 
       <p>
-        Thank you for registering for the 2027 ITSIUG Conference.
+        Thank you for registering' . ($registration_type === 'exhibitor' ? ' as an exhibitor' : ' for the 2027 ITSIUG Conference') . '.
       </p>
 
-      <p>
-        Your registration remains pending until payment of the delegate fee
-        has been confirmed. After 60 days, your registration will be moved to
-        the waiting list to make place for other registrations.
-      </p>
+      ' . ($registration_type === 'exhibitor' ? '<p>We will review your exhibitor submission and follow up with the next steps.</p>' : '<p>Your registration remains pending until payment of the delegate fee has been confirmed. After 60 days, your registration will be moved to the waiting list to make place for other registrations.</p>') . '
 
       <p>
         Best regards,<br>
@@ -971,12 +1289,49 @@ function itsiug_registration_form_webform_submission_delegate_registration_add_f
   \Drupal\Core\Form\FormStateInterface $form_state,
   $form_id
 ) {
+  $session = \Drupal::request()->getSession();
+  $registration_context = $session->get('itsiug_registration');
+  $registration_flow = strtolower((string) ($registration_context['registration_flow'] ?? 'delegate'));
+
+  if ($registration_flow === 'exhibitor') {
+    $form['#attributes']['class'][] = 'itsiug-exhibitor-registration';
+
+    if (isset($form['conference_status'])) {
+      $form['conference_status']['#default_value'] = 'exhibitor';
+    }
+
+    $form['institution_heading'] = [
+      '#type' => 'markup',
+      '#weight' => -1000,
+      '#markup' => '<p><strong>Institution:</strong> ITS Integrator User Group</p>',
+    ];
+
+    if (isset($form['individual_group'])) {
+        unset($form['individual_group']);
+    }
+
+    if (isset($form['what_is_the_name_of_the_group'])) {
+        unset($form['what_is_the_name_of_the_group']);
+    }
+
+    if (isset($form['track_preference'])) {
+      $form['track_preference']['#default_value'] = 'No Preference';
+    }
+
+    $form['#validate'][] = 'itsiug_registration_exhibitor_registration_validate';
+
+    if (isset($form['actions']['submit'])) {
+      $form['actions']['submit']['#submit'][] = 'itsiug_registration_exhibitor_registration_redirect_submit';
+    }
+
+    $form['#after_build'][] = 'itsiug_registration_exhibitor_registration_after_build';
+
+    return;
+  }
+
   $form['#attributes']['class'][] = 'itsiug-delegate-registration';
 
   // Add institution context heading above the registration form fields.
-  $session = \Drupal::request()->getSession();
-  $registration_context = $session->get('itsiug_registration');
-
   if (empty($registration_context['institution_nid'])) {
     return;
   }
@@ -1020,6 +1375,36 @@ function itsiug_registration_form_webform_submission_delegate_registration_add_f
     '#weight' => -1000,
     '#markup' => '<p><strong>Institution:</strong> ' . Html::escape($institution_name) . '</p>'
       . '<p><strong>Membership Status:</strong> ' . Html::escape($membership_status) . '</p>',
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function itsiug_registration_form_webform_submission_exhibitor_registration_add_form_alter(
+  &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state,
+  $form_id
+) {
+  $form['#attributes']['class'][] = 'itsiug-exhibitor-registration';
+
+  $session = \Drupal::request()->getSession();
+  $registration_context = $session->get('itsiug_registration');
+
+  if (empty($registration_context['institution_nid'])) {
+    return;
+  }
+
+  $institution = Node::load((int) $registration_context['institution_nid']);
+
+  if (!$institution || $institution->bundle() !== 'institution') {
+    return;
+  }
+
+  $form['institution_heading'] = [
+    '#type' => 'markup',
+    '#weight' => -1000,
+    '#markup' => '<p><strong>Institution:</strong> ' . Html::escape($institution->label()) . '</p>',
   ];
 }
 
@@ -1201,7 +1586,7 @@ function itsiug_registration_webform_access(
 
     $route_name = \Drupal::routeMatch()->getRouteName();
 
-    if ($route_name === 'itsiug_registration.delegate') {
+    if (in_array($route_name, ['itsiug_registration.delegate', 'itsiug_registration.exhibitor'], TRUE)) {
       return \Drupal\Core\Access\AccessResult::forbidden();
     }
   }
@@ -1231,12 +1616,47 @@ function itsiug_registration_form_alter(
 
     $form['#attributes']['class'][] = 'itsiug-delegate-registration';
 
-    $form['#validate'][] =
-      'itsiug_registration_delegate_registration_validate';
+    $session = \Drupal::request()->getSession();
+    $registration_context = $session->get('itsiug_registration');
+    $registration_flow = strtolower((string) ($registration_context['registration_flow'] ?? 'delegate'));
 
-    if (isset($form['actions']['submit'])) {
-      $form['actions']['submit']['#submit'][] =
-        'itsiug_registration_delegate_registration_redirect_submit';
+    if ($registration_flow === 'exhibitor') {
+
+      $form['#attributes']['class'][] = 'itsiug-exhibitor-registration';
+
+      if (isset($form['conference_status'])) {
+        $form['conference_status']['#default_value'] = 'exhibitor';
+      }
+
+      if (isset($form['individual_group'])) {
+        unset($form['individual_group']);
+      }
+
+      if (isset($form['what_is_the_name_of_the_group'])) {
+        unset($form['what_is_the_name_of_the_group']);
+      }
+
+      if (isset($form['track_preference'])) {
+        $form['track_preference']['#default_value'] = 'No Preference';
+      }
+
+      if (isset($form['actions']['submit'])) {
+        $form['actions']['submit']['#submit'][] =
+          'itsiug_registration_exhibitor_registration_redirect_submit';
+      }
+
+      $form['#after_build'][] = 'itsiug_registration_exhibitor_registration_after_build';
+
+      $form['#attached']['library'][] = 'itsiug_registration/exhibitor_registration';
+    }
+    else {
+      $form['#validate'][] =
+        'itsiug_registration_delegate_registration_validate';
+
+      if (isset($form['actions']['submit'])) {
+        $form['actions']['submit']['#submit'][] =
+          'itsiug_registration_delegate_registration_redirect_submit';
+      }
     }
   }
 
@@ -1334,6 +1754,86 @@ function itsiug_registration_delegate_registration_redirect_submit(
   \Drupal\Core\Form\FormStateInterface $form_state
 ) {
   $form_state->setRedirect('itsiug_registration.delegate_confirmation');
+}
+
+/**
+ * Validate duplicate exhibitor registrations by email.
+ */
+function itsiug_registration_exhibitor_registration_validate(
+  array &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state
+) {
+
+  $email = trim((string) $form_state->getValue('email'));
+
+  if ($email === '') {
+    return;
+  }
+
+  $email = mb_strtolower($email);
+
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'exhibitor')
+    ->execute();
+
+  foreach ($registration_ids as $registration_id) {
+    $registration = Node::load((int) $registration_id);
+
+    if (!$registration || !$registration->hasField('field_email') || $registration->get('field_email')->isEmpty()) {
+      continue;
+    }
+
+    $registration_email = mb_strtolower(trim((string) $registration->get('field_email')->value));
+
+    if ($registration_email !== $email) {
+      continue;
+    }
+
+    $message = \Drupal\Core\Render\Markup::create(
+      '<div class="itsiug-duplicate-registration-message">'
+      . '<strong>This email address is already registered as an exhibitor.</strong><br>'
+      . 'Please check the address or contact the conference organisers for assistance.'
+      . '</div>'
+    );
+
+    \Drupal::messenger()->addError($message);
+
+    $form_state->setErrorByName(
+      'email',
+      t('This email address is already registered as an exhibitor.')
+    );
+
+    \Drupal::logger('itsiug_registration')->notice(
+      'Duplicate exhibitor registration blocked for email @email.',
+      ['@email' => $email]
+    );
+
+    return;
+  }
+}
+
+/**
+ * Redirect exhibitor registrations to custom confirmation page.
+ */
+function itsiug_registration_exhibitor_registration_redirect_submit(
+  array &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state
+) {
+  $form_state->setRedirect('itsiug_registration.exhibitor_confirmation');
+}
+
+/**
+ * Remove delegate-only field groups from the exhibitor form after build.
+ */
+function itsiug_registration_exhibitor_registration_after_build(
+  array $form,
+  \Drupal\Core\Form\FormStateInterface $form_state
+) {
+  unset($form['individual_group']);
+  unset($form['what_is_the_name_of_the_group']);
+
+  return $form;
 }
 
 /**

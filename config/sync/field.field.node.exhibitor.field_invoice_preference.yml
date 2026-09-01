@@ -1,0 +1,21 @@
+uuid: 43A86E3B-5C9E-4CE3-B3BB-14C37C9FFF4F
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_invoice_preference
+    - node.type.exhibitor
+  module:
+    - options
+id: node.exhibitor.field_invoice_preference
+field_name: field_invoice_preference
+entity_type: node
+bundle: exhibitor
+label: 'Invoice Preference'
+description: 'Please confirm your choice.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
