@@ -1,5 +1,6 @@
 
 # Keep production secrets and database backups out of Git
+.DS_Store
 /sites/default/settings.php
 /backups/*.sql.gz
 /backups/*.tar.gz
