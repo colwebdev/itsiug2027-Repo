@@ -45,9 +45,15 @@ final class TrashExportViewsCommand extends Command {
   protected function execute(InputInterface $input, OutputInterface $output): int {
     $io = new SymfonyStyle($input, $output);
 
-    $entity_type_ids = $this->trashCliActions->getEnabledEntityTypes();
-    if ($entity_type_ids === []) {
+    $enabled_entity_type_ids = $this->trashCliActions->getEnabledEntityTypes();
+    if ($enabled_entity_type_ids === []) {
       $io->error($this->trashCliActions->noEntityTypesEnabledMessage());
+      return Command::FAILURE;
+    }
+
+    $exportable_entity_type_ids = $this->trashCliActions->getExportableEntityTypes();
+    if ($exportable_entity_type_ids === []) {
+      $io->error($this->trashCliActions->noExportableEntityTypesMessage());
       return Command::FAILURE;
     }
 
@@ -55,11 +61,20 @@ final class TrashExportViewsCommand extends Command {
     $entity_type_id = $input->getArgument('entity_type_id');
 
     if ($all) {
+      // Pass every enabled entity type so that the ones without Views
+      // integration are reported as skipped instead of dropped silently.
+      $entity_type_ids = $enabled_entity_type_ids;
       $confirmation = $this->trashCliActions->exportConfirmationQuestion(TRUE, NULL);
     }
     else {
-      if (!$entity_type_id || !in_array($entity_type_id, $entity_type_ids, TRUE)) {
-        $entity_type_id = $io->choice($this->trashCliActions->selectExportEntityTypeQuestion(), $this->trashCliActions->getEntityTypeLabels($entity_type_ids));
+      // Say why a trash-enabled entity type cannot be exported, instead of
+      // falling through to the selection prompt.
+      if ($entity_type_id !== NULL && in_array($entity_type_id, $enabled_entity_type_ids, TRUE) && !in_array($entity_type_id, $exportable_entity_type_ids, TRUE)) {
+        $io->error($this->trashCliActions->notExportableMessage($entity_type_id));
+        return Command::FAILURE;
+      }
+      if (!$entity_type_id || !in_array($entity_type_id, $exportable_entity_type_ids, TRUE)) {
+        $entity_type_id = $io->choice($this->trashCliActions->selectExportEntityTypeQuestion(), $this->trashCliActions->getEntityTypeLabels($exportable_entity_type_ids));
       }
       $entity_type_ids = [$entity_type_id];
       $confirmation = $this->trashCliActions->exportConfirmationQuestion(FALSE, $entity_type_id);

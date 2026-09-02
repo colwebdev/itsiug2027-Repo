@@ -68,6 +68,13 @@ class TrashFileTest extends BrowserTestBase {
     $this->submitForm($edit, 'Save configuration');
     $this->assertSession()->statusCodeEquals(200);
 
+    // Neither entity type has a canonical page, so they get no local tasks.
+    $definitions = \Drupal::service('plugin.manager.menu.local_task')->getDefinitions();
+    $this->assertArrayNotHasKey('trash.entity_restore:file', $definitions);
+    $this->assertArrayNotHasKey('trash.entity_purge:file', $definitions);
+    $this->assertArrayNotHasKey('trash.entity_restore:path_alias', $definitions);
+    $this->assertArrayNotHasKey('trash.entity_purge:path_alias', $definitions);
+
     $trash_file_user = $this->createUser([
       'access files overview',
       'delete own files',

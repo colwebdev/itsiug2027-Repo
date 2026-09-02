@@ -82,6 +82,38 @@ class TrashCliActions {
   }
 
   /**
+   * Returns the trash-enabled entity types that a View can be exported for.
+   *
+   * Entity types without Views integration get the fallback table on the Trash
+   * overview page, so there is no View to export for them.
+   *
+   * @see \Drupal\trash\Controller\TrashController::listing()
+   */
+  public function getExportableEntityTypes(): array {
+    return array_values(array_filter(
+      $this->getEnabledEntityTypes(),
+      fn (string $entity_type_id): bool => (bool) $this->entityTypeManager->getDefinition($entity_type_id, FALSE)?->hasHandlerClass('views_data'),
+    ));
+  }
+
+  /**
+   * Returns the message shown when an entity type has no View to export.
+   */
+  public function notExportableMessage(string $entity_type_id): string {
+    $entity_type = $this->entityTypeManager->getDefinition($entity_type_id, FALSE);
+    return (string) $this->t('The @entity_type entity type has no Views integration, so its Trash overview page uses the fallback table and there is no view to export.', [
+      '@entity_type' => $entity_type ? $entity_type->getLabel() : $entity_type_id,
+    ]);
+  }
+
+  /**
+   * Returns the message shown when no entity type has a View to export.
+   */
+  public function noExportableEntityTypesMessage(): string {
+    return (string) $this->t('None of the Trash-enabled entity types have Views integration, so there are no Trash overview page views to export.');
+  }
+
+  /**
    * Builds the confirmation question for the export-views operation.
    */
   public function exportConfirmationQuestion(bool $all, ?string $entity_type_id): string {
@@ -99,6 +131,13 @@ class TrashCliActions {
   public function exportViews(SymfonyStyle $io, array $entity_type_ids, bool $overwrite): void {
     foreach ($entity_type_ids as $entity_type_id) {
       $entity_type = $this->entityTypeManager->getDefinition($entity_type_id);
+      // Saving a View built on a table without Views data throws while its
+      // dependencies are calculated, so there is nothing to export here.
+      if (!$entity_type->hasHandlerClass('views_data')) {
+        $io->comment($this->notExportableMessage($entity_type_id));
+        continue;
+      }
+
       $trash_view = View::load('trash_' . $entity_type_id);
       if (!$trash_view || $overwrite) {
         $view_executable = $this->trashViewBuilder->buildView($entity_type, TRUE);

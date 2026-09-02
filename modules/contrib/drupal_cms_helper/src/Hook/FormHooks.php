@@ -44,6 +44,12 @@ final class FormHooks {
    */
   #[Hook('form_user_register_form_alter')]
   public function alterAccountCreationForm(array &$form): void {
+    // Only alter the form on the admin account creation route. On the public
+    // registration form, setting notify to TRUE bypasses the admin-approval
+    // registration workflow in RegisterForm::save().
+    if ($this->routeMatch->getRouteName() === 'user.register') {
+      return;
+    }
     $visibility = [
       'visible' => [
         'input[name="notify"]' => ['checked' => FALSE],
