@@ -1920,6 +1920,13 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
     /*
      * Convert institution summary to table rows.
      */
+    uasort($institutions, static function (array $left, array $right): int {
+      return strnatcasecmp(
+        (string) $left['name'],
+        (string) $right['name']
+      );
+    });
+
     $institution_rows = [];
 
     foreach ($institutions as $institution) {
@@ -2208,6 +2215,7 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
       ->execute();
 
     $handle = fopen('php://temp', 'w+');
+    $rows = [];
 
     // CSV header.
     fputcsv($handle, [
@@ -2398,7 +2406,7 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
           $allowed_values[$value] ?? $value;
       }
 
-      fputcsv($handle, [
+      $rows[] = [
         $delegate_name,
         $institution_name,
         $delegate_email,
@@ -2408,7 +2416,15 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
         $tuesday_status,
         $wednesday_status,
         $certificate_status,
-      ]);
+      ];
+    }
+
+    usort($rows, static function (array $left, array $right): int {
+      return strnatcasecmp((string) $left[1], (string) $right[1]);
+    });
+
+    foreach ($rows as $row) {
+      fputcsv($handle, $row);
     }
 
     rewind($handle);
@@ -2845,6 +2861,8 @@ return $response;
   public function adminDelegates() {
 
     $search = $this->getDelegateSearchTerm();
+    $institution_filter = $this->getDelegateInstitutionFilter();
+    $institution_options = $this->getDelegateInstitutionOptions();
 
     $registration_ids = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
@@ -2885,6 +2903,10 @@ return $response;
       $institution_label = $institution ? $institution->label() : '';
 
       if (!$this->matchesDelegateSearch($registration, $delegate, $institution_label, $search)) {
+        continue;
+      }
+
+      if ($institution_filter !== '' && (string) $registration->get('field_institution1')->target_id !== $institution_filter) {
         continue;
       }
 
@@ -3014,7 +3036,9 @@ return [
 
     'filters' => $this->buildDelegateFilter(
       'itsiug_registration.admin_delegates',
-      $search
+      $search,
+      $institution_filter,
+      $institution_options
     ),
 
     'delegates' => [
@@ -3069,6 +3093,8 @@ return [
   public function adminDelegateContacts() {
 
     $search = $this->getDelegateSearchTerm();
+    $institution_filter = $this->getDelegateInstitutionFilter();
+    $institution_options = $this->getDelegateInstitutionOptions();
 
     $registration_ids = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
@@ -3093,6 +3119,10 @@ return [
 
       $institution = $registration->get('field_institution1')->entity ?? NULL;
       $institution_label = $institution ? $institution->label() : '';
+
+      if ($institution_filter !== '' && (string) ($registration->get('field_institution1')->target_id ?? '') !== $institution_filter) {
+        continue;
+      }
 
       if (!$this->matchesDelegateSearch($registration, $delegate, $institution_label, $search)) {
         continue;
@@ -3173,7 +3203,9 @@ return [
 
       'filters' => $this->buildDelegateFilter(
         'itsiug_registration.admin_delegate_contacts',
-        $search
+        $search,
+        $institution_filter,
+        $institution_options
       ),
 
       'delegates' => [
@@ -3223,6 +3255,8 @@ return [
   public function adminCertificates() {
 
   $search = $this->getDelegateSearchTerm();
+  $institution_filter = $this->getDelegateInstitutionFilter();
+  $institution_options = $this->getDelegateInstitutionOptions();
 
   $registration_ids = \Drupal::entityQuery('node')
     ->accessCheck(FALSE)
@@ -3261,6 +3295,10 @@ return [
     $institution_label = $institution ? $institution->label() : '';
 
     if (!$this->matchesDelegateSearch($registration, $delegate, $institution_label, $search)) {
+      continue;
+    }
+
+    if ($institution_filter !== '' && (string) ($registration->get('field_institution1')->target_id ?? '') !== $institution_filter) {
       continue;
     }
 
@@ -3509,7 +3547,9 @@ return [
 
     'filters' => $this->buildDelegateFilter(
       'itsiug_registration.admin_certificates',
-      $search
+      $search,
+      $institution_filter,
+      $institution_options
     ),
 
     'certificates' => [
@@ -3829,13 +3869,53 @@ return [
   }
 
   /**
+   * Get the selected institution filter from the request query.
+   */
+  private function getDelegateInstitutionFilter(): string {
+
+    return trim((string) \Drupal::request()->query->get('institution', ''));
+  }
+
+  /**
+   * Get institution options for the delegate filter dropdown.
+   */
+  private function getDelegateInstitutionOptions(): array {
+
+    $institution_ids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'institution')
+      ->sort('title', 'ASC')
+      ->execute();
+
+    $options = [];
+
+    foreach ($institution_ids as $institution_id) {
+      $institution = Node::load($institution_id);
+
+      if (!$institution) {
+        continue;
+      }
+
+      $options[(string) $institution_id] = $institution->label();
+    }
+
+    return $options;
+  }
+
+  /**
    * Build a reusable GET filter form for admin listing pages.
    */
-  private function buildDelegateFilter(string $route_name, string $search): array {
+  private function buildDelegateFilter(string $route_name, string $search, string $institution_filter = '', array $institution_options = []): array {
 
     $action = Url::fromRoute($route_name)->toString();
     $clear_url = Url::fromRoute($route_name)->toString();
     $input_id = Html::getId($route_name . '-delegate-search');
+    $institution_id = Html::getId($route_name . '-delegate-institution');
+
+    $institution_items = [];
+    foreach ($institution_options as $value => $label) {
+      $institution_items[] = '<option value="' . Html::escape((string) $value) . '"' . ((string) $value === $institution_filter ? ' selected="selected"' : '') . '>' . Html::escape((string) $label) . '</option>';
+    }
 
     return [
       '#type' => 'container',
@@ -3847,14 +3927,19 @@ return [
       ],
       'form' => [
         '#type' => 'inline_template',
-        '#template' => '<form method="get" action="{{ action }}" class="itsiug-admin-filter-form"><div class="form-item"><label for="{{ input_id }}">{{ label }}</label><input type="text" id="{{ input_id }}" name="search" value="{{ search }}" size="40" class="itsiug-badge-filter-input" /><div class="description">{{ description }}</div></div><div class="form-actions"><input type="submit" value="{{ apply_label }}" class="button button--primary" /><a href="{{ clear_url }}" class="button">{{ clear_label }}</a></div></form>',
+        '#template' => '<form method="get" action="{{ action }}" class="itsiug-admin-filter-form"><div class="form-item"><label for="{{ input_id }}">{{ label }}</label><input type="text" id="{{ input_id }}" name="search" value="{{ search }}" size="40" class="itsiug-badge-filter-input" /><div class="description">{{ description }}</div></div><div class="form-item"><label for="{{ institution_id }}">{{ institution_label }}</label><select id="{{ institution_id }}" name="institution" class="itsiug-badge-filter-input"><option value="">{{ all_institutions_label }}</option>{{ institution_options|raw }}</select><div class="description">{{ institution_description }}</div></div><div class="form-actions"><input type="submit" value="{{ apply_label }}" class="button button--primary" /><a href="{{ clear_url }}" class="button">{{ clear_label }}</a></div></form>',
         '#context' => [
           'action' => $action,
           'clear_url' => $clear_url,
           'input_id' => $input_id,
+          'institution_id' => $institution_id,
           'search' => $search,
           'label' => $this->t('Find Delegate'),
           'description' => $this->t('Type any part of first name, last name, QR ID, email, or institution.'),
+          'institution_label' => $this->t('Institution'),
+          'institution_description' => $this->t('Filter delegates to a specific institution.'),
+          'all_institutions_label' => $this->t('All institutions'),
+          'institution_options' => implode('', $institution_items),
           'apply_label' => $this->t('Apply Filter'),
           'clear_label' => $this->t('Clear Filter'),
         ],
