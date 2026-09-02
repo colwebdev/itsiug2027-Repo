@@ -1,6 +1,17 @@
 
-# Keep production secrets and database backups out of Git
+# Keep production secrets, local runtime files, and machine-specific clutter out of Git
 .DS_Store
+/.idea/
+/.vscode/
+/.phpunit.result.cache
 /sites/default/settings.php
+/sites/default/settings.local.php
+/sites/default/services.yml
+/sites/default/services.local.yml
+/sites/default/files/*
+!/sites/default/files/.htaccess
+!/sites/default/files/.gitkeep
+/sites/default/private/*
+!/sites/default/private/.htaccess
 /backups/*.sql.gz
 /backups/*.tar.gz
