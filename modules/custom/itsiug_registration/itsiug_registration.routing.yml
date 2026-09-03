@@ -163,6 +163,14 @@ itsiug_registration.codepin_report:
   requirements:
     _permission: 'access itsiug admin'
 
+itsiug_registration.admin_finance_status:
+  path: '/register/admin/finance-status'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminFinanceStatus'
+    _title: 'Finance Status Dashboard'
+  requirements:
+    _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::adminRole'
+
 itsiug_registration.admin_delegates:
   path: '/register/admin/delegates'
   defaults:

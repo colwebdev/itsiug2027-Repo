@@ -2762,6 +2762,21 @@ return $response;
           ],
         ],
 
+        'finance_status_dashboard' => [
+          '#type' => 'link',
+          '#title' => $this->t('Finance Status Dashboard'),
+          '#url' => Url::fromRoute(
+            'itsiug_registration.admin_finance_status'
+          ),
+          '#access' => $access_manager->checkNamedRoute('itsiug_registration.admin_finance_status', [], $account),
+          '#attributes' => [
+            'class' => [
+              'button',
+              'button--primary',
+            ],
+          ],
+        ],
+
         'delegates' => [
           '#type' => 'link',
           '#title' => $this->t('Delegate Management'),
@@ -2850,6 +2865,217 @@ return $response;
           ],
         ],
 
+        ],
+      ],
+    ];
+  }
+
+  /**
+   * Display the finance status dashboard.
+   */
+  public function adminFinanceStatus() {
+
+    $search = $this->getDelegateSearchTerm();
+    $institution_filter = $this->getDelegateInstitutionFilter();
+    $institution_options = $this->getDelegateInstitutionOptions();
+
+    $registration_ids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'conference_registration')
+      ->condition('field_conference', 2)
+      ->execute();
+
+    $counts = [
+      'total' => 0,
+      'draft' => 0,
+      'quotation_pending' => 0,
+      'payment_pending' => 0,
+      'payment_confirmed' => 0,
+    ];
+
+    $delegate_rows = [];
+
+    foreach ($registration_ids as $registration_id) {
+      $registration = Node::load($registration_id);
+
+      if (!$registration) {
+        continue;
+      }
+
+      $counts['total']++;
+
+      $delegate = $registration->get('field_delegate')->entity ?? NULL;
+      $institution = $registration->get('field_institution1')->entity ?? NULL;
+
+      $delegate_name = $delegate ? $delegate->label() : $this->t('Unknown delegate');
+      $institution_name = $institution ? $institution->label() : $this->t('Unknown institution');
+
+      if (
+        $registration->hasField('field_conference_status') &&
+        !$registration->get('field_conference_status')->isEmpty()
+      ) {
+        $status = (string) $registration->get('field_conference_status')->value;
+
+        if (isset($counts[$status])) {
+          $counts[$status]++;
+        }
+      }
+
+      if ($institution_filter !== '' && (string) ($registration->get('field_institution1')->target_id ?? '') !== $institution_filter) {
+        continue;
+      }
+
+      if ($delegate && !$this->matchesDelegateSearch($registration, $delegate, (string) $institution_name, $search)) {
+        continue;
+      }
+
+      $name_data = $delegate ? $this->getDelegateSortData($delegate) : [
+        'first_name' => (string) $delegate_name,
+        'last_name' => (string) $delegate_name,
+      ];
+
+      $delegate_rows[] = [
+        'registration_id' => (int) $registration->id(),
+        'sort_first_name' => $name_data['first_name'],
+        'sort_last_name' => $name_data['last_name'],
+        'row' => [
+          'delegate' => $delegate ? [
+            'data' => [
+              '#type' => 'link',
+              '#title' => $delegate_name,
+              '#url' => Url::fromRoute(
+                'entity.node.canonical',
+                [
+                  'node' => $delegate->id(),
+                ]
+              ),
+            ],
+          ] : $delegate_name,
+          'institution' => $institution_name,
+          'conference_status' => $this->getRegistrationFieldLabel(
+            $registration,
+            'field_conference_status'
+          ),
+          'edit' => [
+            'data' => [
+              '#type' => 'link',
+              '#title' => $this->t('Edit node'),
+              '#url' => Url::fromRoute(
+                'entity.node.edit_form',
+                [
+                  'node' => $registration->id(),
+                ]
+              ),
+              '#attributes' => [
+                'class' => [
+                  'button',
+                  'button--primary',
+                ],
+              ],
+            ],
+          ],
+        ],
+      ];
+    }
+
+    $this->sortDelegateRows($delegate_rows);
+    $delegate_rows = array_map(
+      static fn (array $row): array => $row['row'],
+      $delegate_rows
+    );
+
+    $rows = [
+      [
+        $this->t('Total Registrations'),
+        $counts['total'],
+      ],
+      [
+        $this->t('Not processed in Sage Accounting'),
+        $counts['draft'],
+      ],
+      [
+        $this->t('Quotation acceptance pending'),
+        $counts['quotation_pending'],
+      ],
+      [
+        $this->t('Invoiced but payment pending'),
+        $counts['payment_pending'],
+      ],
+      [
+        $this->t('Payment confirmed'),
+        $counts['payment_confirmed'],
+      ],
+    ];
+
+    return [
+      'report_page' => [
+        '#type' => 'container',
+        '#cache' => [
+          'max-age' => 0,
+        ],
+        '#attached' => [
+          'library' => [
+            'itsiug_theme/global-styling',
+          ],
+        ],
+        '#attributes' => [
+          'class' => [
+            'itsiug-admin-page',
+            'itsiug-reports-page',
+            'itsiug-finance-status-dashboard',
+          ],
+        ],
+        'header' => [
+          '#markup' => '<h2>' . $this->t('Finance Status Dashboard') . '</h2>',
+        ],
+        'summary' => [
+          '#type' => 'table',
+          '#attributes' => [
+            'class' => [
+              'itsiug-delegate-management-table',
+            ],
+          ],
+          '#header' => [
+            $this->t('Measure'),
+            $this->t('Total'),
+          ],
+          '#rows' => $rows,
+          '#empty' => $this->t('No conference registrations were found.'),
+        ],
+        'filters' => $this->buildDelegateFilter(
+          'itsiug_registration.admin_finance_status',
+          $search,
+          $institution_filter,
+          $institution_options
+        ),
+        'delegate_list_title' => [
+          '#markup' => '<h3>' . $this->t('Conference Registration Delegates') . '</h3>',
+        ],
+        'delegate_list' => [
+          '#type' => 'table',
+          '#attributes' => [
+            'class' => [
+              'itsiug-delegate-management-table',
+            ],
+          ],
+          '#header' => [
+            $this->t('Delegate'),
+            $this->t('Institution'),
+            $this->t('Conference Status'),
+            $this->t('Edit'),
+          ],
+          '#rows' => $delegate_rows,
+          '#empty' => $this->t('No conference registrations were found.'),
+        ],
+        'back' => [
+          '#type' => 'link',
+          '#title' => $this->t('Return to Administration'),
+          '#url' => Url::fromRoute('itsiug_registration.admin'),
+          '#attributes' => [
+            'class' => [
+              'button',
+            ],
+          ],
         ],
       ],
     ];

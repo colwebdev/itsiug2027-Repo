@@ -483,3 +483,41 @@ function itsiug_registration_update_9006() {
 
   return 'Removed ITSIUG admin permission from Exco Member.';
 }
+
+/**
+ * Set conference registration status to draft for existing records.
+ */
+function itsiug_registration_update_9007() {
+
+  $field_config = \Drupal::entityTypeManager()
+    ->getStorage('field_config')
+    ->load('node.conference_registration.field_conference_status');
+
+  if ($field_config) {
+    $field_config->setDefaultValue([
+      ['value' => 'draft'],
+    ]);
+    $field_config->save();
+  }
+
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'conference_registration')
+    ->execute();
+
+  $count = 0;
+
+  foreach ($registration_ids as $registration_id) {
+    $registration = \Drupal\node\Entity\Node::load($registration_id);
+
+    if (!$registration || !$registration->hasField('field_conference_status')) {
+      continue;
+    }
+
+    $registration->set('field_conference_status', 'draft');
+    $registration->save();
+    $count++;
+  }
+
+  return 'Updated ' . $count . ' conference registrations to draft.';
+}

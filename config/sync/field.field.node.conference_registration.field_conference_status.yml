@@ -15,7 +15,9 @@ label: 'Conference Status'
 description: 'Conference status for this registration.'
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    value: draft
 default_value_callback: ''
 settings: {  }
 field_type: list_string

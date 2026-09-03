@@ -525,10 +525,7 @@ $delegate->save();
 
     'field_certificate_status' => 'not_generated',
 
-    'field_conference_status' => itsiug_map_list_field_value(
-      $data['conference_status'] ?? 'delegate',
-      itsiug_conference_status_options()
-    ) ?: 'delegate',
+    'field_conference_status' => 'draft',
 
     'field_badge_status' => 'not_generated',
   ]);

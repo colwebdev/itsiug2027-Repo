@@ -18,6 +18,19 @@ class AdminAccessCheck {
   }
 
   /**
+   * Access check for admin-only pages.
+   */
+  public function adminRole(AccountInterface $account): AccessResult {
+    if ($account->isAnonymous() || !in_array('admin', $account->getRoles(), TRUE)) {
+      return AccessResult::forbidden()
+        ->cachePerUser();
+    }
+
+    return AccessResult::allowed()
+      ->cachePerUser();
+  }
+
+  /**
    * Access check for ITSIUG reports pages.
    */
   public function reports(AccountInterface $account): AccessResult {
