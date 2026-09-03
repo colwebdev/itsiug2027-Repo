@@ -2880,6 +2880,20 @@ return $response;
     $institution_options = $this->getDelegateInstitutionOptions();
     $conference_status_filter = $this->getDelegateConferenceStatusFilter();
     $conference_status_options = $this->getConferenceStatusOptions();
+    $finance_status_destination = Url::fromRoute(
+      'itsiug_registration.admin_finance_status',
+      [],
+      [
+        'query' => array_filter(
+          [
+            'search' => $search,
+            'institution' => $institution_filter,
+            'conference_status' => $conference_status_filter,
+          ],
+          static fn ($value): bool => $value !== ''
+        ),
+      ]
+    )->toString();
 
     $registration_ids = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
@@ -2970,6 +2984,11 @@ return $response;
                 'entity.node.edit_form',
                 [
                   'node' => $registration->id(),
+                ],
+                [
+                  'query' => [
+                    'destination' => $finance_status_destination,
+                  ],
                 ]
               ),
               '#attributes' => [
