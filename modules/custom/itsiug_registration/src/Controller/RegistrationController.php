@@ -228,7 +228,8 @@ public function registerInfo() {
         'message' => [
           '#markup' =>
             '<p><strong>Welcome to the Registration Pages.</strong></p>' .
-            '<p>Your registration wil remain PENDING until the Good Standing of the Institutional Membership is confirmed.</p>',
+            '<p>Your registration will remain PENDING until the Good Standing of the Institutional Membership is confirmed.</p>' .
+            '<p class="itsiug-registerinfo-warning"><strong>Only proceed with this registration if you have prior APPROVAL and with the knowledge of the UG Representative at your Institution to do so</strong></p>',
         ],
 
         'actions' => [

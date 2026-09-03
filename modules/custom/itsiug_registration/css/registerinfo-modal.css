@@ -34,6 +34,11 @@
   margin-bottom: 0;
 }
 
+.itsiug-registerinfo-warning {
+  color: #b00020;
+  font-weight: 700;
+}
+
 .itsiug-registerinfo-actions {
   margin-top: 26px;
   display: flex;
