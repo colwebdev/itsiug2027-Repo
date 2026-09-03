@@ -1602,9 +1602,17 @@ function itsiug_registration_form_alter(
 
   if ($form_id === 'webform_submission_delegate_registration_add_form') {
 
+    $session = \Drupal::request()->getSession();
+    $registration_context = $session->get('itsiug_registration');
+    $registration_flow = strtolower((string) ($registration_context['registration_flow'] ?? 'delegate'));
+
+    $conference_status_title = ($registration_flow === 'delegate')
+      ? t('Delegate Status')
+      : t('Conference Status');
+
         $form['conference_status'] = [
           '#type' => 'select',
-          '#title' => t('Conference Status'),
+          '#title' => $conference_status_title,
           '#options' => itsiug_conference_status_options(),
           '#default_value' => 'delegate',
           '#required' => TRUE,
@@ -1612,10 +1620,6 @@ function itsiug_registration_form_alter(
         ];
 
     $form['#attributes']['class'][] = 'itsiug-delegate-registration';
-
-    $session = \Drupal::request()->getSession();
-    $registration_context = $session->get('itsiug_registration');
-    $registration_flow = strtolower((string) ($registration_context['registration_flow'] ?? 'delegate'));
 
     if ($registration_flow === 'exhibitor') {
 
