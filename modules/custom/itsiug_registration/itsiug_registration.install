@@ -521,3 +521,29 @@ function itsiug_registration_update_9007() {
 
   return 'Updated ' . $count . ' conference registrations to draft.';
 }
+
+/**
+ * Rename the draft conference status label to match the finance dashboard wording.
+ */
+function itsiug_registration_update_9008() {
+
+  $field_storage = \Drupal::entityTypeManager()
+    ->getStorage('field_storage_config')
+    ->load('node.field_conference_status');
+
+  if (!$field_storage) {
+    return 'Conference status field storage not found; no label was changed.';
+  }
+
+  $settings = $field_storage->getSettings();
+
+  if (!isset($settings['allowed_values']['draft'])) {
+    return 'Draft conference status value not found; no label was changed.';
+  }
+
+  $settings['allowed_values']['draft'] = 'Not processed in Sage';
+  $field_storage->setSettings($settings);
+  $field_storage->save();
+
+  return 'Updated the draft conference status label to Not processed in Sage.';
+}

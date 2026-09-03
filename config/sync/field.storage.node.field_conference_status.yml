@@ -13,7 +13,7 @@ settings:
   allowed_values:
     -
       value: draft
-      label: Draft
+      label: 'Not processed in Sage'
     -
       value: open_for_registration
       label: 'Open for Registration'

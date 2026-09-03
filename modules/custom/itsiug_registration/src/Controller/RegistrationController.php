@@ -3015,7 +3015,7 @@ return $response;
         $counts['total'],
       ],
       [
-        $this->t('Not processed in Sage Accounting'),
+        $this->t('Not processed in Sage'),
         $counts['draft'],
       ],
       [
@@ -4169,7 +4169,7 @@ return [
   private function getConferenceStatusOptions(): array {
 
     return [
-      'draft' => $this->t('Not processed in Sage Accounting'),
+      'draft' => $this->t('Not processed in Sage'),
       'quotation_pending' => $this->t('Quotation acceptance pending'),
       'payment_pending' => $this->t('Invoiced but payment pending'),
       'payment_confirmed' => $this->t('Payment confirmed'),
