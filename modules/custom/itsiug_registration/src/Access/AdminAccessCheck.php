@@ -21,7 +21,7 @@ class AdminAccessCheck {
    * Access check for admin-only pages.
    */
   public function adminRole(AccountInterface $account): AccessResult {
-    if ($account->isAnonymous() || !in_array('admin', $account->getRoles(), TRUE)) {
+    if ($account->isAnonymous() || !in_array('administrator', $account->getRoles(), TRUE)) {
       return AccessResult::forbidden()
         ->cachePerUser();
     }

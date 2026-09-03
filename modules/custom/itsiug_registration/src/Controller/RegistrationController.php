@@ -2878,6 +2878,8 @@ return $response;
     $search = $this->getDelegateSearchTerm();
     $institution_filter = $this->getDelegateInstitutionFilter();
     $institution_options = $this->getDelegateInstitutionOptions();
+    $conference_status_filter = $this->getDelegateConferenceStatusFilter();
+    $conference_status_options = $this->getConferenceStatusOptions();
 
     $registration_ids = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
@@ -2922,6 +2924,10 @@ return $response;
       }
 
       if ($institution_filter !== '' && (string) ($registration->get('field_institution1')->target_id ?? '') !== $institution_filter) {
+        continue;
+      }
+
+      if ($conference_status_filter !== '' && (string) ($registration->get('field_conference_status')->value ?? '') !== $conference_status_filter) {
         continue;
       }
 
@@ -3046,7 +3052,9 @@ return $response;
           'itsiug_registration.admin_finance_status',
           $search,
           $institution_filter,
-          $institution_options
+          $institution_options,
+          $conference_status_filter,
+          $conference_status_options
         ),
         'delegate_list_title' => [
           '#markup' => '<h3>' . $this->t('Conference Registration Delegates') . '</h3>',
@@ -4103,6 +4111,14 @@ return [
   }
 
   /**
+   * Get the selected conference status filter from the request query.
+   */
+  private function getDelegateConferenceStatusFilter(): string {
+
+    return trim((string) \Drupal::request()->query->get('conference_status', ''));
+  }
+
+  /**
    * Get institution options for the delegate filter dropdown.
    */
   private function getDelegateInstitutionOptions(): array {
@@ -4129,18 +4145,37 @@ return [
   }
 
   /**
+   * Get finance status options for the delegate filter dropdown.
+   */
+  private function getConferenceStatusOptions(): array {
+
+    return [
+      'draft' => $this->t('Not processed in Sage Accounting'),
+      'quotation_pending' => $this->t('Quotation acceptance pending'),
+      'payment_pending' => $this->t('Invoiced but payment pending'),
+      'payment_confirmed' => $this->t('Payment confirmed'),
+    ];
+  }
+
+  /**
    * Build a reusable GET filter form for admin listing pages.
    */
-  private function buildDelegateFilter(string $route_name, string $search, string $institution_filter = '', array $institution_options = []): array {
+  private function buildDelegateFilter(string $route_name, string $search, string $institution_filter = '', array $institution_options = [], string $conference_status_filter = '', array $conference_status_options = []): array {
 
     $action = Url::fromRoute($route_name)->toString();
     $clear_url = Url::fromRoute($route_name)->toString();
     $input_id = Html::getId($route_name . '-delegate-search');
     $institution_id = Html::getId($route_name . '-delegate-institution');
+    $conference_status_id = Html::getId($route_name . '-conference-status');
 
     $institution_items = [];
     foreach ($institution_options as $value => $label) {
       $institution_items[] = '<option value="' . Html::escape((string) $value) . '"' . ((string) $value === $institution_filter ? ' selected="selected"' : '') . '>' . Html::escape((string) $label) . '</option>';
+    }
+
+    $conference_status_items = [];
+    foreach ($conference_status_options as $value => $label) {
+      $conference_status_items[] = '<option value="' . Html::escape((string) $value) . '"' . ((string) $value === $conference_status_filter ? ' selected="selected"' : '') . '>' . Html::escape((string) $label) . '</option>';
     }
 
     return [
@@ -4153,12 +4188,13 @@ return [
       ],
       'form' => [
         '#type' => 'inline_template',
-        '#template' => '<form method="get" action="{{ action }}" class="itsiug-admin-filter-form"><div class="form-item"><label for="{{ input_id }}">{{ label }}</label><input type="text" id="{{ input_id }}" name="search" value="{{ search }}" size="40" class="itsiug-badge-filter-input" /><div class="description">{{ description }}</div></div><div class="form-item"><label for="{{ institution_id }}">{{ institution_label }}</label><select id="{{ institution_id }}" name="institution" class="itsiug-badge-filter-input"><option value="">{{ all_institutions_label }}</option>{{ institution_options|raw }}</select><div class="description">{{ institution_description }}</div></div><div class="form-actions"><input type="submit" value="{{ apply_label }}" class="button button--primary" /><a href="{{ clear_url }}" class="button">{{ clear_label }}</a></div></form>',
+        '#template' => '<form method="get" action="{{ action }}" class="itsiug-admin-filter-form"><div class="form-item"><label for="{{ input_id }}">{{ label }}</label><input type="text" id="{{ input_id }}" name="search" value="{{ search }}" size="40" class="itsiug-badge-filter-input" /><div class="description">{{ description }}</div></div><div class="form-item"><label for="{{ institution_id }}">{{ institution_label }}</label><select id="{{ institution_id }}" name="institution" class="itsiug-badge-filter-input"><option value="">{{ all_institutions_label }}</option>{{ institution_options|raw }}</select><div class="description">{{ institution_description }}</div></div><div class="form-item"><label for="{{ conference_status_id }}">{{ conference_status_label }}</label><select id="{{ conference_status_id }}" name="conference_status" class="itsiug-badge-filter-input"><option value="">{{ all_conference_status_label }}</option>{{ conference_status_options|raw }}</select><div class="description">{{ conference_status_description }}</div></div><div class="form-actions"><input type="submit" value="{{ apply_label }}" class="button button--primary" /><a href="{{ clear_url }}" class="button">{{ clear_label }}</a></div></form>',
         '#context' => [
           'action' => $action,
           'clear_url' => $clear_url,
           'input_id' => $input_id,
           'institution_id' => $institution_id,
+          'conference_status_id' => $conference_status_id,
           'search' => $search,
           'label' => $this->t('Find Delegate'),
           'description' => $this->t('Type any part of first name, last name, QR ID, email, or institution.'),
@@ -4166,6 +4202,10 @@ return [
           'institution_description' => $this->t('Filter delegates to a specific institution.'),
           'all_institutions_label' => $this->t('All institutions'),
           'institution_options' => implode('', $institution_items),
+          'conference_status_label' => $this->t('Conference Status'),
+          'conference_status_description' => $this->t('Filter delegates to a specific finance status.'),
+          'all_conference_status_label' => $this->t('All conference statuses'),
+          'conference_status_options' => implode('', $conference_status_items),
           'apply_label' => $this->t('Apply Filter'),
           'clear_label' => $this->t('Clear Filter'),
         ],
