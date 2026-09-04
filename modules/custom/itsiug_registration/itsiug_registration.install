@@ -547,3 +547,50 @@ function itsiug_registration_update_9008() {
 
   return 'Updated the draft conference status label to Not processed in Sage.';
 }
+
+/**
+ * Normalize conference registration statuses to the valid finance default.
+ */
+function itsiug_registration_update_9009() {
+
+  $field_storage = \Drupal::entityTypeManager()
+    ->getStorage('field_storage_config')
+    ->load('node.field_conference_status');
+
+  if (!$field_storage) {
+    return 'Conference status field storage not found; no registrations were updated.';
+  }
+
+  $allowed_values = array_keys($field_storage->getSetting('allowed_values') ?? []);
+
+  if (!in_array('draft', $allowed_values, TRUE)) {
+    return 'Draft conference status is not available; no registrations were updated.';
+  }
+
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'conference_registration')
+    ->execute();
+
+  $count = 0;
+
+  foreach ($registration_ids as $registration_id) {
+    $registration = \Drupal\node\Entity\Node::load($registration_id);
+
+    if (!$registration || !$registration->hasField('field_conference_status')) {
+      continue;
+    }
+
+    $current_value = (string) ($registration->get('field_conference_status')->value ?? '');
+
+    if ($current_value !== '' && in_array($current_value, $allowed_values, TRUE)) {
+      continue;
+    }
+
+    $registration->set('field_conference_status', 'draft');
+    $registration->save();
+    $count++;
+  }
+
+  return 'Updated ' . $count . ' conference registrations to Not processed in Sage.';
+}
