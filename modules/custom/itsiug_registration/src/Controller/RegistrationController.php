@@ -3077,7 +3077,7 @@ return $response;
           $conference_status_options
         ),
         'delegate_list_title' => [
-          '#markup' => '<h3>' . $this->t('Conference Registration Delegates') . '</h3>',
+          '#markup' => '<h3>' . $this->t('Conference Delegates') . '</h3>',
         ],
         'delegate_list' => [
           '#type' => 'table',
