@@ -3052,7 +3052,7 @@ return $response;
           ],
         ],
         'header' => [
-          '#markup' => '<h2>' . $this->t('Finance Status Dashboard') . '</h2>',
+          '#markup' => '<h2>' . $this->t('Delegate Processed Status') . '</h2>',
         ],
         'summary' => [
           '#type' => 'table',
@@ -3089,7 +3089,7 @@ return $response;
           '#header' => [
             $this->t('Delegate'),
             $this->t('Institution'),
-            $this->t('Conference Status'),
+            $this->t('Processed Status'),
             $this->t('Edit'),
           ],
           '#rows' => $delegate_rows,
@@ -4344,6 +4344,8 @@ return [
       if (isset($status_options[$value])) {
         return $status_options[$value];
       }
+
+      return 'Not processed in Sage';
     }
 
     return strtoupper(str_replace('_', ' ', $value));
