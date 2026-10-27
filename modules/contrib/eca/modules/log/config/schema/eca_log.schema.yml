@@ -24,8 +24,7 @@ action.configuration.eca_write_log_message:
       label: 'Severity'
       constraints:
         # @see \Drupal\Core\Logger::getLevels()
-        EcaChoice:
-          choices: [0, 1, 2, 3, 4, 5, 6, 7]
+        Choice: [0, 1, 2, 3, 4, 5, 6, 7]
     message:
       type: text
       label: 'Message'

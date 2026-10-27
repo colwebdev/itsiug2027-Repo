@@ -4,6 +4,7 @@ namespace Drupal\itsiug_registration\Controller;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\webform\Entity\Webform;
@@ -2879,8 +2880,8 @@ return $response;
     $search = $this->getDelegateSearchTerm();
     $institution_filter = $this->getDelegateInstitutionFilter();
     $institution_options = $this->getDelegateInstitutionOptions();
-    $conference_status_filter = $this->getDelegateConferenceStatusFilter();
-    $conference_status_options = $this->getConferenceStatusOptions();
+    $financial_status_filter = $this->getDelegateConferenceStatusFilter();
+    $financial_status_options = $this->getFinancialStatusOptions();
     $finance_status_destination = Url::fromRoute(
       'itsiug_registration.admin_finance_status',
       [],
@@ -2889,7 +2890,7 @@ return $response;
           [
             'search' => $search,
             'institution' => $institution_filter,
-            'conference_status' => $conference_status_filter,
+            'conference_status' => $financial_status_filter,
           ],
           static fn ($value): bool => $value !== ''
         ),
@@ -2927,17 +2928,23 @@ return $response;
 
       $delegate_name = $delegate ? $delegate->label() : $this->t('Unknown delegate');
       $institution_name = $institution ? $institution->label() : $this->t('Unknown institution');
-      $financial_status = $this->getDelegateFinancialStatus($registration);
 
-      if (isset($counts[$financial_status])) {
-        $counts[$financial_status]++;
+      if (
+        $registration->hasField('field_delegate_financial_status') &&
+        !$registration->get('field_delegate_financial_status')->isEmpty()
+      ) {
+        $status = (string) $registration->get('field_delegate_financial_status')->value;
+
+        if (isset($counts[$status])) {
+          $counts[$status]++;
+        }
       }
 
       if ($institution_filter !== '' && (string) ($registration->get('field_institution1')->target_id ?? '') !== $institution_filter) {
         continue;
       }
 
-      if ($conference_status_filter !== '' && $financial_status !== $conference_status_filter) {
+      if ($financial_status_filter !== '' && (string) ($registration->get('field_delegate_financial_status')->value ?? '') !== $financial_status_filter) {
         continue;
       }
 
@@ -2968,7 +2975,10 @@ return $response;
             ],
           ] : $delegate_name,
           'institution' => $institution_name,
-          'conference_status' => $this->getConferenceStatusOptions()[$financial_status],
+          'conference_status' => $this->getRegistrationFieldLabel(
+            $registration,
+            'field_delegate_financial_status'
+          ),
           'edit' => [
             'data' => [
               '#type' => 'link',
@@ -3069,8 +3079,10 @@ return $response;
           $search,
           $institution_filter,
           $institution_options,
-          $conference_status_filter,
-          $conference_status_options
+          $financial_status_filter,
+          $financial_status_options,
+          $this->t('Delegate Financial Status'),
+          $this->t('All financial statuses')
         ),
         'delegate_list_title' => [
           '#markup' => '<h3>' . $this->t('Conference Delegates') . '</h3>',
@@ -4161,9 +4173,9 @@ return [
   }
 
   /**
-   * Get finance status options for the delegate filter dropdown.
+   * Get financial status options for the finance dashboard filter.
    */
-  private function getConferenceStatusOptions(): array {
+  private function getFinancialStatusOptions(): array {
 
     return [
       'draft' => $this->t('Not processed in Sage'),
@@ -4175,31 +4187,9 @@ return [
   }
 
   /**
-   * Get a registration's financial status, including before field deployment.
-   */
-  private function getDelegateFinancialStatus(Node $registration): string {
-
-    $options = $this->getConferenceStatusOptions();
-    $status = '';
-
-    if ($registration->hasField('field_delegate_financial_status')) {
-      $status = (string) ($registration->get('field_delegate_financial_status')->value ?? '');
-    }
-
-    if ($status === '' && $registration->hasField('field_conference_status')) {
-      $legacy_status = (string) ($registration->get('field_conference_status')->value ?? '');
-      if (isset($options[$legacy_status])) {
-        $status = $legacy_status;
-      }
-    }
-
-    return isset($options[$status]) ? $status : 'draft';
-  }
-
-  /**
    * Build a reusable GET filter form for admin listing pages.
    */
-  private function buildDelegateFilter(string $route_name, string $search, string $institution_filter = '', array $institution_options = [], string $conference_status_filter = '', array $conference_status_options = []): array {
+  private function buildDelegateFilter(string $route_name, string $search, string $institution_filter = '', array $institution_options = [], string $conference_status_filter = '', array $conference_status_options = [], ?TranslatableMarkup $conference_status_label = NULL, ?TranslatableMarkup $all_conference_statuses_label = NULL): array {
 
     $action = Url::fromRoute($route_name)->toString();
     $clear_url = Url::fromRoute($route_name)->toString();
@@ -4241,9 +4231,9 @@ return [
           'institution_description' => $this->t('Filter delegates to a specific institution.'),
           'all_institutions_label' => $this->t('All institutions'),
           'institution_options' => implode('', $institution_items),
-          'conference_status_label' => $this->t('Delegate Financial Status'),
+          'conference_status_label' => $conference_status_label ?? $this->t('Conference Status'),
           'conference_status_description' => $this->t('Filter delegates to a specific finance status.'),
-          'all_conference_status_label' => $this->t('All financial statuses'),
+          'all_conference_status_label' => $all_conference_statuses_label ?? $this->t('All conference statuses'),
           'conference_status_options' => implode('', $conference_status_items),
           'apply_label' => $this->t('Apply Filter'),
           'clear_label' => $this->t('Clear Filter'),
@@ -4358,8 +4348,8 @@ return [
       return (string) $allowed_values[$value];
     }
 
-    if ($field_name === 'field_delegate_financial_status') {
-      $status_options = $this->getConferenceStatusOptions();
+    if ($field_name === 'field_conference_status') {
+      $status_options = itsiug_conference_status_options();
       if (isset($status_options[$value])) {
         return $status_options[$value];
       }

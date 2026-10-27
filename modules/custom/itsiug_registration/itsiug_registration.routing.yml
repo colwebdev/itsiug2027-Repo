@@ -167,7 +167,7 @@ itsiug_registration.admin_finance_status:
   path: '/register/admin/finance-status'
   defaults:
     _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::adminFinanceStatus'
-    _title: 'Delegate Processed Status'
+    _title: 'Finance Status Dashboard'
   requirements:
     _custom_access: '\Drupal\itsiug_registration\Access\AdminAccessCheck::adminRole'
 

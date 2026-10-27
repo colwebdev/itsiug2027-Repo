@@ -506,23 +506,11 @@ function itsiug_registration_update_9007() {
     ->execute();
 
   $count = 0;
-  $financial_statuses = [
-    'draft',
-    'quotation_pending',
-    'payment_pending',
-    'payment_confirmed',
-    'waiting_list',
-  ];
 
   foreach ($registration_ids as $registration_id) {
     $registration = \Drupal\node\Entity\Node::load($registration_id);
 
     if (!$registration || !$registration->hasField('field_conference_status')) {
-      continue;
-    }
-
-    $current_status = (string) ($registration->get('field_conference_status')->value ?? '');
-    if (in_array($current_status, $financial_statuses, TRUE)) {
       continue;
     }
 
@@ -573,15 +561,7 @@ function itsiug_registration_update_9009() {
     return 'Conference status field storage not found; no registrations were updated.';
   }
 
-  $allowed_values = array_unique(array_merge(
-    array_keys($field_storage->getSetting('allowed_values') ?? []),
-    [
-      'quotation_pending',
-      'payment_pending',
-      'payment_confirmed',
-      'waiting_list',
-    ]
-  ));
+  $allowed_values = array_keys($field_storage->getSetting('allowed_values') ?? []);
 
   if (!in_array('draft', $allowed_values, TRUE)) {
     return 'Draft conference status is not available; no registrations were updated.';
@@ -616,14 +596,13 @@ function itsiug_registration_update_9009() {
 }
 
 /**
- * Add a dedicated financial status field to conference registrations.
+ * Add delegate financial status and migrate finance values from old status.
  */
-function itsiug_registration_update_9010() {
+function itsiug_registration_update_9011() {
 
   $entity_type_manager = \Drupal::entityTypeManager();
   $field_storage_storage = $entity_type_manager->getStorage('field_storage_config');
   $field_config_storage = $entity_type_manager->getStorage('field_config');
-  $form_display_storage = $entity_type_manager->getStorage('entity_form_display');
   $allowed_values = [
     'draft' => 'Not processed in Sage',
     'quotation_pending' => 'Quotation Acceptance Pending',
@@ -632,8 +611,9 @@ function itsiug_registration_update_9010() {
     'waiting_list' => 'Waiting List',
   ];
 
-  if (!$field_storage_storage->load('node.field_delegate_financial_status')) {
-    $field_storage_storage->create([
+  $field_storage = $field_storage_storage->load('node.field_delegate_financial_status');
+  if (!$field_storage) {
+    $field_storage = $field_storage_storage->create([
       'field_name' => 'field_delegate_financial_status',
       'entity_type' => 'node',
       'type' => 'list_string',
@@ -643,11 +623,17 @@ function itsiug_registration_update_9010() {
         'allowed_values' => $allowed_values,
         'allowed_values_function' => '',
       ],
-    ])->save();
+    ]);
   }
+  $settings = $field_storage->getSettings();
+  $settings['allowed_values'] = $allowed_values;
+  $settings['allowed_values_function'] = '';
+  $field_storage->setSettings($settings);
+  $field_storage->save();
 
-  if (!$field_config_storage->load('node.conference_registration.field_delegate_financial_status')) {
-    $field_config_storage->create([
+  $field_config = $field_config_storage->load('node.conference_registration.field_delegate_financial_status');
+  if (!$field_config) {
+    $field_config = $field_config_storage->create([
       'field_name' => 'field_delegate_financial_status',
       'entity_type' => 'node',
       'bundle' => 'conference_registration',
@@ -659,9 +645,15 @@ function itsiug_registration_update_9010() {
         ['value' => 'draft'],
       ],
       'settings' => [],
-    ])->save();
+    ]);
   }
+  $field_config->setLabel('Delegate Financial Status');
+  $field_config->setDefaultValue([
+    ['value' => 'draft'],
+  ]);
+  $field_config->save();
 
+  $form_display_storage = $entity_type_manager->getStorage('entity_form_display');
   $form_display = $form_display_storage->load('node.conference_registration.default');
   if ($form_display && !$form_display->getComponent('field_delegate_financial_status')) {
     $form_display->setComponent('field_delegate_financial_status', [
@@ -672,8 +664,6 @@ function itsiug_registration_update_9010() {
     ]);
     $form_display->save();
   }
-
-  \Drupal::entityDefinitionUpdateManager()->applyUpdates();
 
   $registration_ids = \Drupal::entityQuery('node')
     ->accessCheck(FALSE)
@@ -688,6 +678,13 @@ function itsiug_registration_update_9010() {
     }
 
     $current_status = (string) ($registration->get('field_delegate_financial_status')->value ?? '');
+    if ($current_status === 'archived') {
+      $registration->set('field_delegate_financial_status', 'waiting_list');
+      $registration->save();
+      $count++;
+      continue;
+    }
+
     if (isset($allowed_values[$current_status])) {
       continue;
     }
@@ -705,5 +702,34 @@ function itsiug_registration_update_9010() {
     $count++;
   }
 
-  return 'Created delegate financial status and migrated ' . $count . ' registrations.';
+  return 'Created the delegate financial status field and migrated ' . $count . ' registration(s).';
+}
+
+/**
+ * Set all delegate financial statuses to Invoice Payment Pending once.
+ */
+function itsiug_registration_update_9012() {
+
+  $registration_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'conference_registration')
+    ->execute();
+  $count = 0;
+
+  foreach ($registration_ids as $registration_id) {
+    $registration = \Drupal\node\Entity\Node::load($registration_id);
+    if (!$registration || !$registration->hasField('field_delegate_financial_status')) {
+      continue;
+    }
+
+    if ($registration->get('field_delegate_financial_status')->value === 'payment_pending') {
+      continue;
+    }
+
+    $registration->set('field_delegate_financial_status', 'payment_pending');
+    $registration->save();
+    $count++;
+  }
+
+  return 'Set ' . $count . ' delegate financial status value(s) to Invoice Payment Pending.';
 }

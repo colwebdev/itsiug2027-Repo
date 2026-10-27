@@ -1,0 +1,9 @@
+name: ITSIUG Registration
+type: module
+description: 'Conference registration workflow for ITSIUG.'
+package: ITSIUG
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:user
+  - webform:webform

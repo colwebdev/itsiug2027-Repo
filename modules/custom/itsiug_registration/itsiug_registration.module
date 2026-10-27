@@ -265,7 +265,6 @@ $delegate->save();
   'field_certificate_status' => 'not_generated',
 
   'field_conference_status' => 'draft',
-
   'field_delegate_financial_status' => 'draft',
 
   'field_badge_status' => 'not_generated',

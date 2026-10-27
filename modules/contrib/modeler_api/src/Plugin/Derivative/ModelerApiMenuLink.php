@@ -17,13 +17,6 @@ class ModelerApiMenuLink extends DeriverBase implements ContainerDeriverInterfac
   use StringTranslationTrait;
 
   /**
-   * The base plugin ID from the menu link definition.
-   *
-   * @var string
-   */
-  protected string $basePluginId = '';
-
-  /**
    * Constructs a ModelerApiLocalAction object.
    */
   final public function __construct(
@@ -35,12 +28,10 @@ class ModelerApiMenuLink extends DeriverBase implements ContainerDeriverInterfac
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, $base_plugin_id): ModelerApiMenuLink {
-    $deriver = new static(
+    return new static(
       $container->get('plugin.manager.modeler_api.model_owner'),
       $container->get('modeler_api.service'),
     );
-    $deriver->basePluginId = $base_plugin_id;
-    return $deriver;
   }
 
   /**
@@ -63,12 +54,11 @@ class ModelerApiMenuLink extends DeriverBase implements ContainerDeriverInterfac
           'description' => $owner->description(),
           'route_name' => $collectionName,
         ];
-        $collectionPluginId = $this->basePluginId . ':' . $collectionName;
         $name = 'entity.' . $type . '.import';
         if ($this->modelerApiService->getRouteByName($name)) {
           $this->derivatives[$name] = [
             'title' => $this->t('Import'),
-            'parent' => $collectionPluginId,
+            'parent' => $collectionName,
             'description' => $this->t('Import a model'),
             'route_name' => $name,
           ];
@@ -77,7 +67,7 @@ class ModelerApiMenuLink extends DeriverBase implements ContainerDeriverInterfac
         if ($this->modelerApiService->getRouteByName($name)) {
           $this->derivatives[$name] = [
             'title' => $this->t('Settings'),
-            'parent' => $collectionPluginId,
+            'parent' => $collectionName,
             'description' => $this->t('Configure the model'),
             'route_name' => $name,
           ];

@@ -1,0 +1,485 @@
+<?php
+
+/**
+ * @file
+ * Install and update hooks for the ITSIUG registration module.
+ */
+
+/**
+ * Add conference signature fields used by certificate generation.
+ */
+function itsiug_registration_update_9001() {
+
+  $messages = [];
+
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $field_storage_storage = $entity_type_manager->getStorage('field_storage_config');
+  $field_config_storage = $entity_type_manager->getStorage('field_config');
+  $form_display_storage = $entity_type_manager->getStorage('entity_form_display');
+
+  $definitions = [
+    [
+      'name' => 'field_chairperson_signature',
+      'label' => 'Chairperson Signature',
+      'description' => 'Signature image used on certificates for the chairperson.',
+      'weight' => 60,
+    ],
+    [
+      'name' => 'field_administrator_signature',
+      'label' => 'Administrator Signature',
+      'description' => 'Signature image used on certificates for the ITSIUG administrator.',
+      'weight' => 61,
+    ],
+  ];
+
+  foreach ($definitions as $definition) {
+
+    $field_name = $definition['name'];
+
+    if (!$field_storage_storage->load('node.' . $field_name)) {
+      $storage = $field_storage_storage->create([
+        'field_name' => $field_name,
+        'entity_type' => 'node',
+        'type' => 'entity_reference',
+        'cardinality' => 1,
+        'translatable' => FALSE,
+        'settings' => [
+          'target_type' => 'media',
+        ],
+      ]);
+      $storage->save();
+      $messages[] = 'Created field storage for ' . $field_name . '.';
+    }
+
+    if (!$field_config_storage->load('node.conference.' . $field_name)) {
+      $field = $field_config_storage->create([
+        'field_name' => $field_name,
+        'entity_type' => 'node',
+        'bundle' => 'conference',
+        'label' => $definition['label'],
+        'description' => $definition['description'],
+        'required' => FALSE,
+        'translatable' => FALSE,
+        'settings' => [
+          'handler' => 'default:media',
+          'handler_settings' => [],
+        ],
+      ]);
+      $field->save();
+      $messages[] = 'Attached ' . $field_name . ' to conference content type.';
+    }
+
+    $display_id = 'node.conference.default';
+    $form_display = $form_display_storage->load($display_id);
+
+    if (!$form_display) {
+      $form_display = $form_display_storage->create([
+        'targetEntityType' => 'node',
+        'bundle' => 'conference',
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+    }
+
+    if (!$form_display->getComponent($field_name)) {
+      $form_display->setComponent($field_name, [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => $definition['weight'],
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => 60,
+          'placeholder' => '',
+        ],
+        'third_party_settings' => [],
+      ]);
+      $form_display->save();
+      $messages[] = 'Added ' . $field_name . ' to conference form display.';
+    }
+  }
+
+  if (empty($messages)) {
+    return 'Conference signature fields already exist.';
+  }
+
+  return implode(' ', $messages);
+}
+
+/**
+ * Backfill delegate and conference registration synchronisation.
+ */
+function itsiug_registration_update_9002() {
+
+  $delegate_ids = \Drupal::entityQuery('node')
+    ->accessCheck(FALSE)
+    ->condition('type', 'delegate')
+    ->execute();
+
+  if (empty($delegate_ids)) {
+    return 'No delegate nodes found to backfill.';
+  }
+
+  $delegate_updated = 0;
+  $registration_updated = 0;
+
+  foreach ($delegate_ids as $delegate_id) {
+
+    $delegate = \Drupal\node\Entity\Node::load($delegate_id);
+
+    if (!$delegate) {
+      continue;
+    }
+
+    $first_name = '';
+    $last_name = '';
+
+    if (
+      $delegate->hasField('field_first_name') &&
+      !$delegate->get('field_first_name')->isEmpty()
+    ) {
+      $first_name = trim($delegate->get('field_first_name')->value);
+    }
+
+    if (
+      $delegate->hasField('field_last_name') &&
+      !$delegate->get('field_last_name')->isEmpty()
+    ) {
+      $last_name = trim($delegate->get('field_last_name')->value);
+    }
+
+    $expected_title = trim($first_name . ' ' . $last_name);
+
+    if ($expected_title !== '' && $delegate->label() !== $expected_title) {
+      $delegate->setTitle($expected_title);
+      $delegate->save();
+      $delegate_updated++;
+    }
+
+    $delegate_reference = '';
+
+    if (
+      $delegate->hasField('field_delegate_reference') &&
+      !$delegate->get('field_delegate_reference')->isEmpty()
+    ) {
+      $delegate_reference = trim($delegate->get('field_delegate_reference')->value);
+    }
+
+    $registration_ids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'conference_registration')
+      ->condition('field_delegate', $delegate->id())
+      ->execute();
+
+    foreach ($registration_ids as $registration_id) {
+
+      $registration = \Drupal\node\Entity\Node::load($registration_id);
+
+      if (!$registration) {
+        continue;
+      }
+
+      $changed = FALSE;
+
+      if ($registration->getTitle() !== $delegate->label()) {
+        $registration->setTitle($delegate->label());
+        $changed = TRUE;
+      }
+
+      if (
+        $delegate_reference !== '' &&
+        $registration->hasField('field_qr_code')
+      ) {
+        $current_qr = (string) $registration->get('field_qr_code')->value;
+
+        if ($current_qr !== $delegate_reference) {
+          $registration->set('field_qr_code', $delegate_reference);
+          $changed = TRUE;
+        }
+      }
+
+      if ($changed) {
+        $registration->save();
+        $registration_updated++;
+      }
+    }
+  }
+
+  return 'Backfill complete: updated ' .
+    $delegate_updated . ' delegate node(s) and ' .
+    $registration_updated . ' conference registration node(s).';
+}
+
+/**
+ * Add badge output and conference background fields used by badge generation.
+ */
+function itsiug_registration_update_9003() {
+
+  $messages = [];
+
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $field_storage_storage = $entity_type_manager->getStorage('field_storage_config');
+  $field_config_storage = $entity_type_manager->getStorage('field_config');
+  $form_display_storage = $entity_type_manager->getStorage('entity_form_display');
+
+  $definitions = [
+    [
+      'bundle' => 'conference_registration',
+      'name' => 'field_badge_file',
+      'label' => 'Badge File',
+      'description' => 'Generated conference badge PDF attached to the registration.',
+      'weight' => 62,
+      'type' => 'entity_reference',
+      'settings' => [
+        'target_type' => 'file',
+      ],
+      'component' => 'entity_reference_autocomplete',
+    ],
+    [
+      'bundle' => 'conference_registration',
+      'name' => 'field_badge_status',
+      'label' => 'Badge Status',
+      'description' => 'Tracks whether the conference badge has been generated.',
+      'weight' => 63,
+      'type' => 'list_string',
+      'settings' => [
+        'allowed_values' => [
+          'not_generated' => 'Not generated',
+          'generated' => 'Generated',
+          'issued' => 'Issued',
+        ],
+      ],
+      'component' => 'options_select',
+    ],
+    [
+      'bundle' => 'conference_registration',
+      'name' => 'field_conference_status',
+      'label' => 'Conference Status',
+      'description' => 'Conference badge status for this registration.',
+      'weight' => 64,
+      'type' => 'list_string',
+      'settings' => [
+        'allowed_values' => [
+          'adaptit_education' => 'ADAPTIT: EDUCATION',
+          'honorary_member' => 'HONORARY MEMBER',
+          'delegate' => 'DELEGATE',
+          'exco_member' => 'EXCO MEMBER',
+          'exhibitor' => 'EXHIBITOR',
+        ],
+      ],
+      'component' => 'options_select',
+    ],
+    [
+      'bundle' => 'conference',
+      'name' => 'field_badge_background_image',
+      'label' => 'Badge Background Image',
+      'description' => 'Background image used on conference badges.',
+      'weight' => 62,
+      'type' => 'entity_reference',
+      'settings' => [
+        'target_type' => 'media',
+      ],
+      'component' => 'entity_reference_autocomplete',
+      'handler' => 'default:media',
+    ],
+  ];
+
+  foreach ($definitions as $definition) {
+
+    $field_name = $definition['name'];
+    $entity_type = 'node';
+
+    if (!$field_storage_storage->load($entity_type . '.' . $field_name)) {
+      $storage = $field_storage_storage->create([
+        'field_name' => $field_name,
+        'entity_type' => $entity_type,
+        'type' => $definition['type'],
+        'cardinality' => 1,
+        'translatable' => FALSE,
+        'settings' => $definition['settings'],
+      ]);
+      $storage->save();
+      $messages[] = 'Created field storage for ' . $field_name . '.';
+    }
+
+    if (!$field_config_storage->load($entity_type . '.' . $definition['bundle'] . '.' . $field_name)) {
+      $field = $field_config_storage->create([
+        'field_name' => $field_name,
+        'entity_type' => $entity_type,
+        'bundle' => $definition['bundle'],
+        'label' => $definition['label'],
+        'description' => $definition['description'],
+        'required' => FALSE,
+        'translatable' => FALSE,
+        'settings' => [
+          'handler' => $definition['handler'] ?? ($definition['type'] === 'entity_reference' ? 'default:file' : 'default'),
+          'handler_settings' => [],
+        ],
+      ]);
+      $field->save();
+      $messages[] = 'Attached ' . $field_name . ' to ' . $definition['bundle'] . ' content type.';
+    }
+
+    $display_id = 'node.' . $definition['bundle'] . '.default';
+    $form_display = $form_display_storage->load($display_id);
+
+    if (!$form_display) {
+      $form_display = $form_display_storage->create([
+        'targetEntityType' => 'node',
+        'bundle' => $definition['bundle'],
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+    }
+
+    if (!$form_display->getComponent($field_name)) {
+      $form_display->setComponent($field_name, [
+        'type' => $definition['component'],
+        'weight' => $definition['weight'],
+        'settings' => $definition['type'] === 'list_string'
+          ? []
+          : [
+            'match_operator' => 'CONTAINS',
+            'size' => 60,
+            'placeholder' => '',
+          ],
+        'third_party_settings' => [],
+      ]);
+      $form_display->save();
+      $messages[] = 'Added ' . $field_name . ' to ' . $definition['bundle'] . ' form display.';
+    }
+  }
+
+  if (empty($messages)) {
+    return 'Badge fields already exist.';
+  }
+
+  return implode(' ', $messages);
+}
+
+/**
+ * Add the conference status field used by badge generation.
+ */
+function itsiug_registration_update_9004() {
+
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $field_storage_storage = $entity_type_manager->getStorage('field_storage_config');
+  $field_config_storage = $entity_type_manager->getStorage('field_config');
+  $form_display_storage = $entity_type_manager->getStorage('entity_form_display');
+
+  $field_name = 'field_conference_status';
+  $bundle = 'conference_registration';
+
+  if (!$field_storage_storage->load('node.' . $field_name)) {
+    $storage = $field_storage_storage->create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'list_string',
+      'cardinality' => 1,
+      'translatable' => FALSE,
+      'settings' => [
+        'allowed_values' => [
+          'adaptit_education' => 'ADAPTIT: EDUCATION',
+          'honorary_member' => 'HONORARY MEMBER',
+          'delegate' => 'DELEGATE',
+          'exco_member' => 'EXCO MEMBER',
+          'exhibitor' => 'EXHIBITOR',
+        ],
+      ],
+    ]);
+    $storage->save();
+  }
+
+  if (!$field_config_storage->load('node.' . $bundle . '.' . $field_name)) {
+    $field = $field_config_storage->create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'bundle' => $bundle,
+      'label' => 'Conference Status',
+      'description' => 'Conference status for this registration.',
+      'required' => FALSE,
+      'translatable' => FALSE,
+      'settings' => [
+        'allowed_values' => [
+          'adaptit_education' => 'ADAPTIT: EDUCATION',
+          'honorary_member' => 'HONORARY MEMBER',
+          'delegate' => 'DELEGATE',
+          'exco_member' => 'EXCO MEMBER',
+          'exhibitor' => 'EXHIBITOR',
+        ],
+      ],
+    ]);
+    $field->save();
+  }
+
+  $display_id = 'node.' . $bundle . '.default';
+  $form_display = $form_display_storage->load($display_id);
+
+  if (!$form_display) {
+    $form_display = $form_display_storage->create([
+      'targetEntityType' => 'node',
+      'bundle' => $bundle,
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+  }
+
+  if (!$form_display->getComponent($field_name)) {
+    $form_display->setComponent($field_name, [
+      'type' => 'options_select',
+      'weight' => 64,
+      'settings' => [],
+      'third_party_settings' => [],
+    ]);
+    $form_display->save();
+  }
+
+  return 'Conference status field added.';
+}
+
+/**
+ * Grant ITSIUG admin and reports permissions to Exco Member.
+ */
+function itsiug_registration_update_9005() {
+
+  $role = \Drupal\user\Entity\Role::load('exco_member');
+
+  if (!$role) {
+    return 'Exco Member role not found; no permissions were changed.';
+  }
+
+  $changed = FALSE;
+
+  foreach (['access itsiug admin', 'access itsiug reports'] as $permission) {
+    if (!$role->hasPermission($permission)) {
+      $role->grantPermission($permission);
+      $changed = TRUE;
+    }
+  }
+
+  if ($changed) {
+    $role->save();
+    return 'Granted ITSIUG admin and reports permissions to Exco Member.';
+  }
+
+  return 'Exco Member already has ITSIUG admin and reports permissions.';
+}
+
+/**
+ * Restrict Exco Member from broad ITSIUG admin permission.
+ */
+function itsiug_registration_update_9006() {
+
+  $role = \Drupal\user\Entity\Role::load('exco_member');
+
+  if (!$role) {
+    return 'Exco Member role not found; no permissions were changed.';
+  }
+
+  if (!$role->hasPermission('access itsiug admin')) {
+    return 'Exco Member already does not have ITSIUG admin permission.';
+  }
+
+  $role->revokePermission('access itsiug admin');
+  $role->save();
+
+  return 'Removed ITSIUG admin permission from Exco Member.';
+}

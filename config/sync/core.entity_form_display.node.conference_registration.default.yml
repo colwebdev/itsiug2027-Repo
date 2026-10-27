@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.conference_registration.field_checkin_status
     - field.field.node.conference_registration.field_conference
     - field.field.node.conference_registration.field_conference_gift
+    - field.field.node.conference_registration.field_conference_status
     - field.field.node.conference_registration.field_delegate
     - field.field.node.conference_registration.field_delegate_financial_status
     - field.field.node.conference_registration.field_gift_datetime
@@ -106,6 +107,12 @@ content:
   field_conference_gift:
     type: options_select
     weight: 127
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_conference_status:
+    type: options_select
+    weight: 64
     region: content
     settings: {  }
     third_party_settings: {  }

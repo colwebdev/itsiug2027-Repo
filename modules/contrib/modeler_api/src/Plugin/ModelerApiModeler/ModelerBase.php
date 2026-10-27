@@ -130,13 +130,6 @@ abstract class ModelerBase extends PluginBase implements ModelerInterface {
   /**
    * {@inheritdoc}
    */
-  public function export(ModelOwnerInterface $owner, ConfigEntityInterface $model): ?string {
-    return NULL;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function prepareEmptyModelData(string &$id): string {
     return '';
   }

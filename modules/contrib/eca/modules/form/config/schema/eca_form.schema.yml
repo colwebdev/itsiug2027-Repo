@@ -130,13 +130,13 @@ eca.condition.plugin.eca_form_operation:
       type: string
       label: 'Comparison operator'
       constraints:
-        EcaChoice:
+        Choice:
           callback: '\Drupal\eca\Plugin\ECA\Condition\StringComparisonBase::getAllValidOperators'
     type:
       type: string
       label: 'Comparison type'
       constraints:
-        EcaChoice:
+        Choice:
           callback: '\Drupal\eca\Plugin\ECA\Condition\StringComparisonBase::getAllValidTypes'
     case:
       type: boolean
@@ -167,13 +167,13 @@ eca.condition.plugin.eca_form_field_value:
       type: string
       label: 'Comparison operator'
       constraints:
-        EcaChoice:
+        Choice:
           callback: '\Drupal\eca\Plugin\ECA\Condition\StringComparisonBase::getAllValidOperators'
     type:
       type: string
       label: 'Comparison type'
       constraints:
-        EcaChoice:
+        Choice:
           callback: '\Drupal\eca\Plugin\ECA\Condition\StringComparisonBase::getAllValidTypes'
     case:
       type: boolean
@@ -190,13 +190,13 @@ eca.condition.plugin.eca_form_triggered:
       type: string
       label: 'Comparison operator'
       constraints:
-        EcaChoice:
+        Choice:
           callback: '\Drupal\eca\Plugin\ECA\Condition\StringComparisonBase::getAllValidOperators'
     type:
       type: string
       label: 'Comparison type'
       constraints:
-        EcaChoice:
+        Choice:
           callback: '\Drupal\eca\Plugin\ECA\Condition\StringComparisonBase::getAllValidTypes'
     case:
       type: boolean
@@ -230,32 +230,30 @@ action.configuration.eca_form_field_add_state:
       label: 'State'
       constraints:
         # @see \Drupal\eca_form\Plugin\Action\FormFieldAddState::buildConfigurationForm()
-        EcaChoice:
-          choices:
-            - 'enabled'
-            - 'disabled'
-            - 'required'
-            - 'optional'
-            - 'visible'
-            - 'invisible'
-            - 'checked'
-            - 'unchecked'
-            - 'expanded'
-            - 'collapsed'
+        Choice:
+          - 'enabled'
+          - 'disabled'
+          - 'required'
+          - 'optional'
+          - 'visible'
+          - 'invisible'
+          - 'checked'
+          - 'unchecked'
+          - 'expanded'
+          - 'collapsed'
         NotBlank: []
     condition:
       type: string
       label: 'Condition'
       constraints:
-        EcaChoice:
-          choices:
-            - empty
-            - filled
-            - checked
-            - unchecked
-            - expanded
-            - collapsed
-            - value
+        Choice:
+          - empty
+          - filled
+          - checked
+          - unchecked
+          - expanded
+          - collapsed
+          - value
         NotBlank: []
     value:
       type: string
@@ -464,7 +462,7 @@ action.configuration.eca_form_field_set_weight:
   label: 'Configuration for the "Form Field Set Weight" action'
   mapping:
     weight:
-      type: weight
+      type: string
       label: 'Element weight'
     field_name:
       type: string
@@ -691,12 +689,11 @@ action.configuration.eca_form_add_submit_button:
       type: string
       label: 'Button type'
       constraints:
-        EcaChoice:
-          choices:
-            - _none
-            - primary
-            - secondary
-            - danger
+        Choice:
+          - _none
+          - primary
+          - secondary
+          - danger
         NotBlank: []
 
 action.configuration.eca_form_add_textfield:
@@ -760,8 +757,7 @@ action.configuration.eca_form_set_method:
       type: string
       label: 'Method'
       constraints:
-        EcaChoice:
-          choices:
-            - get
-            - post
+        Choice:
+          - get
+          - post
         NotBlank: []

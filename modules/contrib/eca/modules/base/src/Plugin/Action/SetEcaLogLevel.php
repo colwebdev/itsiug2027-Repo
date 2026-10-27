@@ -40,15 +40,14 @@ class SetEcaLogLevel extends ConfigurableActionBase implements CleanupInterface 
    *
    * @var int
    */
-  protected int $configuredLogLevel = RfcLogLevel::ERROR;
+  protected int $configuredLogLevel;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
-    $config = $container->get('config.factory')->get('eca.settings');
-    $instance->configuredLogLevel = (int) ($config->get('log_level') ?? RfcLogLevel::ERROR);
+    $instance->configuredLogLevel = $container->get('config.factory')->get('eca.settings')->get('log_level');
     return $instance;
   }
 

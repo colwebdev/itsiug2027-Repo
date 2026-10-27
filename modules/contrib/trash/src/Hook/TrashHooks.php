@@ -18,7 +18,6 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
-use Drupal\trash\Form\TrashSettingsForm;
 use Drupal\trash\Handler\TrashHandlerInterface;
 use Drupal\trash\TrashEntityPurger;
 use Drupal\trash\TrashManagerInterface;
@@ -250,9 +249,8 @@ class TrashHooks {
         $enabled_entity_types['path_alias'] ??= [];
       }
 
-      if ((in_array('menu_link_content', $modules, TRUE) ||
-        (in_array('trash', $modules, TRUE) && $this->moduleHandler->moduleExists('menu_link_content')))
-        && !in_array('menu_link_content', TrashSettingsForm::getUnsupportedEntityTypes(), TRUE)
+      if (in_array('menu_link_content', $modules, TRUE) ||
+        (in_array('trash', $modules, TRUE) && $this->moduleHandler->moduleExists('menu_link_content'))
       ) {
         $enabled_entity_types['menu_link_content'] ??= [];
       }

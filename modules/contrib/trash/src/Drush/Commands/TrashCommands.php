@@ -97,28 +97,16 @@ final class TrashCommands extends DrushCommands {
       'overwrite' => FALSE,
     ],
   ): void {
-    $enabled_entity_type_ids = $this->cliActions->getEnabledEntityTypes();
-    if (!$enabled_entity_type_ids) {
+    $entity_type_ids = $this->cliActions->getEnabledEntityTypes();
+    if (!$entity_type_ids) {
       throw new UserAbortException($this->cliActions->noEntityTypesEnabledMessage());
     }
-    $exportable_entity_type_ids = $this->cliActions->getExportableEntityTypes();
-    if (!$exportable_entity_type_ids) {
-      throw new UserAbortException($this->cliActions->noExportableEntityTypesMessage());
-    }
     if ($options['all']) {
-      // Pass every enabled entity type so that the ones without Views
-      // integration are reported as skipped instead of dropped silently.
-      $entity_type_ids = $enabled_entity_type_ids;
       $confirmation_message = $this->cliActions->exportConfirmationQuestion(TRUE, NULL);
     }
     else {
-      // Say why a trash-enabled entity type cannot be exported, instead of
-      // falling through to the selection prompt.
-      if ($entity_type_id !== NULL && in_array($entity_type_id, $enabled_entity_type_ids, TRUE) && !in_array($entity_type_id, $exportable_entity_type_ids, TRUE)) {
-        throw new UserAbortException($this->cliActions->notExportableMessage($entity_type_id));
-      }
-      if (!$entity_type_id || !in_array($entity_type_id, $exportable_entity_type_ids, TRUE)) {
-        if (!($entity_type_id = $this->io()->choice($this->cliActions->selectExportEntityTypeQuestion(), $this->cliActions->getEntityTypeLabels($exportable_entity_type_ids)))) {
+      if (!$entity_type_id || !in_array($entity_type_id, $entity_type_ids, TRUE)) {
+        if (!($entity_type_id = $this->io()->choice($this->cliActions->selectExportEntityTypeQuestion(), $this->cliActions->getEntityTypeLabels($entity_type_ids)))) {
           throw new UserAbortException();
         }
       }

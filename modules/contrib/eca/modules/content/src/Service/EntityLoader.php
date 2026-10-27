@@ -68,7 +68,7 @@ class EntityLoader {
    *
    * @var string
    */
-  protected string $pluginId = '';
+  protected string $pluginId;
 
   /**
    * Constructs a new EntityLoader object.
@@ -292,16 +292,16 @@ class EntityLoader {
    * Loads the entity by using the currently given plugin configuration.
    *
    * @param \Drupal\Core\Entity\EntityInterface|null $entity
-   *   A passed through entity object.
+   *   (Optional) A passed through entity object.
    * @param array $plugin_configuration
-   *   The plugin configuration values.
+   *   (Optional) The plugin configuration values.
    * @param string $pluginId
-   *   The plugin ID which is calling the method.
+   *   (Optional) The plugin ID which is calling the method.
    *
    * @return \Drupal\Core\Entity\EntityInterface|null
    *   The loaded entity, or NULL if not found.
    */
-  public function loadEntity(?EntityInterface $entity, array $plugin_configuration, string $pluginId): ?EntityInterface {
+  public function loadEntity(?EntityInterface $entity = NULL, array $plugin_configuration = [], string $pluginId = 'eca_token_load_entity'): ?EntityInterface {
     $this->pluginId = $pluginId;
     $config = $plugin_configuration + $this->defaultConfiguration();
     $token = $this->tokenService;

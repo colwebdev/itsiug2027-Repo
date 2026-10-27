@@ -86,10 +86,6 @@ eca.event.plugin.routing:finished:
   type: eca.event.plugin
   label: 'Route building finished'
 
-eca.condition.plugin.eca_is_ajax:
-  type: eca.condition.plugin
-  label: 'Is Ajax'
-
 eca.condition.plugin.eca_route_match:
   type: eca.condition.plugin
   label: 'Route Match'
@@ -98,8 +94,7 @@ eca.condition.plugin.eca_route_match:
       type: integer
       label: 'Request'
       constraints:
-        EcaChoice:
-          choices: [0, 1, 2]
+        Choice: [0, 1, 2]
     route:
       type: string
       label: 'Route name'
@@ -107,13 +102,13 @@ eca.condition.plugin.eca_route_match:
       type: string
       label: 'Comparison operator'
       constraints:
-        EcaChoice:
+        Choice:
           callback: '\Drupal\eca\Plugin\ECA\Condition\StringComparisonBase::getAllValidOperators'
     type:
       type: string
       label: 'Comparison type'
       constraints:
-        EcaChoice:
+        Choice:
           callback: '\Drupal\eca\Plugin\ECA\Condition\StringComparisonBase::getAllValidTypes'
     case:
       type: boolean
@@ -184,8 +179,7 @@ action.configuration.eca_token_load_route_param:
       type: integer
       label: 'Request'
       constraints:
-        EcaChoice:
-          choices: [0, 1, 2]
+        Choice: [0, 1, 2]
     parameter_name:
       type: string
       label: 'Name of route parameter'

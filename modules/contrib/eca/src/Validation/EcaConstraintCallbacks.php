@@ -16,19 +16,7 @@ class EcaConstraintCallbacks {
    *   An array of valid langcodes.
    */
   public static function getAllValidLangcodes(): array {
-    return array_merge(LanguageReference::getAllValidLangcodes(), ['_interface']);
-  }
-
-  /**
-   * Returns all valid langcodes and the preferred language of the current user.
-   *
-   * @return string[]
-   *   An array of valid langcodes.
-   */
-  public static function getAllValidLangcodesAndPreferred(): array {
-    $langcodes = self::getAllValidLangcodes();
-    $langcodes[] = '_preferred';
-    return $langcodes;
+    return array_merge(LanguageReference::getAllValidLangcodes(), ['_interface', '_eca_token', '']);
   }
 
   /**
