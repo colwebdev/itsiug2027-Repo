@@ -1,0 +1,36 @@
+uuid: D44C0F5B-D5EC-478D-AC70-6D720E131E23
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_delegate_financial_status
+field_name: field_delegate_financial_status
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: draft
+      label: 'Not processed in Sage'
+    -
+      value: quotation_pending
+      label: 'Quotation Acceptance Pending'
+    -
+      value: payment_pending
+      label: 'Invoice Payment Pending'
+    -
+      value: payment_confirmed
+      label: 'Confirmed Paid'
+    -
+      value: waiting_list
+      label: 'Waiting List'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

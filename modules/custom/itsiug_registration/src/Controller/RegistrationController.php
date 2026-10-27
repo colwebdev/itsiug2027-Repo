@@ -2908,6 +2908,7 @@ return $response;
       'quotation_pending' => 0,
       'payment_pending' => 0,
       'payment_confirmed' => 0,
+      'waiting_list' => 0,
     ];
 
     $delegate_rows = [];
@@ -2926,23 +2927,17 @@ return $response;
 
       $delegate_name = $delegate ? $delegate->label() : $this->t('Unknown delegate');
       $institution_name = $institution ? $institution->label() : $this->t('Unknown institution');
+      $financial_status = $this->getDelegateFinancialStatus($registration);
 
-      if (
-        $registration->hasField('field_conference_status') &&
-        !$registration->get('field_conference_status')->isEmpty()
-      ) {
-        $status = (string) $registration->get('field_conference_status')->value;
-
-        if (isset($counts[$status])) {
-          $counts[$status]++;
-        }
+      if (isset($counts[$financial_status])) {
+        $counts[$financial_status]++;
       }
 
       if ($institution_filter !== '' && (string) ($registration->get('field_institution1')->target_id ?? '') !== $institution_filter) {
         continue;
       }
 
-      if ($conference_status_filter !== '' && (string) ($registration->get('field_conference_status')->value ?? '') !== $conference_status_filter) {
+      if ($conference_status_filter !== '' && $financial_status !== $conference_status_filter) {
         continue;
       }
 
@@ -2973,10 +2968,7 @@ return $response;
             ],
           ] : $delegate_name,
           'institution' => $institution_name,
-          'conference_status' => $this->getRegistrationFieldLabel(
-            $registration,
-            'field_conference_status'
-          ),
+          'conference_status' => $this->getConferenceStatusOptions()[$financial_status],
           'edit' => [
             'data' => [
               '#type' => 'link',
@@ -3020,16 +3012,20 @@ return $response;
         $counts['draft'],
       ],
       [
-        $this->t('Quotation acceptance pending'),
+        $this->t('Quotation Acceptance Pending'),
         $counts['quotation_pending'],
       ],
       [
-        $this->t('Invoiced but payment pending'),
+        $this->t('Invoice Payment Pending'),
         $counts['payment_pending'],
       ],
       [
-        $this->t('Payment confirmed'),
+        $this->t('Confirmed Paid'),
         $counts['payment_confirmed'],
+      ],
+      [
+        $this->t('Waiting List'),
+        $counts['waiting_list'],
       ],
     ];
 
@@ -3052,7 +3048,7 @@ return $response;
           ],
         ],
         'header' => [
-          '#markup' => '<h2>' . $this->t('Delegate Processed Status') . '</h2>',
+          '#markup' => '<h2>' . $this->t('Delegate Financial Status') . '</h2>',
         ],
         'summary' => [
           '#type' => 'table',
@@ -3089,7 +3085,7 @@ return $response;
           '#header' => [
             $this->t('Delegate'),
             $this->t('Institution'),
-            $this->t('Processed Status'),
+            $this->t('Delegate Financial Status'),
             $this->t('Edit'),
           ],
           '#rows' => $delegate_rows,
@@ -4171,10 +4167,33 @@ return [
 
     return [
       'draft' => $this->t('Not processed in Sage'),
-      'quotation_pending' => $this->t('Quotation acceptance pending'),
-      'payment_pending' => $this->t('Invoiced but payment pending'),
-      'payment_confirmed' => $this->t('Payment confirmed'),
+      'quotation_pending' => $this->t('Quotation Acceptance Pending'),
+      'payment_pending' => $this->t('Invoice Payment Pending'),
+      'payment_confirmed' => $this->t('Confirmed Paid'),
+      'waiting_list' => $this->t('Waiting List'),
     ];
+  }
+
+  /**
+   * Get a registration's financial status, including before field deployment.
+   */
+  private function getDelegateFinancialStatus(Node $registration): string {
+
+    $options = $this->getConferenceStatusOptions();
+    $status = '';
+
+    if ($registration->hasField('field_delegate_financial_status')) {
+      $status = (string) ($registration->get('field_delegate_financial_status')->value ?? '');
+    }
+
+    if ($status === '' && $registration->hasField('field_conference_status')) {
+      $legacy_status = (string) ($registration->get('field_conference_status')->value ?? '');
+      if (isset($options[$legacy_status])) {
+        $status = $legacy_status;
+      }
+    }
+
+    return isset($options[$status]) ? $status : 'draft';
   }
 
   /**
@@ -4222,9 +4241,9 @@ return [
           'institution_description' => $this->t('Filter delegates to a specific institution.'),
           'all_institutions_label' => $this->t('All institutions'),
           'institution_options' => implode('', $institution_items),
-          'conference_status_label' => $this->t('Conference Status'),
+          'conference_status_label' => $this->t('Delegate Financial Status'),
           'conference_status_description' => $this->t('Filter delegates to a specific finance status.'),
-          'all_conference_status_label' => $this->t('All conference statuses'),
+          'all_conference_status_label' => $this->t('All financial statuses'),
           'conference_status_options' => implode('', $conference_status_items),
           'apply_label' => $this->t('Apply Filter'),
           'clear_label' => $this->t('Clear Filter'),
@@ -4339,8 +4358,8 @@ return [
       return (string) $allowed_values[$value];
     }
 
-    if ($field_name === 'field_conference_status') {
-      $status_options = itsiug_conference_status_options();
+    if ($field_name === 'field_delegate_financial_status') {
+      $status_options = $this->getConferenceStatusOptions();
       if (isset($status_options[$value])) {
         return $status_options[$value];
       }

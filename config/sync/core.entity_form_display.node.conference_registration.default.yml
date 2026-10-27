@@ -12,8 +12,8 @@ dependencies:
     - field.field.node.conference_registration.field_checkin_status
     - field.field.node.conference_registration.field_conference
     - field.field.node.conference_registration.field_conference_gift
-    - field.field.node.conference_registration.field_conference_status
     - field.field.node.conference_registration.field_delegate
+    - field.field.node.conference_registration.field_delegate_financial_status
     - field.field.node.conference_registration.field_gift_datetime
     - field.field.node.conference_registration.field_institution1
     - field.field.node.conference_registration.field_monday_attendance
@@ -109,12 +109,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_conference_status:
-    type: options_select
-    weight: 64
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_delegate:
     type: tagify_entity_reference_autocomplete_widget
     weight: 122
@@ -128,6 +122,12 @@ content:
       show_info_label: 0
       info_label: ''
       parent_selection: 1
+    third_party_settings: {  }
+  field_delegate_financial_status:
+    type: options_select
+    weight: 65
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_gift_datetime:
     type: datetime_default

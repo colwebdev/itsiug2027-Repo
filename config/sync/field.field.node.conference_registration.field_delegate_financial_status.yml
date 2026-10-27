@@ -1,0 +1,23 @@
+uuid: 47B8D8CC-81C1-451E-B4FE-1F5F09EF7722
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_delegate_financial_status
+    - node.type.conference_registration
+  module:
+    - options
+id: node.conference_registration.field_delegate_financial_status
+field_name: field_delegate_financial_status
+entity_type: node
+bundle: conference_registration
+label: 'Delegate Financial Status'
+description: 'Financial processing status for this delegate registration.'
+required: false
+translatable: false
+default_value:
+  -
+    value: draft
+default_value_callback: ''
+settings: {  }
+field_type: list_string
