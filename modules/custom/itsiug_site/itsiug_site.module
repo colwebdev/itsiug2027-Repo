@@ -59,3 +59,13 @@ function itsiug_site_preprocess_field(array &$variables): void {
   $variables['attributes']['class'][] = 'itsiug-field';
   $variables['title_attributes']['class'][] = 'itsiug-field__label';
 }
+
+
+/**
+ * Implements hook_page_attachments().
+ */
+function itsiug_site_page_attachments(array &$attachments): void {
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
+    $attachments['#attached']['library'][] = 'itsiug_site/institution_marquee';
+  }
+}

@@ -5,3 +5,13 @@ entity_page:
       css/entity-page.css: {}
   dependencies:
     - itsiug_theme/global-styling
+
+institution_marquee:
+  css:
+    theme:
+      css/institution-marquee.css: {}
+  js:
+    js/institution-marquee.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

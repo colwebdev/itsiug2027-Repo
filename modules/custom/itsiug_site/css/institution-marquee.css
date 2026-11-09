@@ -1,0 +1,105 @@
+/* Homepage industry partner logo marquee. */
+.grid-logos.grid-logos--itsiug-marquee {
+  width: min(88%, 1120px);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 4px 20px rgb(20 39 51 / 10%);
+}
+
+.grid-logos--itsiug-marquee .grid-logos__header {
+  margin-bottom: 1.75rem;
+}
+
+.grid-logos.grid-logos--itsiug-marquee .grid-logos__grid {
+  display: block;
+  min-height: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+}
+
+.grid-logos--itsiug-marquee .grid-logos__track {
+  display: flex;
+  width: max-content;
+  animation: itsiug-logo-marquee 36s linear infinite;
+  will-change: transform;
+}
+
+.grid-logos--itsiug-marquee .grid-logos__group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-right: clamp(2rem, 4vw, 4rem);
+}
+
+.grid-logos--itsiug-marquee .card-logo {
+  flex: 0 0 10.5rem;
+  width: 10.5rem;
+  min-width: 0;
+  min-height: 5rem;
+  padding: 0.5rem;
+  filter: none;
+}
+
+.grid-logos--itsiug-marquee .card-logo img,
+.grid-logos--itsiug-marquee .card-logo svg,
+.grid-logos--itsiug-marquee .card-logo .media,
+.grid-logos--itsiug-marquee .card-logo .component {
+  width: 100%;
+  max-height: 4.5rem;
+  min-height: 0;
+  object-fit: contain;
+}
+
+@keyframes itsiug-logo-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.grid-logos--itsiug-marquee:hover .grid-logos__track,
+.grid-logos--itsiug-marquee:focus-within .grid-logos__track {
+  animation-play-state: paused;
+}
+
+@media (max-width: 700px) {
+  .grid-logos.grid-logos--itsiug-marquee {
+    width: calc(100% - 2rem);
+    padding: 1.25rem 0.75rem;
+  }
+
+  .grid-logos--itsiug-marquee .grid-logos__header {
+    margin-bottom: 1rem;
+  }
+
+  .grid-logos--itsiug-marquee .card-logo {
+    flex-basis: 8rem;
+    width: 8rem;
+    min-height: 4rem;
+  }
+
+  .grid-logos--itsiug-marquee .grid-logos__track {
+    animation-duration: 30s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-logos--itsiug-marquee .grid-logos__track {
+    width: 100%;
+    animation: none;
+  }
+
+  .grid-logos--itsiug-marquee .grid-logos__group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .grid-logos--itsiug-marquee .grid-logos__group:first-child {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
+  }
+}
