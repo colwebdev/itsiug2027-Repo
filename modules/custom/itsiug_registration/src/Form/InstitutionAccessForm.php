@@ -109,9 +109,11 @@ class InstitutionAccessForm extends FormBase {
     // Store the institution context in the current browser session.
     $session = \Drupal::request()->getSession();
 
+    $authenticated_at = \Drupal::time()->getRequestTime();
     $session->set('itsiug_registration', [
       'institution_nid' => $institution->id(),
-      'authenticated_at' => \Drupal::time()->getRequestTime(),
+      'authenticated_at' => $authenticated_at,
+      'last_activity' => $authenticated_at,
       'registration_flow' => $flow === 'exhibitor' ? 'exhibitor' : 'delegate',
     ]);
 
