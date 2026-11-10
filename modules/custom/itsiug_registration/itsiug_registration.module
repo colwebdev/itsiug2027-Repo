@@ -1256,8 +1256,8 @@ function itsiug_registration_form_webform_submission_delegate_registration_add_f
   if ($registration_flow === 'exhibitor') {
     $form['#attributes']['class'][] = 'itsiug-exhibitor-registration';
 
-    if (isset($form['conference_status'])) {
-      $form['conference_status']['#default_value'] = 'exhibitor';
+    if (isset($form['elements']['conference_status'])) {
+      $form['elements']['conference_status']['#default_value'] = 'exhibitor';
     }
 
     if (!empty($registration_context['institution_nid'])) {
@@ -1574,28 +1574,16 @@ function itsiug_registration_form_alter(
     $registration_context = $session->get('itsiug_registration');
     $registration_flow = strtolower((string) ($registration_context['registration_flow'] ?? 'delegate'));
 
-    $conference_status_title = ($registration_flow === 'delegate')
-      ? t('Delegate Status')
-      : t('Conference Status');
-
-        $form['conference_status'] = [
-          '#type' => 'select',
-          '#title' => $conference_status_title,
-          '#options' => itsiug_conference_status_options(),
-          '#default_value' => 'delegate',
-          '#required' => TRUE,
-          '#weight' => -980,
-        ];
+    if (isset($form['elements']['conference_status'])) {
+      $form['elements']['conference_status']['#default_value'] =
+        $registration_flow === 'exhibitor' ? 'exhibitor' : 'delegate';
+    }
 
     $form['#attributes']['class'][] = 'itsiug-delegate-registration';
 
     if ($registration_flow === 'exhibitor') {
 
       $form['#attributes']['class'][] = 'itsiug-exhibitor-registration';
-
-      if (isset($form['conference_status'])) {
-        $form['conference_status']['#default_value'] = 'exhibitor';
-      }
 
       if (isset($form['individual_group'])) {
         unset($form['individual_group']);
