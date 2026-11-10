@@ -45,6 +45,17 @@ elements: |-
   email:
     '#type': email
     '#title': Email
+  conference_status:
+    '#type': select
+    '#title': 'Conference Status'
+    '#options':
+      adaptit_education: 'ADAPTIT: EDUCATION'
+      honorary_member: 'HONORARY MEMBER'
+      delegate: DELEGATE
+      exco_member: 'EXCO MEMBER'
+      exhibitor: EXHIBITOR
+    '#default_value': delegate
+    '#required': true
   country:
     '#type': webform_select_other
     '#title': Country

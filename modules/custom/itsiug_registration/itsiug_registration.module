@@ -55,6 +55,29 @@ function itsiug_registration_webform_submission_insert(
 
   $data = $webform_submission->getData();
   $registration_flow = strtolower((string) ($registration_context['registration_flow'] ?? 'delegate'));
+  $default_conference_status = $registration_flow === 'exhibitor'
+    ? 'exhibitor'
+    : 'delegate';
+  $submitted_conference_status = $data['conference_status'] ?? NULL;
+  $conference_status = itsiug_map_list_field_value(
+    $submitted_conference_status,
+    itsiug_conference_status_options()
+  );
+
+  if ($conference_status === '') {
+    if ($submitted_conference_status !== NULL && $submitted_conference_status !== '') {
+      \Drupal::logger('itsiug_registration')->warning(
+        'Registration submitted with an invalid conference status: @status.',
+        [
+          '@status' => is_scalar($submitted_conference_status)
+            ? (string) $submitted_conference_status
+            : '',
+        ]
+      );
+    }
+
+    $conference_status = $default_conference_status;
+  }
 
   if ($registration_flow !== 'exhibitor') {
 
@@ -264,7 +287,7 @@ $delegate->save();
 
   'field_certificate_status' => 'not_generated',
 
-  'field_conference_status' => 'draft',
+  'field_conference_status' => $conference_status,
   'field_delegate_financial_status' => 'draft',
 
   'field_badge_status' => 'not_generated',
@@ -523,7 +546,7 @@ $delegate->save();
 
     'field_certificate_status' => 'not_generated',
 
-    'field_conference_status' => 'draft',
+    'field_conference_status' => $conference_status,
     'field_delegate_financial_status' => 'draft',
 
     'field_badge_status' => 'not_generated',
