@@ -2927,6 +2927,21 @@ return $response;
       $institution = $registration->get('field_institution1')->entity ?? NULL;
 
       $delegate_name = $delegate ? $delegate->label() : $this->t('Unknown delegate');
+      $delegate_email = '';
+      if ($delegate) {
+        $name_parts = [];
+        foreach (['field_last_name', 'field_first_name'] as $field_name) {
+          if ($delegate->hasField($field_name) && !$delegate->get($field_name)->isEmpty()) {
+            $name_parts[] = trim((string) $delegate->get($field_name)->value);
+          }
+        }
+        if ($name_parts) {
+          $delegate_name = implode(' ', $name_parts);
+        }
+        if ($delegate->hasField('field_email') && !$delegate->get('field_email')->isEmpty()) {
+          $delegate_email = (string) $delegate->get('field_email')->value;
+        }
+      }
       $institution_name = $institution ? $institution->label() : $this->t('Unknown institution');
 
       if (
@@ -2974,6 +2989,7 @@ return $response;
               ),
             ],
           ] : $delegate_name,
+          'email' => $delegate_email,
           'institution' => $institution_name,
           'conference_status' => $this->getRegistrationFieldLabel(
             $registration,
@@ -3096,6 +3112,7 @@ return $response;
           ],
           '#header' => [
             $this->t('Delegate'),
+            $this->t('Email'),
             $this->t('Institution'),
             $this->t('Delegate Financial Status'),
             $this->t('Edit'),
