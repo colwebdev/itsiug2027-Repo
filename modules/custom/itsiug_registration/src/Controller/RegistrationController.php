@@ -1839,6 +1839,14 @@ public function cancelDelegate($delegate) {
           'field_dietry_requirements',
           (string) $this->t('Not specified')
         );
+        $track_label = $this->normalizeReportChoice(
+          $track_label,
+          'No Preference'
+        );
+        $dietary_label = $this->normalizeReportChoice(
+          $dietary_label,
+          'None'
+        );
 
         if (!isset($track_choices[$track_label])) {
           $track_choices[$track_label] = 0;
@@ -4393,5 +4401,21 @@ return [
     }
 
     return $fallback;
+  }
+
+  /**
+   * Combine an unspecified value with the matching report choice.
+   */
+  private function normalizeReportChoice(string $label, string $choice): string {
+    $normalized_label = strtolower(trim($label));
+
+    if (
+      $normalized_label === 'not specified' ||
+      $normalized_label === strtolower($choice)
+    ) {
+      return $choice;
+    }
+
+    return $label;
   }
 }
