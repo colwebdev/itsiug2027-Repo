@@ -1600,6 +1600,9 @@ public function cancelDelegate($delegate) {
     $track_choices = [];
     $dietary_requirements = [];
 
+    // Exhibitor registrations.
+    $exhibitors = [];
+
     // Detailed delegate report.
     $delegate_rows = [];
 
@@ -1642,6 +1645,20 @@ public function cancelDelegate($delegate) {
       $delegate_name = $delegate
         ? $delegate->label()
         : $this->t('Unknown delegate');
+
+      if (
+        !$registration->get('field_conference_status')->isEmpty() &&
+        strtolower((string) $registration->get('field_conference_status')->value) === 'exhibitor'
+      ) {
+        if ($institution && $institution_nid) {
+          $exhibitor_name = trim((string) $institution_name);
+          $exhibitor_key = (string) $institution_nid;
+
+          if ($exhibitor_name !== '' && !isset($exhibitors[$exhibitor_key])) {
+            $exhibitors[$exhibitor_key] = $exhibitor_name;
+          }
+        }
+      }
 
       $delegate_email = '';
 
@@ -1954,6 +1971,7 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
 
     ksort($track_choices, SORT_NATURAL | SORT_FLAG_CASE);
     ksort($dietary_requirements, SORT_NATURAL | SORT_FLAG_CASE);
+    uasort($exhibitors, 'strnatcasecmp');
 
     $track_rows = [];
     foreach ($track_choices as $track_label => $track_count) {
@@ -1963,6 +1981,11 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
     $dietary_rows = [];
     foreach ($dietary_requirements as $dietary_label => $dietary_count) {
       $dietary_rows[] = [$dietary_label, $dietary_count];
+    }
+
+    $exhibitor_rows = [];
+    foreach ($exhibitors as $exhibitor_name) {
+      $exhibitor_rows[] = [$exhibitor_name];
     }
 
     $this->sortDelegateRows($delegate_rows);
@@ -2158,6 +2181,32 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
             '#empty' => $this->t('No dietary requirement data is available.'),
           ],
         ],
+      ],
+
+      /*
+       * Exhibitors registered.
+       */
+      'exhibitors_title' => [
+        '#markup' =>
+          '<h3>' .
+          $this->t('Exhibitors Registered (@count)', [
+            '@count' => count($exhibitors),
+          ]) .
+          '</h3>',
+      ],
+
+      'exhibitors' => [
+        '#type' => 'table',
+        '#attributes' => [
+          'class' => [
+            'itsiug-report-summary-table',
+          ],
+        ],
+        '#header' => [
+          $this->t('Exhibitor'),
+        ],
+        '#rows' => $exhibitor_rows,
+        '#empty' => $this->t('No exhibitor registrations are available.'),
       ],
 
       /*
