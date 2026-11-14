@@ -540,15 +540,6 @@ class BadgeGenerator {
       $pdf->SetAlpha(1);
     }
 
-    $pdf->SetFillColor(255, 255, 255);
-    $pdf->SetAlpha(0.88);
-    $pdf->Rect(4, 4, 90, 34, 'F');
-    $pdf->SetAlpha(1);
-
-    $pdf->SetDrawColor($navy[0], $navy[1], $navy[2]);
-    $pdf->SetLineWidth(0.35);
-    $pdf->Rect(1.5, 1.5, 95, 117);
-
     $pdf->SetTextColor($navy[0], $navy[1], $navy[2]);
 
     if ($logo_path && file_exists($logo_path)) {
@@ -623,7 +614,7 @@ class BadgeGenerator {
 
     $pdf->SetTextColor($grey[0], $grey[1], $grey[2]);
     $pdf->SetFont('helvetica', '', 7.5);
-    $pdf->SetXY(7, 87);
+    $pdf->SetXY(7, 96);
     $pdf->MultiCell(
       54,
       4,
