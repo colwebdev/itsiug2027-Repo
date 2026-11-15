@@ -6,6 +6,8 @@ use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Confirmation form for generating an ITSIUG 2027 certificate.
@@ -181,6 +183,28 @@ class CertificateGenerationConfirmForm extends ConfirmFormBase {
                 ? $delegate->label()
                 : 'the delegate',
             ]
+          )
+        );
+
+        $certificate_path = \Drupal::service('file_system')->realpath(
+          $result['uri']
+        );
+
+        if ($certificate_path && is_file($certificate_path)) {
+          $response = new BinaryFileResponse($certificate_path);
+          $response->headers->set('Content-Type', 'application/pdf');
+          $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $result['filename']
+          );
+
+          $form_state->setResponse($response);
+          return;
+        }
+
+        $this->messenger()->addWarning(
+          $this->t(
+            'Certificate was generated but could not be prepared for download.'
           )
         );
 

@@ -4103,6 +4103,27 @@ return [
           )
         );
 
+        $badge_path = \Drupal::service('file_system')->realpath(
+          $result['uri']
+        );
+
+        if ($badge_path && is_file($badge_path)) {
+          $response = new BinaryFileResponse($badge_path);
+          $response->headers->set('Content-Type', 'application/pdf');
+          $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $result['filename']
+          );
+
+          return $response;
+        }
+
+        $this->messenger()->addWarning(
+          $this->t(
+            'Badge was generated but could not be prepared for download.'
+          )
+        );
+
       }
       else {
 
@@ -4167,10 +4188,32 @@ return [
         );
       }
 
-      $file_url = \Drupal::service('file_url_generator')
-        ->generateAbsoluteString($result['uri']);
+      $file_path = \Drupal::service('file_system')->realpath(
+        $result['uri']
+      );
 
-      return new RedirectResponse($file_url);
+      if ($file_path && is_file($file_path)) {
+        $response = new BinaryFileResponse($file_path);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->setContentDisposition(
+          ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+          $result['filename']
+        );
+
+        return $response;
+      }
+
+      $this->messenger()->addWarning(
+        $this->t(
+          'Bulk badge PDF was generated but could not be prepared for download.'
+        )
+      );
+
+      return new RedirectResponse(
+        Url::fromRoute(
+          'itsiug_registration.admin_badges'
+        )->toString()
+      );
 
     }
     catch (\Throwable $e) {
