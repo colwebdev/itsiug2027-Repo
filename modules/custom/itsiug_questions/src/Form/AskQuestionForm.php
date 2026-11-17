@@ -133,10 +133,48 @@ class AskQuestionForm extends FormBase {
       '#required' => TRUE,
       '#rows' => 5,
       '#maxlength' => QuestionManager::MAX_QUESTION_LENGTH,
+      '#attributes' => [
+        'id' => 'itsiug-ask-question',
+      ],
       '#description' => $this->t(
         'Up to @count characters.',
         ['@count' => QuestionManager::MAX_QUESTION_LENGTH],
       ),
+    ];
+
+    $form['question_voice'] = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['itsiug-ask-voice']],
+      'button' => [
+        '#type' => 'html_tag',
+        '#tag' => 'button',
+        '#value' => $this->t('Record your question'),
+        '#attributes' => [
+          'type' => 'button',
+          'id' => 'itsiug-ask-record-question',
+          'class' => ['button', 'itsiug-ask-voice-button'],
+          'aria-controls' => 'itsiug-ask-question',
+        ],
+      ],
+      'status' => [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#value' => '',
+        '#attributes' => [
+          'id' => 'itsiug-ask-voice-status',
+          'class' => ['itsiug-ask-voice-status'],
+          'aria-live' => 'polite',
+          'role' => 'status',
+        ],
+      ],
+      'description' => [
+        '#type' => 'html_tag',
+        '#tag' => 'p',
+        '#value' => $this->t(
+          'Browser speech recognition may require internet. Review before submitting.'
+        ),
+        '#attributes' => ['class' => ['description']],
+      ],
     ];
 
     $form['actions'] = [
@@ -207,7 +245,7 @@ class AskQuestionForm extends FormBase {
     }
 
     if (trim((string) $form_state->getValue('question')) === '') {
-      $form_state->setErrorByName('question', $this->t('Please type your question.'));
+      $form_state->setErrorByName('question', $this->t('Please enter or record your question.'));
       return;
     }
 
