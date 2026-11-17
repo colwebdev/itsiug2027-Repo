@@ -28,6 +28,8 @@ class BadgeManagementForm extends FormBase {
     $form['#tree'] = TRUE;
     $request = \Drupal::request();
     $search = trim((string) $request->query->get('search', ''));
+    $institution_filter = trim((string) $request->query->get('institution', ''));
+    $conference_status_filter = trim((string) $request->query->get('conference_status', ''));
 
     if ($search === '') {
       $search = $this->findSearchValueRecursive((array) $request->request->all());
@@ -40,6 +42,9 @@ class BadgeManagementForm extends FormBase {
       ->execute();
 
     $options = itsiug_conference_status_options();
+    $institution_options = $this->getInstitutionOptions();
+    $institution_filter = isset($institution_options[$institution_filter]) ? $institution_filter : '';
+    $conference_status_filter = isset($options[$conference_status_filter]) ? $conference_status_filter : '';
     $form['badge_management'] = [
       '#type' => 'container',
 
@@ -94,6 +99,36 @@ class BadgeManagementForm extends FormBase {
             ],
           ],
           '#description' => $this->t('Type any part of first name, last name, QR ID, or institution.'),
+        ],
+
+        'institution' => [
+          '#type' => 'select',
+          '#title' => $this->t('Institution'),
+          '#options' => $institution_options,
+          '#empty_option' => $this->t('All institutions'),
+          '#empty_value' => '',
+          '#default_value' => $institution_filter,
+          '#parents' => ['badge_institution'],
+          '#attributes' => [
+            'class' => [
+              'itsiug-badge-filter-input',
+            ],
+          ],
+        ],
+
+        'conference_status' => [
+          '#type' => 'select',
+          '#title' => $this->t('Conference Status'),
+          '#options' => $options,
+          '#empty_option' => $this->t('All conference statuses'),
+          '#empty_value' => '',
+          '#default_value' => $conference_status_filter,
+          '#parents' => ['badge_conference_status'],
+          '#attributes' => [
+            'class' => [
+              'itsiug-badge-filter-input',
+            ],
+          ],
         ],
 
         'filter_actions' => [
@@ -192,6 +227,14 @@ class BadgeManagementForm extends FormBase {
       ]);
 
       if ($search !== '' && stripos($search_haystack, $search) === FALSE) {
+        continue;
+      }
+
+      if ($institution_filter !== '' && (string) ($registration->get('field_institution1')->target_id ?? '') !== $institution_filter) {
+        continue;
+      }
+
+      if ($conference_status_filter !== '' && $current_status !== $conference_status_filter) {
         continue;
       }
 
@@ -361,15 +404,23 @@ class BadgeManagementForm extends FormBase {
     $user_input = (array) $form_state->getUserInput();
     $search = trim((string) ($user_input['badge_search'] ?? ''));
 
-    if ($search === '') {
+    if (!array_key_exists('badge_search', $user_input) && $search === '') {
       $search = trim((string) $form_state->getValue('badge_search', ''));
     }
 
-    if ($search === '') {
+    if (!array_key_exists('badge_search', $user_input) && $search === '') {
       $search = $this->extractSubmittedSearch($form_state, \Drupal::request());
     }
 
-    if ($search === '') {
+    $institution = trim((string) ($user_input['badge_institution'] ?? $form_state->getValue('badge_institution', '')));
+    $conference_status = trim((string) ($user_input['badge_conference_status'] ?? $form_state->getValue('badge_conference_status', '')));
+    $query = array_filter([
+      'search' => $search,
+      'institution' => $institution,
+      'conference_status' => $conference_status,
+    ], static fn (string $value): bool => $value !== '');
+
+    if ($query === []) {
       $form_state->setRedirect('itsiug_registration.admin_badges');
       return;
     }
@@ -378,9 +429,7 @@ class BadgeManagementForm extends FormBase {
       'itsiug_registration.admin_badges',
       [],
       [
-        'query' => [
-          'search' => $search,
-        ],
+        'query' => $query,
       ]
     );
   }
@@ -452,6 +501,30 @@ class BadgeManagementForm extends FormBase {
   public function clearFilterSubmit(array &$form, FormStateInterface $form_state): void {
 
     $form_state->setRedirect('itsiug_registration.admin_badges');
+  }
+
+  /**
+   * Get institution options for the badge filter.
+   */
+  private function getInstitutionOptions(): array {
+
+    $institution_ids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'institution')
+      ->sort('title', 'ASC')
+      ->execute();
+
+    $options = [];
+
+    foreach ($institution_ids as $institution_id) {
+      $institution = Node::load($institution_id);
+
+      if ($institution) {
+        $options[(string) $institution_id] = $institution->label();
+      }
+    }
+
+    return $options;
   }
 
   /**
