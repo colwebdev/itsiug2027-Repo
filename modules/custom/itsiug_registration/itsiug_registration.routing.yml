@@ -147,6 +147,14 @@ itsiug_registration.reports_csv:
   requirements:
     _permission: 'access itsiug reports'
 
+itsiug_registration.reports_regdetail:
+  path: '/register/reports/regdetail'
+  defaults:
+    _controller: '\Drupal\itsiug_registration\Controller\RegistrationController::reportsRegistrationDetail'
+    _title: 'ITSIUG 2027 Delegate Registration Detail'
+  requirements:
+    _permission: 'access itsiug reports'
+
 itsiug_registration.institution_report:
   path: '/register/institution-report'
   defaults:

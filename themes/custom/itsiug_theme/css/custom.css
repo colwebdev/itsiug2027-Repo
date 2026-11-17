@@ -701,6 +701,12 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
   font-size: 22px;
 }
 
+.itsiug-reports-page .itsiug-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .itsiug-reports-page .button {
   display: inline-block;
   margin-bottom: 10px;

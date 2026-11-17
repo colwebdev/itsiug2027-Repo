@@ -2046,6 +2046,20 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
             ],
           ],
         ],
+
+        'export_regdetail' => [
+          '#type' => 'link',
+          '#title' => $this->t('Download Delegate Registration Detail'),
+          '#url' => \Drupal\Core\Url::fromRoute(
+            'itsiug_registration.reports_regdetail'
+          ),
+          '#attributes' => [
+            'class' => [
+              'button',
+              'button--primary',
+            ],
+          ],
+        ],
       ],
 
       /*
@@ -2507,6 +2521,82 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
     );
 
 return $response;
+  }
+
+  /**
+   * Download delegate registration details as CSV.
+   */
+  public function reportsRegistrationDetail() {
+
+    $delegate_nids = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'delegate')
+      ->condition('status', 1)
+      ->execute();
+
+    $rows = [];
+
+    foreach ($delegate_nids as $delegate_nid) {
+      $delegate = Node::load($delegate_nid);
+
+      if (!$delegate) {
+        continue;
+      }
+
+      $institution = $delegate->get('field_institution')->entity;
+
+      $rows[] = [
+        'last_name' => $delegate->get('field_last_name')->value ?? '',
+        'first_name' => $delegate->get('field_first_name')->value ?? '',
+        'values' => [
+          $delegate->get('field_title')->value ?? '',
+          $delegate->get('field_last_name')->value ?? '',
+          $delegate->get('field_first_name')->value ?? '',
+          $institution ? $institution->label() : '',
+          $delegate->get('field_email')->value ?? '',
+          $delegate->get('field_job_title')->value ?? '',
+          $this->getDelegateReferenceLabel($delegate, 'field_track_preference', ''),
+          $this->getDelegateReferenceLabel($delegate, 'field_dietry_requirements', ''),
+        ],
+      ];
+    }
+
+    usort($rows, static function (array $left, array $right): int {
+      $last_name_compare = strcasecmp($left['last_name'], $right['last_name']);
+
+      return $last_name_compare !== 0
+        ? $last_name_compare
+        : strcasecmp($left['first_name'], $right['first_name']);
+    });
+
+    $handle = fopen('php://temp', 'w+');
+    fputcsv($handle, [
+      'Title',
+      'Lastname',
+      'Firstname',
+      'Institution',
+      'Email',
+      'Job Title',
+      'Track Preference',
+      'Dietary Requirements',
+    ]);
+
+    foreach ($rows as $row) {
+      fputcsv($handle, $row['values']);
+    }
+
+    rewind($handle);
+    $csv = stream_get_contents($handle);
+    fclose($handle);
+
+    $response = new \Symfony\Component\HttpFoundation\Response($csv);
+    $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
+    $response->headers->set(
+      'Content-Disposition',
+      'attachment; filename="ITSIUG-2027-Delegate-Registration-Detail.csv"'
+    );
+
+    return $response;
   }
 
   /**
