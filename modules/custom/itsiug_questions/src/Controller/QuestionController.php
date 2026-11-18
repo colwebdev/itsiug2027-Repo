@@ -9,6 +9,7 @@ use Drupal\Core\Flood\FloodInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\Core\Url;
 use Drupal\itsiug_questions\Service\QuestionManager;
+use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -157,21 +158,48 @@ class QuestionController extends ControllerBase {
   }
 
   /**
+   * Session chooser for the presenter display.
+   */
+  public function display(): array {
+    return [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['itsiug-board', 'itsiug-display-page']],
+      '#attached' => [
+        'library' => ['itsiug_questions/display', 'itsiug_theme/global-styling'],
+      ],
+      'heading' => [
+        '#markup' => '<h1 class="itsiug-board-heading">'
+          . $this->t('Select the session that you want to display') . '</h1>',
+      ],
+      'picker' => $this->buildSessionPicker(NULL, FALSE),
+    ];
+  }
+
+  /**
    * Presenter board showing the questions for one session.
    */
   public function board(string $session_number): array {
     $session = $this->loadSession($session_number);
-    $rows = $this->questionManager->getSessionQuestions($session);
+    $rows = $session ? $this->questionManager->getSessionQuestions($session) : [];
 
-    $description = $session->hasField('field_description') && !$session->get('field_description')->isEmpty()
+    $description = $session
+      && $session->hasField('field_description')
+      && !$session->get('field_description')->isEmpty()
       ? (string) $session->get('field_description')->value
       : '';
+    $heading = $session
+      ? $this->questionManager->getSessionHeading($session)
+      : (string) $this->t('Session @number', ['@number' => $session_number]);
 
     return [
       '#type' => 'container',
       '#attributes' => ['class' => ['itsiug-board']],
       '#attached' => [
-        'library' => ['itsiug_questions/board', 'itsiug_theme/global-styling'],
+        'library' => [
+          'itsiug_questions/board',
+          'itsiug_questions/display',
+          'itsiug_theme/global-styling',
+        ],
         'drupalSettings' => [
           'itsiugQuestions' => [
             'dataUrl' => Url::fromRoute(
@@ -185,9 +213,9 @@ class QuestionController extends ControllerBase {
       ],
       '#cache' => ['max-age' => 0],
       'heading' => [
-        '#markup' => '<h1 class="itsiug-board-heading">'
-          . $this->questionManager->getSessionHeading($session) . '</h1>',
+        '#markup' => '<h1 class="itsiug-board-heading">' . $heading . '</h1>',
       ],
+      'picker' => $this->buildSessionPicker((int) $session_number),
       'description' => $description === '' ? [] : [
         '#markup' => '<p class="itsiug-board-description">' . $description . '</p>',
       ],
@@ -232,7 +260,7 @@ class QuestionController extends ControllerBase {
     $session = $this->loadSession($session_number);
     $since = (int) $request->query->get('since', 0);
 
-    $rows = $this->questionManager->getSessionQuestions($session, $since);
+    $rows = $session ? $this->questionManager->getSessionQuestions($session, $since) : [];
 
     $response = new JsonResponse([
       'rows' => $rows,
@@ -248,18 +276,91 @@ class QuestionController extends ControllerBase {
   }
 
   /**
-   * Load a session by programme number or fail with a 404.
+   * Load session data when available; reject unsupported programme numbers.
    */
-  protected function loadSession(string $session_number) {
-    $session = ctype_digit($session_number)
-      ? $this->questionManager->findSessionByNumber((int) $session_number)
-      : null;
-
-    if (!$session) {
+  protected function loadSession(string $session_number): ?NodeInterface {
+    $number = ctype_digit($session_number) ? (int) $session_number : 0;
+    if (!$this->isSupportedSessionNumber($number)) {
       throw new NotFoundHttpException();
     }
 
+    $session = $number > 0
+      ? $this->questionManager->findSessionByNumber((int) $session_number)
+      : null;
+
     return $session;
+  }
+
+  /**
+   * Check whether a number is in the conference's published session range.
+   */
+  protected function isSupportedSessionNumber(int $session_number): bool {
+    return $session_number >= 1 && $session_number <= 89;
+  }
+
+  /**
+   * Build three day-specific session selectors.
+   */
+  protected function buildSessionPicker(
+    ?int $selected_session = NULL,
+    bool $include_heading = TRUE,
+  ): array {
+    $days = [
+      'monday' => ['label' => $this->t('Monday'), 'start' => 1, 'end' => 36],
+      'tuesday' => ['label' => $this->t('Tuesday'), 'start' => 37, 'end' => 68],
+      'wednesday' => ['label' => $this->t('Wednesday'), 'start' => 69, 'end' => 89],
+    ];
+    $picker = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['itsiug-display-picker']],
+    ];
+
+    if ($include_heading) {
+      $picker['heading'] = [
+        '#markup' => '<h2 class="itsiug-display-picker-heading">'
+          . $this->t('Select the session that you want to display') . '</h2>',
+      ];
+    }
+
+    $day_options = [];
+
+    foreach ($days as $key => $day) {
+      $options = [];
+
+      for ($number = $day['start']; $number <= $day['end']; $number++) {
+        $options[] = [
+          'value' => Url::fromRoute('itsiug_questions.board', [
+            'session_number' => $number,
+          ])->toString(),
+          'label' => $this->t('Session @number', ['@number' => $number]),
+          'selected' => $selected_session === $number,
+        ];
+      }
+
+      $day_options[] = [
+        'id' => 'itsiug-display-' . $key,
+        'label' => $day['label'],
+        'options' => $options,
+      ];
+    }
+
+    $picker['days'] = [
+      '#type' => 'inline_template',
+      '#template' => '<div class="itsiug-display-picker-days">'
+        . '{% for day in days %}<div class="form-item">'
+        . '<label for="{{ day.id }}">{{ day.label }}</label>'
+        . '<select id="{{ day.id }}" data-itsiug-session-picker="true">'
+        . '<option value="">{{ empty_label }}</option>'
+        . '{% for option in day.options %}<option value="{{ option.value }}"'
+        . '{% if option.selected %} selected{% endif %}>{{ option.label }}</option>'
+        . '{% endfor %}</select></div>{% endfor %}</div>',
+      '#context' => [
+        'days' => $day_options,
+        'empty_label' => $this->t('Select a session'),
+      ],
+    ];
+
+    return $picker;
   }
 
 }

@@ -6,6 +6,14 @@ itsiug_questions.ask:
   requirements:
     _access: 'TRUE'
 
+itsiug_questions.display:
+  path: '/display'
+  defaults:
+    _controller: '\Drupal\itsiug_questions\Controller\QuestionController::display'
+    _title: 'Presenter display'
+  requirements:
+    _access: 'TRUE'
+
 itsiug_questions.submitted:
   path: '/ask/submitted'
   defaults:

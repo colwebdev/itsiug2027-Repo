@@ -22,3 +22,15 @@ board:
     - core/drupal
     - core/drupalSettings
     - core/once
+
+display:
+  version: 1.x
+  css:
+    theme:
+      css/board.css: {}
+      css/display.css: {}
+  js:
+    js/display.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
