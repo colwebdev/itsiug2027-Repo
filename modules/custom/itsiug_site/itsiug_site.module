@@ -7,6 +7,7 @@
 
 declare(strict_types=1);
 
+use Drupal\Component\Utility\Html;
 use Drupal\node\NodeInterface;
 
 /**
@@ -24,7 +25,40 @@ function itsiug_site_preprocess_page(array &$variables): void {
 
   if (empty($variables['is_front'])) {
     unset($variables['page']['footer']);
+    return;
   }
+
+  $ticker = itsiug_site_announcement_ticker_markup();
+  $variables['page']['footer']['#prefix'] = $ticker . ($variables['page']['footer']['#prefix'] ?? '');
+}
+
+/**
+ * Builds the landing-page announcement ticker markup.
+ */
+function itsiug_site_announcement_ticker_markup(): string {
+  $messages = [
+    'Registrations CLOSE on 31 January 2027',
+    'Research & Innovation',
+    'Ideas in action',
+    'Connect, Collaborate, Inspire',
+  ];
+  $items = implode('', array_map(
+    static fn(string $message): string => '<span class="itsiug-announcement-ticker__item">'
+      . Html::escape($message)
+      . '</span>',
+    $messages,
+  ));
+  $group = '<div class="itsiug-announcement-ticker__group">' . $items . '</div>';
+
+  return '<section class="itsiug-announcement-ticker" role="region" tabindex="0"'
+    . ' aria-label="ITSIUG 2027 highlights">'
+    . '<div class="itsiug-announcement-ticker__track">'
+    . $group
+    . '<div class="itsiug-announcement-ticker__group" aria-hidden="true">'
+    . $items
+    . '</div>'
+    . '</div>'
+    . '</section>';
 }
 
 /**
@@ -67,5 +101,6 @@ function itsiug_site_preprocess_field(array &$variables): void {
 function itsiug_site_page_attachments(array &$attachments): void {
   if (\Drupal::service('path.matcher')->isFrontPage()) {
     $attachments['#attached']['library'][] = 'itsiug_site/institution_marquee';
+    $attachments['#attached']['library'][] = 'itsiug_site/announcement_ticker';
   }
 }
