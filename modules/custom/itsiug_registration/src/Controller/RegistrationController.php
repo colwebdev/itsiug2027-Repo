@@ -2649,6 +2649,16 @@ return $response;
         continue;
       }
 
+      $institution_status_value = $institution->hasField('field_institution_status')
+        ? ($institution->get('field_institution_status')->value ?? '')
+        : '';
+      if (
+        $institution_status_value !== '' &&
+        strtolower(trim((string) $institution_status_value)) === 'inactive'
+      ) {
+        continue;
+      }
+
       $payment_value = $institution->get('field_payment_status')->value ?? '';
 
       $representative = '';
