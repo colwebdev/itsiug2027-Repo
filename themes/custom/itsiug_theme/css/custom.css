@@ -750,6 +750,11 @@ body:not(.canvas-page) .testimonial-module.testimonial-module--admin-theme,
   background: #1f4b6b;
   color: #ffffff;
   font-weight: 600;
+  text-align: left;
+}
+
+.itsiug-reports-page .itsiug-report-left-aligned-heading {
+  text-align: left;
 }
 
 .itsiug-report-summary-table th,

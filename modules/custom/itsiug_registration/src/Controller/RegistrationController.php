@@ -1654,8 +1654,15 @@ public function cancelDelegate($delegate) {
           $exhibitor_name = trim((string) $institution_name);
           $exhibitor_key = (string) $institution_nid;
 
-          if ($exhibitor_name !== '' && !isset($exhibitors[$exhibitor_key])) {
-            $exhibitors[$exhibitor_key] = $exhibitor_name;
+          if ($exhibitor_name !== '') {
+            if (!isset($exhibitors[$exhibitor_key])) {
+              $exhibitors[$exhibitor_key] = [
+                'name' => $exhibitor_name,
+                'representatives' => 0,
+              ];
+            }
+
+            $exhibitors[$exhibitor_key]['representatives']++;
           }
         }
       }
@@ -1971,7 +1978,12 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
 
     ksort($track_choices, SORT_NATURAL | SORT_FLAG_CASE);
     ksort($dietary_requirements, SORT_NATURAL | SORT_FLAG_CASE);
-    uasort($exhibitors, 'strnatcasecmp');
+    uasort($exhibitors, static function (array $left, array $right): int {
+      return strnatcasecmp(
+        (string) $left['name'],
+        (string) $right['name']
+      );
+    });
 
     $track_rows = [];
     foreach ($track_choices as $track_label => $track_count) {
@@ -1984,8 +1996,11 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
     }
 
     $exhibitor_rows = [];
-    foreach ($exhibitors as $exhibitor_name) {
-      $exhibitor_rows[] = [$exhibitor_name];
+    foreach ($exhibitors as $exhibitor) {
+      $exhibitor_rows[] = [
+        $exhibitor['name'],
+        $exhibitor['representatives'],
+      ];
     }
 
     $this->sortDelegateRows($delegate_rows);
@@ -2067,7 +2082,7 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
        */
       'summary_title' => [
         '#markup' =>
-          '<h3>' .
+          '<h3 class="itsiug-report-left-aligned-heading">' .
           $this->t('Conference Summary') .
           '</h3>',
       ],
@@ -2144,7 +2159,7 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
 
           'title' => [
             '#markup' =>
-              '<h3>' .
+              '<h3 class="itsiug-report-left-aligned-heading">' .
               $this->t('Track Choices') .
               '</h3>',
           ],
@@ -2175,7 +2190,7 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
 
           'title' => [
             '#markup' =>
-              '<h3>' .
+              '<h3 class="itsiug-report-left-aligned-heading">' .
               $this->t('Dietary Requirements') .
               '</h3>',
           ],
@@ -2202,7 +2217,7 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
        */
       'exhibitors_title' => [
         '#markup' =>
-          '<h3>' .
+          '<h3 class="itsiug-report-left-aligned-heading">' .
           $this->t('Exhibitors Registered (@count)', [
             '@count' => count($exhibitors),
           ]) .
@@ -2218,6 +2233,7 @@ if (strtolower(trim($checkin_status)) === 'checked in') {
         ],
         '#header' => [
           $this->t('Exhibitor'),
+          $this->t('Representatives'),
         ],
         '#rows' => $exhibitor_rows,
         '#empty' => $this->t('No exhibitor registrations are available.'),
